@@ -1,9 +1,9 @@
 # TACT Compilation Report
-Contract: SampleTactContract
-BOC Size: 849 bytes
+Contract: AutoproofContract
+BOC Size: 826 bytes
 
 # Types
-Total Types: 7
+Total Types: 9
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -17,6 +17,14 @@ Signature: `Context{bounced:bool,sender:address,value:int257,raw:^slice}`
 TLB: `_ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters`
 Signature: `SendParameters{bounce:bool,to:address,value:int257,mode:int257,body:Maybe ^cell,code:Maybe ^cell,data:Maybe ^cell}`
 
+## ChangeOwner
+TLB: `change_owner#819dbe99 queryId:uint64 newOwner:address = ChangeOwner`
+Signature: `ChangeOwner{queryId:uint64,newOwner:address}`
+
+## ChangeOwnerOk
+TLB: `change_owner_ok#327b2b4a queryId:uint64 newOwner:address = ChangeOwnerOk`
+Signature: `ChangeOwnerOk{queryId:uint64,newOwner:address}`
+
 ## Deploy
 TLB: `deploy#946a98b6 queryId:uint64 = Deploy`
 Signature: `Deploy{queryId:uint64}`
@@ -29,14 +37,14 @@ Signature: `DeployOk{queryId:uint64}`
 TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
-## Add
-TLB: `add#87d43ac2 amount:uint32 = Add`
-Signature: `Add{amount:uint32}`
+## SignDocuments
+TLB: `sign_documents#cff0f886 authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = SignDocuments`
+Signature: `SignDocuments{authorship:^string,authorshipHash:^string,authorAddress:address,description:^string,rootHash:^string,data:^string,tags:^string}`
 
 # Get Methods
 Total Get Methods: 1
 
-## counter
+## owner
 
 # Error Codes
 2: Stack underflow
@@ -63,4 +71,3 @@ Total Get Methods: 1
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
-4429: Invalid sender

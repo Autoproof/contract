@@ -52,58 +52,63 @@ cell $DeployOk$_store_cell((int) v) inline {
 }
 
 ;;
-;; Type: Add
-;; Header: 0x87d43ac2
-;; TLB: add#87d43ac2 amount:uint32 = Add
+;; Type: SignDocuments
+;; Header: 0xcff0f886
+;; TLB: sign_documents#cff0f886 authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = SignDocuments
 ;;
 
-(slice, ((int))) $Add$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 2278832834);
-    var v'amount = sc_0~load_uint(32);
-    return (sc_0, (v'amount));
+(slice, ((slice, slice, slice, slice, slice, slice, slice))) $SignDocuments$_load(slice sc_0) inline_ref {
+    throw_unless(129, sc_0~load_uint(32) == 3488675974);
+    var v'authorship = sc_0~load_ref().begin_parse();
+    var v'authorshipHash = sc_0~load_ref().begin_parse();
+    var v'authorAddress = sc_0~__tact_load_address();
+    var v'description = sc_0~load_ref().begin_parse();
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'rootHash = sc_1~load_ref().begin_parse();
+    var v'data = sc_1~load_ref().begin_parse();
+    var v'tags = sc_1~load_ref().begin_parse();
+    return (sc_0, (v'authorship, v'authorshipHash, v'authorAddress, v'description, v'rootHash, v'data, v'tags));
 }
 
 ;;
-;; Type: SampleTactContract
+;; Type: AutoproofContract
 ;;
 
-builder $SampleTactContract$_store(builder build_0, (slice, int) v) inline {
-    var (v'owner, v'counter) = v;
+builder $AutoproofContract$_store(builder build_0, (slice) v) inline {
+    var (v'owner) = v;
     build_0 = __tact_store_address(build_0, v'owner);
-    build_0 = build_0.store_uint(v'counter, 32);
     return build_0;
 }
 
-(slice, ((slice, int))) $SampleTactContract$_load(slice sc_0) inline {
-    var v'owner = sc_0~__tact_load_address();
-    var v'counter = sc_0~load_uint(32);
-    return (sc_0, (v'owner, v'counter));
-}
-
-(slice, ((slice))) $SampleTactContract$init$_load(slice sc_0) inline {
+(slice, ((slice))) $AutoproofContract$_load(slice sc_0) inline {
     var v'owner = sc_0~__tact_load_address();
     return (sc_0, (v'owner));
 }
 
-(slice, int) $SampleTactContract$_contract_load() impure inline_ref {
+(slice, ((slice))) $AutoproofContract$init$_load(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address();
+    return (sc_0, (v'owner));
+}
+
+(slice) $AutoproofContract$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
     if ($loaded) {
-        return $sc~$SampleTactContract$_load();
+        return $sc~$AutoproofContract$_load();
     } else {
         ;; Allow only workchain deployments
         throw_unless(137, my_address().preload_uint(11) == 1024);
-        (slice owner) = $sc~$SampleTactContract$init$_load();
+        (slice owner) = $sc~$AutoproofContract$init$_load();
         $sc.end_parse();
-        return $SampleTactContract$_contract_init(owner);
+        return $AutoproofContract$_contract_init(owner);
     }
 }
 
-() $SampleTactContract$_contract_store((slice, int) v) impure inline {
+() $AutoproofContract$_contract_store((slice) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);
-    b = $SampleTactContract$_store(b, v);
+    b = $AutoproofContract$_store(b, v);
     set_data(b.end_cell());
 }

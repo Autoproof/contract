@@ -1,15 +1,23 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Address, contractAddress } from "@ton/core";
-import { SampleTactContract } from "./output/sample_SampleTactContract";
+import { WalletContractV4, contractAddress } from "@ton/ton";
+import { AutoproofContract } from "./output/autoproof_AutoproofContract";
+import { mnemonicToPrivateKey } from "@ton/crypto";
 import { prepareTactDeployment } from "@tact-lang/deployer";
 
 (async () => {
     // Parameters
     let testnet = true;
-    let packageName = "sample_SampleTactContract.pkg";
-    let owner = Address.parse("kQBM7QssP28PhrctDOyd47_zpFfDiQvv5V9iXizNopb1d2LB");
-    let init = await SampleTactContract.init(owner);
+    let packageName = "autoproof_AutoproofContract.pkg";
+
+    let mnemonics = process.env.MNEMONICS?.split(" ") ?? [];
+    let keyPair = await mnemonicToPrivateKey(mnemonics);
+
+    // Create wallet contract
+    let workchain = 0;
+    let wallet = WalletContractV4.create({ workchain, publicKey: keyPair.publicKey });
+
+    let init = await AutoproofContract.init(wallet.address);
 
     // Load required data
     let address = contractAddress(0, init);
