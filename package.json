@@ -5,7 +5,8 @@
     "test": "jest",
     "deploy": "ts-node ./sources/contract.deploy.ts",
     "send": "ts-node ./sources/sendtx.ts",
-    "read": "ts-node ./sources/contract.read.ts"
+    "read": "ts-node ./sources/contract.read.ts",
+    "buildpage": "ts-node ./sources/buildpage.ts"
   },
   "dependencies": {
     "@orbs-network/ton-access": "^2.3.3",
