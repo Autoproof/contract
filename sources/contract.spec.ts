@@ -118,23 +118,7 @@ Screenshot 2024-06-23 at 00.43.56.png:8036c9bb29bf69ca00aa816097849bb39d31242aea
                   },
                   {
                     "$type": "processed",
-                    "gasUsed": 9079n,
-                  },
-                  {
-                    "$type": "sent",
-                    "messages": [
-                      {
-                        "body": {
-                          "text": "Signed",
-                          "type": "text",
-                        },
-                        "bounce": true,
-                        "from": "@main",
-                        "to": "@treasure(owner)",
-                        "type": "internal",
-                        "value": "0.989741",
-                      },
-                    ],
+                    "gasUsed": 5875n,
                   },
                 ],
               },
@@ -164,6 +148,10 @@ Screenshot 2024-06-23 at 00.43.56.png:8036c9bb29bf69ca00aa816097849bb39d31242aea
               {
                 "$seq": 2,
                 "events": [
+                  {
+                    "$type": "storage-charged",
+                    "amount": "0.000000005",
+                  },
                   {
                     "$type": "received",
                     "message": {
@@ -202,7 +190,7 @@ Screenshot 2024-06-23 at 00.43.56.png:8036c9bb29bf69ca00aa816097849bb39d31242aea
                       "from": "@main",
                       "to": "@treasure(non-owner)",
                       "type": "internal",
-                      "value": "0.994126",
+                      "value": "0.994236",
                     },
                   },
                 ],
