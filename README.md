@@ -15,7 +15,13 @@ yarn build # To build contract
 yarn deploy # To deploy contract
 ```
 
-To send a transaction, change the contents of the `sources/message.json` and run `yarn send`.
+To send a transaction:
+
+```shell
+cp sources/message.json.example sources/message.json
+# change the contents of the `sources/message.json`
+yarn send
+```
 
 ## License
 
