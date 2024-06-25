@@ -17,7 +17,6 @@ import transactionMessage from "./message.json";
   // Create wallet contract
   let workchain = 0;
   let wallet = WalletContractV4.create({ workchain, publicKey: keyPair.publicKey });
-
   const walletContract = client.open(wallet);
 
   // Get balance
@@ -25,9 +24,9 @@ import transactionMessage from "./message.json";
 
   console.log(balance);
 
-  // // Create a transfer
+  // Create a bodyCell
   let seqno: number = await walletContract.getSeqno();
-  let b = beginCell();
+  let bodyCell = beginCell();
   storeSignDocuments({
       $$type: "SignDocuments",
       authorship: transactionMessage.authorship,
@@ -38,17 +37,19 @@ import transactionMessage from "./message.json";
       rootHash: transactionMessage.rootHash,
       data: transactionMessage.data,
       tags: transactionMessage.tags
-  })(b);
+  })(bodyCell);
 
+  // Create a transfer
   let transfer = await walletContract.createTransfer({
     seqno,
     secretKey: keyPair.secretKey,
     messages: [internal({
       value: '0.1',
       to: process.env.DEPLOYED_CONTRACT_ADDRESS ?? "",
-      body: b.endCell()
+      body: bodyCell.endCell()
     })]
   });
 
+  // Send
   await walletContract.send(transfer);
 })();

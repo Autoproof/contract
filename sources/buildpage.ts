@@ -1,9 +1,7 @@
-import { TonClient, WalletContractV4, internal, Address, beginCell, Cell, Slice } from "@ton/ton";
-import { mnemonicToPrivateKey } from "@ton/crypto";
-import { storeSignDocuments, loadSignDocuments } from "./output/autoproof_AutoproofContract";
+import { TonClient, Address, Cell } from "@ton/ton";
+import { loadSignDocuments } from "./output/autoproof_AutoproofContract";
 
 (async () => {
-    // Create Client
     const client = new TonClient({
       endpoint: 'https://testnet.toncenter.com/api/v2/jsonRPC',
       apiKey: process.env.TONCENTER_APIKEY ?? ""

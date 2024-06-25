@@ -4,7 +4,13 @@
         "path": "./sources/contract.tact",
         "output": "./sources/output",
         "options":{
-            
-        }
+
+        }},
+        {
+            "name": "exchange",
+            "path": "./sources/exchange.tact",
+            "output": "./sources/output",
+            "options":{
+            }
     }]
 }
