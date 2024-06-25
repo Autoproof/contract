@@ -3,6 +3,7 @@ import "@stdlib/deploy";
 
 // Contract for autoproof document claim mechanism.
 
+// TODO: describe the fields
 message ClaimDocuments {
     authorship: String;
     authorshipHash: String;
@@ -16,7 +17,7 @@ message ClaimDocuments {
 }
 
 
-// ownable
+// TODO: write a description and the logic if the method
 contract AutoproofContract with Deployable, Ownable {
 
     owner: Address;

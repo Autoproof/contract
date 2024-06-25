@@ -3,7 +3,8 @@ import "@stdlib/deploy";
 
 // Contract for the job exchange
 
-// ownable
+// TODO: implement
+
 contract ExchangeContract with Deployable, Ownable {
 
     owner: Address;
