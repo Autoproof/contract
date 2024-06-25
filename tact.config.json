@@ -1,7 +1,7 @@
 {
     "projects": [{
         "name": "autoproof",
-        "path": "./sources/contract.tact",
+        "path": "./sources/autoproof.tact",
         "output": "./sources/output",
         "options":{
 
