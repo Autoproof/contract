@@ -31,7 +31,7 @@
 ;; Receivers of a Contract AutoproofContract
 ;;
 
-(((slice)), ()) $AutoproofContract$_internal_binary_SignDocuments((slice) $self, (slice, slice, slice, slice, slice, slice, slice) $msg) impure inline {
+(((slice)), ()) $AutoproofContract$_internal_binary_ClaimDocuments((slice) $self, (slice, slice, slice, slice, slice, slice, slice) $msg) impure inline {
     var ($self'owner) = $self;
     var ($msg'authorship, $msg'authorshipHash, $msg'authorAddress, $msg'description, $msg'rootHash, $msg'data, $msg'tags) = $msg;
     ($self'owner)~$AutoproofContract$_fun_requireOwner();
@@ -66,7 +66,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmbYLWUfsSs7KrPWJmTbh7jXpSeew4GessNvGgM72dhMzV";
+    return "ipfs://QmSpYBjfbVgbUMrnvx9ZtDDjUk6bGLtjLxZUeQiLBc9zNY";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -90,10 +90,10 @@ _ lazy_deployment_completed() method_id {
     }
     
     
-    ;; Receive SignDocuments message
-    if (op == 3488675974) {
-        var msg = in_msg~$SignDocuments$_load();
-        self~$AutoproofContract$_internal_binary_SignDocuments(msg);
+    ;; Receive ClaimDocuments message
+    if (op == 3015638490) {
+        var msg = in_msg~$ClaimDocuments$_load();
+        self~$AutoproofContract$_internal_binary_ClaimDocuments(msg);
         return (self, true);
     }
     

@@ -1,7 +1,9 @@
 import "@stdlib/ownable";
 import "@stdlib/deploy";
 
-message SignDocuments {
+// Contract for autoproof document claim mechanism.
+
+message ClaimDocuments {
     authorship: String;
     authorshipHash: String;
     authorAddress: Address;
@@ -23,7 +25,7 @@ contract AutoproofContract with Deployable, Ownable {
         self.owner = owner;
     }
 
-    receive(msg: SignDocuments) {
+    receive(msg: ClaimDocuments) {
         self.requireOwner();
     }
 }

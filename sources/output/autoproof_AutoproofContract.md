@@ -37,9 +37,9 @@ Signature: `DeployOk{queryId:uint64}`
 TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
-## SignDocuments
-TLB: `sign_documents#cff0f886 authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = SignDocuments`
-Signature: `SignDocuments{authorship:^string,authorshipHash:^string,authorAddress:address,description:^string,rootHash:^string,data:^string,tags:^string}`
+## ClaimDocuments
+TLB: `claim_documents#b3befdda authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = ClaimDocuments`
+Signature: `ClaimDocuments{authorship:^string,authorshipHash:^string,authorAddress:address,description:^string,rootHash:^string,data:^string,tags:^string}`
 
 # Get Methods
 Total Get Methods: 1

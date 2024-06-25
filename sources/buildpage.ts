@@ -1,5 +1,5 @@
 import { TonClient, Address, Cell } from "@ton/ton";
-import { loadSignDocuments } from "./output/autoproof_AutoproofContract";
+import { loadClaimDocuments } from "./output/autoproof_AutoproofContract";
 
 (async () => {
     const client = new TonClient({
@@ -13,7 +13,7 @@ import { loadSignDocuments } from "./output/autoproof_AutoproofContract";
         try {
             console.log("Created at", tx.now);
 
-            let document = loadSignDocuments(tx.inMessage?.body.asSlice() ?? Cell.EMPTY.asSlice())
+            let document = loadClaimDocuments(tx.inMessage?.body.asSlice() ?? Cell.EMPTY.asSlice())
             console.log(document);
         } catch(e){
             // ignore

@@ -1,6 +1,8 @@
 import "@stdlib/ownable";
 import "@stdlib/deploy";
 
+// Contract for the job exchange
+
 // ownable
 contract ExchangeContract with Deployable, Ownable {
 

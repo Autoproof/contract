@@ -75,7 +75,7 @@ Netive Hen 1
             owner,
             { value: toNano(1) },
             {
-                $$type: "SignDocuments",
+                $$type: "ClaimDocuments",
                 authorship: authorship,
                 authorshipHash: "24c3b8c100bd541ae6e48ac5a924b5cf46e935770bd9fbad605ac07dad203af0",
                 authorAddress: randomAddress(""),
@@ -129,7 +129,7 @@ Screenshot 2024-06-23 at 00.43.56.png:8036c9bb29bf69ca00aa816097849bb39d31242aea
             nonOwner,
             { value: toNano(1) },
             {
-                $$type: "SignDocuments",
+                $$type: "ClaimDocuments",
                 authorship: authorship,
                 authorshipHash: "24c3b8c100bd541ae6e48ac5a924b5cf46e935770bd9fbad605ac07dad203af0",
                 authorAddress: randomAddress(""),

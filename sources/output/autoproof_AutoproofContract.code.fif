@@ -11,7 +11,7 @@ PROGRAM{
   DECLPROC $Deploy$_load
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
-  DECLPROC $SignDocuments$_load
+  DECLPROC $ClaimDocuments$_load
   DECLPROC $AutoproofContract$_store
   DECLPROC $AutoproofContract$_load
   DECLPROC $StateInit$_not_null
@@ -26,7 +26,7 @@ PROGRAM{
   DECLPROC $AutoproofContract$_fun_requireOwner
   DECLPROC $AutoproofContract$_fun_owner
   DECLPROC $DeployOk$_constructor_queryId
-  DECLPROC $AutoproofContract$_internal_binary_SignDocuments
+  DECLPROC $AutoproofContract$_internal_binary_ClaimDocuments
   DECLPROC $AutoproofContract$_internal_binary_Deploy
   83229 DECLMETHOD %owner
   113617 DECLMETHOD supported_interfaces
@@ -107,10 +107,10 @@ PROGRAM{
     $DeployOk$_store INLINECALLDICT
     ENDC
   }>
-  $SignDocuments$_load PROCREF:<{
+  $ClaimDocuments$_load PROCREF:<{
     32 LDU
     SWAP
-    3488675974 PUSHINT
+    3015638490 PUSHINT
     EQUAL
     129 THROWIFNOT
     LDREF
@@ -342,7 +342,7 @@ PROGRAM{
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
-  $AutoproofContract$_internal_binary_SignDocuments PROCINLINE:<{
+  $AutoproofContract$_internal_binary_ClaimDocuments PROCINLINE:<{
     7 BLKDROP
     $AutoproofContract$_fun_requireOwner INLINECALLDICT
   }>
@@ -364,7 +364,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d62594c575566735373374b7250574a6d546268376a58705365657734476573734e7647674d373264684d7a56} PUSHSLICE
+    x{697066733a2f2f516d537059426a6662566762554d726e7678395a7444446a556b3662474c746a4c785a556551694c4263397a4e59} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -388,13 +388,13 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    3488675974 PUSHINT
+    3015638490 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
-      $SignDocuments$_load INLINECALLDICT
+      $ClaimDocuments$_load INLINECALLDICT
       1 7 BLKDROP2
-      $AutoproofContract$_internal_binary_SignDocuments INLINECALLDICT
+      $AutoproofContract$_internal_binary_ClaimDocuments INLINECALLDICT
       TRUE
     }>
     2490013878 PUSHINT

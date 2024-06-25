@@ -415,8 +415,8 @@ function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
     }
 }
 
-export type SignDocuments = {
-    $$type: 'SignDocuments';
+export type ClaimDocuments = {
+    $$type: 'ClaimDocuments';
     authorship: string;
     authorshipHash: string;
     authorAddress: Address;
@@ -426,10 +426,10 @@ export type SignDocuments = {
     tags: string;
 }
 
-export function storeSignDocuments(src: SignDocuments) {
+export function storeClaimDocuments(src: ClaimDocuments) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(3488675974, 32);
+        b_0.storeUint(3015638490, 32);
         b_0.storeStringRefTail(src.authorship);
         b_0.storeStringRefTail(src.authorshipHash);
         b_0.storeAddress(src.authorAddress);
@@ -442,9 +442,9 @@ export function storeSignDocuments(src: SignDocuments) {
     };
 }
 
-export function loadSignDocuments(slice: Slice) {
+export function loadClaimDocuments(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 3488675974) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 3015638490) { throw Error('Invalid prefix'); }
     let _authorship = sc_0.loadStringRefTail();
     let _authorshipHash = sc_0.loadStringRefTail();
     let _authorAddress = sc_0.loadAddress();
@@ -453,10 +453,10 @@ export function loadSignDocuments(slice: Slice) {
     let _rootHash = sc_1.loadStringRefTail();
     let _data = sc_1.loadStringRefTail();
     let _tags = sc_1.loadStringRefTail();
-    return { $$type: 'SignDocuments' as const, authorship: _authorship, authorshipHash: _authorshipHash, authorAddress: _authorAddress, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
+    return { $$type: 'ClaimDocuments' as const, authorship: _authorship, authorshipHash: _authorshipHash, authorAddress: _authorAddress, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
 }
 
-function loadTupleSignDocuments(source: TupleReader) {
+function loadTupleClaimDocuments(source: TupleReader) {
     let _authorship = source.readString();
     let _authorshipHash = source.readString();
     let _authorAddress = source.readAddress();
@@ -464,10 +464,10 @@ function loadTupleSignDocuments(source: TupleReader) {
     let _rootHash = source.readString();
     let _data = source.readString();
     let _tags = source.readString();
-    return { $$type: 'SignDocuments' as const, authorship: _authorship, authorshipHash: _authorshipHash, authorAddress: _authorAddress, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
+    return { $$type: 'ClaimDocuments' as const, authorship: _authorship, authorshipHash: _authorshipHash, authorAddress: _authorAddress, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
 }
 
-function storeTupleSignDocuments(source: SignDocuments) {
+function storeTupleClaimDocuments(source: ClaimDocuments) {
     let builder = new TupleBuilder();
     builder.writeString(source.authorship);
     builder.writeString(source.authorshipHash);
@@ -479,13 +479,13 @@ function storeTupleSignDocuments(source: SignDocuments) {
     return builder.build();
 }
 
-function dictValueParserSignDocuments(): DictionaryValue<SignDocuments> {
+function dictValueParserClaimDocuments(): DictionaryValue<ClaimDocuments> {
     return {
         serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeSignDocuments(src)).endCell());
+            builder.storeRef(beginCell().store(storeClaimDocuments(src)).endCell());
         },
         parse: (src) => {
-            return loadSignDocuments(src.loadRef().beginParse());
+            return loadClaimDocuments(src.loadRef().beginParse());
         }
     }
 }
@@ -503,8 +503,8 @@ function initAutoproofContract_init_args(src: AutoproofContract_init_args) {
 }
 
 async function AutoproofContract_init(owner: Address) {
-    const __code = Cell.fromBase64('te6ccgECEgEAAy4AART/APSkE/S88sgLAQIBYgIDAs7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxZ2zzy4ILI+EMBzH8BygABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8Wye1UDAQCASAKCwO0AZIwf+BwIddJwh+VMCDXCx/eIIIQz/D4hrqPCjDbPGwXXwfbPH/gghCUapi2uo6n0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4DBwBQYHAJ7THwGCEM/w+Ia68uCB1AHQAdQB0AH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdDUAdAB1AHQAdQw0BA3EDYQNRA0ABL4QlIQxwXy4IQBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8CAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAJAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAg++KO7Z5tnhjAwNAgEgDg8Asu1E0NQB+GPSAAGOIPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4Igx4Pgo1wsKgwm68uCJ+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHRAAIgALm7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgnBAznVp5xX50lCwHWFuJkeygCAUgQEQARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1iWUxXVWZzU3M3S3JQV0ptVGJoN2pYcFNlZXc0R2Vzc052R2dNNzJkaE16VoIA==');
-    const __system = Cell.fromBase64('te6cckECFAEAAzgAAQHAAQEFoeE9AgEU/wD0pBP0vPLICwMCAWIECwLO0AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8Wds88uCCyPhDAcx/AcoAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsntVA0FA7QBkjB/4HAh10nCH5UwINcLH94gghDP8PiGuo8KMNs8bBdfB9s8f+CCEJRqmLa6jqfTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH/gMHAGBwgAntMfAYIQz/D4hrry4IHUAdAB1AHQAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB1AHQAdQB0NQB0AHUAdAB1DDQEDcQNhA1EDQAEvhCUhDHBfLghAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwJAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AAoAmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCASAMDwIPviju2ebZ4YwNDgCy7UTQ1AH4Y9IAAY4g+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiDHg+CjXCwqDCbry4In6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdEAAiACASAQEQC5u70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIJwQM51aecV+dJQsB1hbiZHsoAgFIEhMAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtYllMV1Vmc1NzN0tyUFdKbVRiaDdqWHBTZWV3NEdlc3NOdkdnTTcyZGhNelaCDf2FN/');
+    const __code = Cell.fromBase64('te6ccgECEgEAAy4AART/APSkE/S88sgLAQIBYgIDAs7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxZ2zzy4ILI+EMBzH8BygABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8Wye1UDAQCASAKCwO0AZIwf+BwIddJwh+VMCDXCx/eIIIQs7792rqPCjDbPGwXXwfbPH/gghCUapi2uo6n0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4DBwBQYHAJ7THwGCELO+/dq68uCB1AHQAdQB0AH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdDUAdAB1AHQAdQw0BA3EDYQNRA0ABL4QlIQxwXy4IQBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8CAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAJAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAg++KO7Z5tnhjAwNAgEgDg8Asu1E0NQB+GPSAAGOIPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4Igx4Pgo1wsKgwm68uCJ+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHRAAIgALm7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgnBAznVp5xX50lCwHWFuJkeygCAUgQEQARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1TcFlCamZiVmdiVU1ybnZ4OVp0RERqVWs2YkdMdGpMeFpVZVFpTEJjOXpOWYIA==');
+    const __system = Cell.fromBase64('te6cckECFAEAAzgAAQHAAQEFoeE9AgEU/wD0pBP0vPLICwMCAWIECwLO0AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8Wds88uCCyPhDAcx/AcoAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsntVA0FA7QBkjB/4HAh10nCH5UwINcLH94gghCzvv3auo8KMNs8bBdfB9s8f+CCEJRqmLa6jqfTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH/gMHAGBwgAntMfAYIQs7792rry4IHUAdAB1AHQAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB1AHQAdQB0NQB0AHUAdAB1DDQEDcQNhA1EDQAEvhCUhDHBfLghAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwJAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AAoAmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCASAMDwIPviju2ebZ4YwNDgCy7UTQ1AH4Y9IAAY4g+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiDHg+CjXCwqDCbry4In6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdEAAiACASAQEQC5u70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIJwQM51aecV+dJQsB1hbiZHsoAgFIEhMAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtU3BZQmpmYlZnYlVNcm52eDladEREalVrNmJHTHRqTHhaVWVRaUxCYzl6TlmCCzBFJS');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -549,7 +549,7 @@ const AutoproofContract_types: ABIType[] = [
     {"name":"Deploy","header":2490013878,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"DeployOk","header":2952335191,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"SignDocuments","header":3488675974,"fields":[{"name":"authorship","type":{"kind":"simple","type":"string","optional":false}},{"name":"authorshipHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"authorAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"rootHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"data","type":{"kind":"simple","type":"string","optional":false}},{"name":"tags","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"ClaimDocuments","header":3015638490,"fields":[{"name":"authorship","type":{"kind":"simple","type":"string","optional":false}},{"name":"authorshipHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"authorAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"rootHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"data","type":{"kind":"simple","type":"string","optional":false}},{"name":"tags","type":{"kind":"simple","type":"string","optional":false}}]},
 ]
 
 const AutoproofContract_getters: ABIGetter[] = [
@@ -557,7 +557,7 @@ const AutoproofContract_getters: ABIGetter[] = [
 ]
 
 const AutoproofContract_receivers: ABIReceiver[] = [
-    {"receiver":"internal","message":{"kind":"typed","type":"SignDocuments"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"ClaimDocuments"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Deploy"}},
 ]
 
@@ -591,11 +591,11 @@ export class AutoproofContract implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: SignDocuments | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: ClaimDocuments | Deploy) {
         
         let body: Cell | null = null;
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'SignDocuments') {
-            body = beginCell().store(storeSignDocuments(message)).endCell();
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'ClaimDocuments') {
+            body = beginCell().store(storeClaimDocuments(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Deploy') {
             body = beginCell().store(storeDeploy(message)).endCell();
