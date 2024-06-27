@@ -9,7 +9,7 @@
     "send-declaration-tx": "ts-node ./sources/send-declaration-tx.ts",
     "send-transfer-rights-tx": "ts-node ./sources/send-transfer-rights-tx.ts",
 
-    "build-page": "ts-node ./sources/build-page.ts"
+    "get-txs": "ts-node ./sources/get-txs.ts"
   },
   "dependencies": {
     "@orbs-network/ton-access": "^2.3.3",
