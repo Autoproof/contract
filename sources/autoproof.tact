@@ -4,7 +4,8 @@ import "@stdlib/deploy";
 // Contract for autoproof document claim mechanism.
 
 // TODO: describe the fields
-message ClaimDocuments {
+//
+message DeclareDocuments {
     authorship: String;
     authorshipHash: String;
     authorAddress: Address;
@@ -16,8 +17,21 @@ message ClaimDocuments {
     tags: String;
 }
 
+// TODO: describe the fields
+//
+message TransferExclusiveRights {
+    authorName: String;
+    author: Address;
 
-// TODO: write a description and the logic if the method
+    clientName: String;
+    client: Address;
+
+    signedDocumentHash: String;
+    declarationTransactionId: String;
+}
+
+
+// TODO: write a description and the logic of the method
 contract AutoproofContract with Deployable, Ownable {
 
     owner: Address;
@@ -26,7 +40,11 @@ contract AutoproofContract with Deployable, Ownable {
         self.owner = owner;
     }
 
-    receive(msg: ClaimDocuments) {
+    receive(msg: DeclareDocuments) {
+        self.requireOwner();
+    }
+
+    receive(msg: TransferExclusiveRights) {
         self.requireOwner();
     }
 }

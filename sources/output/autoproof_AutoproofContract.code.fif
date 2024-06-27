@@ -11,7 +11,8 @@ PROGRAM{
   DECLPROC $Deploy$_load
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
-  DECLPROC $ClaimDocuments$_load
+  DECLPROC $DeclareDocuments$_load
+  DECLPROC $TransferExclusiveRights$_load
   DECLPROC $AutoproofContract$_store
   DECLPROC $AutoproofContract$_load
   DECLPROC $StateInit$_not_null
@@ -26,7 +27,8 @@ PROGRAM{
   DECLPROC $AutoproofContract$_fun_requireOwner
   DECLPROC $AutoproofContract$_fun_owner
   DECLPROC $DeployOk$_constructor_queryId
-  DECLPROC $AutoproofContract$_internal_binary_ClaimDocuments
+  DECLPROC $AutoproofContract$_internal_binary_DeclareDocuments
+  DECLPROC $AutoproofContract$_internal_binary_TransferExclusiveRights
   DECLPROC $AutoproofContract$_internal_binary_Deploy
   83229 DECLMETHOD %owner
   113617 DECLMETHOD supported_interfaces
@@ -107,10 +109,10 @@ PROGRAM{
     $DeployOk$_store INLINECALLDICT
     ENDC
   }>
-  $ClaimDocuments$_load PROCREF:<{
+  $DeclareDocuments$_load PROCREF:<{
     32 LDU
     SWAP
-    3015638490 PUSHINT
+    3001006702 PUSHINT
     EQUAL
     129 THROWIFNOT
     LDREF
@@ -145,6 +147,39 @@ PROGRAM{
     s3 s6 XCHG
     s3 s5 XCHG
     s3 s4 XCHG
+  }>
+  $TransferExclusiveRights$_load PROCREF:<{
+    32 LDU
+    SWAP
+    1360878321 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    __tact_load_address INLINECALLDICT
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    __tact_load_address INLINECALLDICT
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    LDREF
+    DROP
+    CTOS
+    s1 s6 XCHG
+    s1 s5 XCHG
+    s1 s4 XCHG
+    s3 s3 s0 XCHG3
   }>
   $AutoproofContract$_store PROCINLINE:<{
     __tact_store_address INLINECALLDICT
@@ -342,8 +377,12 @@ PROGRAM{
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
-  $AutoproofContract$_internal_binary_ClaimDocuments PROCINLINE:<{
+  $AutoproofContract$_internal_binary_DeclareDocuments PROCINLINE:<{
     7 BLKDROP
+    $AutoproofContract$_fun_requireOwner INLINECALLDICT
+  }>
+  $AutoproofContract$_internal_binary_TransferExclusiveRights PROCINLINE:<{
+    6 BLKDROP
     $AutoproofContract$_fun_requireOwner INLINECALLDICT
   }>
   $AutoproofContract$_internal_binary_Deploy PROCINLINE:<{
@@ -364,7 +403,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d537059426a6662566762554d726e7678395a7444446a556b3662474c746a4c785a556551694c4263397a4e59} PUSHSLICE
+    x{697066733a2f2f516d55766b3556746b52576e484d36414d71695177767567394e385a427939534643394658574448426b5169386a} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -388,13 +427,23 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    3015638490 PUSHINT
+    3001006702 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
-      $ClaimDocuments$_load INLINECALLDICT
+      $DeclareDocuments$_load INLINECALLDICT
       1 7 BLKDROP2
-      $AutoproofContract$_internal_binary_ClaimDocuments INLINECALLDICT
+      $AutoproofContract$_internal_binary_DeclareDocuments INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    1360878321 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $TransferExclusiveRights$_load INLINECALLDICT
+      1 6 BLKDROP2
+      $AutoproofContract$_internal_binary_TransferExclusiveRights INLINECALLDICT
       TRUE
     }>
     2490013878 PUSHINT

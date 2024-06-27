@@ -1,7 +1,7 @@
 import { TonClient, WalletContractV4, internal, Address, beginCell } from "@ton/ton";
 import { mnemonicToPrivateKey } from "@ton/crypto";
-import { storeClaimDocuments } from "./output/autoproof_AutoproofContract";
-import transactionMessage from "./message.json";
+import { storeDeclareDocuments } from "./output/autoproof_AutoproofContract";
+import declaration from "./declaration.json";
 
 (async () => {
   // Create Client
@@ -27,16 +27,16 @@ import transactionMessage from "./message.json";
   // Create a bodyCell
   let seqno: number = await walletContract.getSeqno();
   let bodyCell = beginCell();
-  storeClaimDocuments({
-      $$type: "ClaimDocuments",
-      authorship: transactionMessage.authorship,
-      authorshipHash: transactionMessage.authorshipHash,
-      authorAddress: Address.parse(transactionMessage.authorAddress),
+  storeDeclareDocuments({
+      $$type: "DeclareDocuments",
+      authorship: declaration.authorship,
+      authorshipHash: declaration.authorshipHash,
+      authorAddress: Address.parse(declaration.authorAddress),
 
-      description: transactionMessage.description,
-      rootHash: transactionMessage.rootHash,
-      data: transactionMessage.data,
-      tags: transactionMessage.tags
+      description: declaration.description,
+      rootHash: declaration.rootHash,
+      data: declaration.data,
+      tags: declaration.tags
   })(bodyCell);
 
   // Create a transfer

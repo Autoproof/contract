@@ -415,8 +415,8 @@ function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
     }
 }
 
-export type ClaimDocuments = {
-    $$type: 'ClaimDocuments';
+export type DeclareDocuments = {
+    $$type: 'DeclareDocuments';
     authorship: string;
     authorshipHash: string;
     authorAddress: Address;
@@ -426,10 +426,10 @@ export type ClaimDocuments = {
     tags: string;
 }
 
-export function storeClaimDocuments(src: ClaimDocuments) {
+export function storeDeclareDocuments(src: DeclareDocuments) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(3015638490, 32);
+        b_0.storeUint(3001006702, 32);
         b_0.storeStringRefTail(src.authorship);
         b_0.storeStringRefTail(src.authorshipHash);
         b_0.storeAddress(src.authorAddress);
@@ -442,9 +442,9 @@ export function storeClaimDocuments(src: ClaimDocuments) {
     };
 }
 
-export function loadClaimDocuments(slice: Slice) {
+export function loadDeclareDocuments(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 3015638490) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 3001006702) { throw Error('Invalid prefix'); }
     let _authorship = sc_0.loadStringRefTail();
     let _authorshipHash = sc_0.loadStringRefTail();
     let _authorAddress = sc_0.loadAddress();
@@ -453,10 +453,10 @@ export function loadClaimDocuments(slice: Slice) {
     let _rootHash = sc_1.loadStringRefTail();
     let _data = sc_1.loadStringRefTail();
     let _tags = sc_1.loadStringRefTail();
-    return { $$type: 'ClaimDocuments' as const, authorship: _authorship, authorshipHash: _authorshipHash, authorAddress: _authorAddress, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
+    return { $$type: 'DeclareDocuments' as const, authorship: _authorship, authorshipHash: _authorshipHash, authorAddress: _authorAddress, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
 }
 
-function loadTupleClaimDocuments(source: TupleReader) {
+function loadTupleDeclareDocuments(source: TupleReader) {
     let _authorship = source.readString();
     let _authorshipHash = source.readString();
     let _authorAddress = source.readAddress();
@@ -464,10 +464,10 @@ function loadTupleClaimDocuments(source: TupleReader) {
     let _rootHash = source.readString();
     let _data = source.readString();
     let _tags = source.readString();
-    return { $$type: 'ClaimDocuments' as const, authorship: _authorship, authorshipHash: _authorshipHash, authorAddress: _authorAddress, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
+    return { $$type: 'DeclareDocuments' as const, authorship: _authorship, authorshipHash: _authorshipHash, authorAddress: _authorAddress, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
 }
 
-function storeTupleClaimDocuments(source: ClaimDocuments) {
+function storeTupleDeclareDocuments(source: DeclareDocuments) {
     let builder = new TupleBuilder();
     builder.writeString(source.authorship);
     builder.writeString(source.authorshipHash);
@@ -479,13 +479,83 @@ function storeTupleClaimDocuments(source: ClaimDocuments) {
     return builder.build();
 }
 
-function dictValueParserClaimDocuments(): DictionaryValue<ClaimDocuments> {
+function dictValueParserDeclareDocuments(): DictionaryValue<DeclareDocuments> {
     return {
         serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeClaimDocuments(src)).endCell());
+            builder.storeRef(beginCell().store(storeDeclareDocuments(src)).endCell());
         },
         parse: (src) => {
-            return loadClaimDocuments(src.loadRef().beginParse());
+            return loadDeclareDocuments(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type TransferExclusiveRights = {
+    $$type: 'TransferExclusiveRights';
+    authorName: string;
+    author: Address;
+    clientName: string;
+    client: Address;
+    signedDocumentHash: string;
+    declarationTransactionId: string;
+}
+
+export function storeTransferExclusiveRights(src: TransferExclusiveRights) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(1360878321, 32);
+        b_0.storeStringRefTail(src.authorName);
+        b_0.storeAddress(src.author);
+        b_0.storeStringRefTail(src.clientName);
+        b_0.storeAddress(src.client);
+        b_0.storeStringRefTail(src.signedDocumentHash);
+        let b_1 = new Builder();
+        b_1.storeStringRefTail(src.declarationTransactionId);
+        b_0.storeRef(b_1.endCell());
+    };
+}
+
+export function loadTransferExclusiveRights(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 1360878321) { throw Error('Invalid prefix'); }
+    let _authorName = sc_0.loadStringRefTail();
+    let _author = sc_0.loadAddress();
+    let _clientName = sc_0.loadStringRefTail();
+    let _client = sc_0.loadAddress();
+    let _signedDocumentHash = sc_0.loadStringRefTail();
+    let sc_1 = sc_0.loadRef().beginParse();
+    let _declarationTransactionId = sc_1.loadStringRefTail();
+    return { $$type: 'TransferExclusiveRights' as const, authorName: _authorName, author: _author, clientName: _clientName, client: _client, signedDocumentHash: _signedDocumentHash, declarationTransactionId: _declarationTransactionId };
+}
+
+function loadTupleTransferExclusiveRights(source: TupleReader) {
+    let _authorName = source.readString();
+    let _author = source.readAddress();
+    let _clientName = source.readString();
+    let _client = source.readAddress();
+    let _signedDocumentHash = source.readString();
+    let _declarationTransactionId = source.readString();
+    return { $$type: 'TransferExclusiveRights' as const, authorName: _authorName, author: _author, clientName: _clientName, client: _client, signedDocumentHash: _signedDocumentHash, declarationTransactionId: _declarationTransactionId };
+}
+
+function storeTupleTransferExclusiveRights(source: TransferExclusiveRights) {
+    let builder = new TupleBuilder();
+    builder.writeString(source.authorName);
+    builder.writeAddress(source.author);
+    builder.writeString(source.clientName);
+    builder.writeAddress(source.client);
+    builder.writeString(source.signedDocumentHash);
+    builder.writeString(source.declarationTransactionId);
+    return builder.build();
+}
+
+function dictValueParserTransferExclusiveRights(): DictionaryValue<TransferExclusiveRights> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeTransferExclusiveRights(src)).endCell());
+        },
+        parse: (src) => {
+            return loadTransferExclusiveRights(src.loadRef().beginParse());
         }
     }
 }
@@ -503,8 +573,8 @@ function initAutoproofContract_init_args(src: AutoproofContract_init_args) {
 }
 
 async function AutoproofContract_init(owner: Address) {
-    const __code = Cell.fromBase64('te6ccgECEgEAAy4AART/APSkE/S88sgLAQIBYgIDAs7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxZ2zzy4ILI+EMBzH8BygABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8Wye1UDAQCASAKCwO0AZIwf+BwIddJwh+VMCDXCx/eIIIQs7792rqPCjDbPGwXXwfbPH/gghCUapi2uo6n0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4DBwBQYHAJ7THwGCELO+/dq68uCB1AHQAdQB0AH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdDUAdAB1AHQAdQw0BA3EDYQNRA0ABL4QlIQxwXy4IQBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8CAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAJAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAg++KO7Z5tnhjAwNAgEgDg8Asu1E0NQB+GPSAAGOIPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4Igx4Pgo1wsKgwm68uCJ+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHRAAIgALm7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgnBAznVp5xX50lCwHWFuJkeygCAUgQEQARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1TcFlCamZiVmdiVU1ybnZ4OVp0RERqVWs2YkdMdGpMeFpVZVFpTEJjOXpOWYIA==');
-    const __system = Cell.fromBase64('te6cckECFAEAAzgAAQHAAQEFoeE9AgEU/wD0pBP0vPLICwMCAWIECwLO0AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8Wds88uCCyPhDAcx/AcoAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsntVA0FA7QBkjB/4HAh10nCH5UwINcLH94gghCzvv3auo8KMNs8bBdfB9s8f+CCEJRqmLa6jqfTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH/gMHAGBwgAntMfAYIQs7792rry4IHUAdAB1AHQAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB1AHQAdQB0NQB0AHUAdAB1DDQEDcQNhA1EDQAEvhCUhDHBfLghAE6bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwJAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7AAoAmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCASAMDwIPviju2ebZ4YwNDgCy7UTQ1AH4Y9IAAY4g+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiDHg+CjXCwqDCbry4In6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdEAAiACASAQEQC5u70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIJwQM51aecV+dJQsB1hbiZHsoAgFIEhMAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtU3BZQmpmYlZnYlVNcm52eDladEREalVrNmJHTHRqTHhaVWVRaUxCYzl6TlmCCzBFJS');
+    const __code = Cell.fromBase64('te6ccgECFQEAA7AAART/APSkE/S88sgLAQIBYgIDAs7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxZ2zzy4ILI+EMBzH8BygABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8Wye1UDwQCASANDgRwAZIwf+BwIddJwh+VMCDXCx/eIIIQst+6brqPCjDbPGwXXwfbPH/gIIIQUR1a8brjAoIQlGqYtroFCQYHAJ7THwGCELLfum668uCB1AHQAdQB0AH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdDUAdAB1AHQAdQw0BA3EDYQNRA0AhQw2zxsFl8G2zx/CAkBWI6n0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4DBwCgDI0x8BghBRHVrxuvLggdQB0AH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdDUMNAWFRRDMAAS+EJSEMcF8uCEATptbSJus5lbIG7y0IBvIgGRMuIQJHADBIBCUCPbPAsByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsADACYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzAIPviju2ebZ4YwPEAIBIBESALLtRNDUAfhj0gABjiD6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIMeD4KNcLCoMJuvLgifpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0QACIAC5u70YJwXOw9XSyuex6E7DnWSoUbZoJwndY1LStkfLMi068t/fFiOYJwIFXAG4BnY5TOWDquRyWyw4JwnZdOWrNOy3M6DpZtlGbopIJwQM51aecV+dJQsB1hbiZHsoAgFIExQAEbCvu1E0NIAAYAB1sm7jQ1aXBmczovL1FtVXZrNVZ0a1JXbkhNNkFNcWlRd3Z1ZzlOOFpCeTlTRkM5RlhXREhCa1FpOGqCA=');
+    const __system = Cell.fromBase64('te6cckECFwEAA7oAAQHAAQEFoeE9AgEU/wD0pBP0vPLICwMCAWIEDgLO0AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8Wds88uCCyPhDAcx/AcoAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsntVBAFBHABkjB/4HAh10nCH5UwINcLH94gghCy37puuo8KMNs8bBdfB9s8f+AgghBRHVrxuuMCghCUapi2ugYJBwoAntMfAYIQst+6brry4IHUAdAB1AHQAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB1AHQAdQB0NQB0AHUAdAB1DDQEDcQNhA1EDQCFDDbPGwWXwbbPH8ICQDI0x8BghBRHVrxuvLggdQB0AH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdQB0AHUAdDUMNAWFRRDMAAS+EJSEMcF8uCEAViOp9MfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8f+AwcAsBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wANAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAgEgDxICD74o7tnm2eGMEBEAsu1E0NQB+GPSAAGOIPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4Igx4Pgo1wsKgwm68uCJ+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHRAAIgAgEgExQAubu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSCcEDOdWnnFfnSULAdYW4mR7KAIBSBUWABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbVV2azVWdGtSV25ITTZBTXFpUXd2dWc5TjhaQnk5U0ZDOUZYV0RIQmtRaThqgg7DpQbQ==');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -549,7 +619,8 @@ const AutoproofContract_types: ABIType[] = [
     {"name":"Deploy","header":2490013878,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"DeployOk","header":2952335191,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"ClaimDocuments","header":3015638490,"fields":[{"name":"authorship","type":{"kind":"simple","type":"string","optional":false}},{"name":"authorshipHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"authorAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"rootHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"data","type":{"kind":"simple","type":"string","optional":false}},{"name":"tags","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"DeclareDocuments","header":3001006702,"fields":[{"name":"authorship","type":{"kind":"simple","type":"string","optional":false}},{"name":"authorshipHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"authorAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"rootHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"data","type":{"kind":"simple","type":"string","optional":false}},{"name":"tags","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"TransferExclusiveRights","header":1360878321,"fields":[{"name":"authorName","type":{"kind":"simple","type":"string","optional":false}},{"name":"author","type":{"kind":"simple","type":"address","optional":false}},{"name":"clientName","type":{"kind":"simple","type":"string","optional":false}},{"name":"client","type":{"kind":"simple","type":"address","optional":false}},{"name":"signedDocumentHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"declarationTransactionId","type":{"kind":"simple","type":"string","optional":false}}]},
 ]
 
 const AutoproofContract_getters: ABIGetter[] = [
@@ -557,7 +628,8 @@ const AutoproofContract_getters: ABIGetter[] = [
 ]
 
 const AutoproofContract_receivers: ABIReceiver[] = [
-    {"receiver":"internal","message":{"kind":"typed","type":"ClaimDocuments"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"DeclareDocuments"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"TransferExclusiveRights"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Deploy"}},
 ]
 
@@ -591,11 +663,14 @@ export class AutoproofContract implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: ClaimDocuments | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: DeclareDocuments | TransferExclusiveRights | Deploy) {
         
         let body: Cell | null = null;
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'ClaimDocuments') {
-            body = beginCell().store(storeClaimDocuments(message)).endCell();
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'DeclareDocuments') {
+            body = beginCell().store(storeDeclareDocuments(message)).endCell();
+        }
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'TransferExclusiveRights') {
+            body = beginCell().store(storeTransferExclusiveRights(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Deploy') {
             body = beginCell().store(storeDeploy(message)).endCell();

@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: AutoproofContract
-BOC Size: 826 bytes
+BOC Size: 956 bytes
 
 # Types
-Total Types: 9
+Total Types: 10
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -37,9 +37,13 @@ Signature: `DeployOk{queryId:uint64}`
 TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
-## ClaimDocuments
-TLB: `claim_documents#b3befdda authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = ClaimDocuments`
-Signature: `ClaimDocuments{authorship:^string,authorshipHash:^string,authorAddress:address,description:^string,rootHash:^string,data:^string,tags:^string}`
+## DeclareDocuments
+TLB: `declare_documents#b2dfba6e authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = DeclareDocuments`
+Signature: `DeclareDocuments{authorship:^string,authorshipHash:^string,authorAddress:address,description:^string,rootHash:^string,data:^string,tags:^string}`
+
+## TransferExclusiveRights
+TLB: `transfer_exclusive_rights#511d5af1 authorName:^string author:address clientName:^string client:address signedDocumentHash:^string declarationTransactionId:^string = TransferExclusiveRights`
+Signature: `TransferExclusiveRights{authorName:^string,author:address,clientName:^string,client:address,signedDocumentHash:^string,declarationTransactionId:^string}`
 
 # Get Methods
 Total Get Methods: 1

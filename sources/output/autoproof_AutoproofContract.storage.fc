@@ -52,13 +52,13 @@ cell $DeployOk$_store_cell((int) v) inline {
 }
 
 ;;
-;; Type: ClaimDocuments
-;; Header: 0xb3befdda
-;; TLB: claim_documents#b3befdda authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = ClaimDocuments
+;; Type: DeclareDocuments
+;; Header: 0xb2dfba6e
+;; TLB: declare_documents#b2dfba6e authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = DeclareDocuments
 ;;
 
-(slice, ((slice, slice, slice, slice, slice, slice, slice))) $ClaimDocuments$_load(slice sc_0) inline_ref {
-    throw_unless(129, sc_0~load_uint(32) == 3015638490);
+(slice, ((slice, slice, slice, slice, slice, slice, slice))) $DeclareDocuments$_load(slice sc_0) inline_ref {
+    throw_unless(129, sc_0~load_uint(32) == 3001006702);
     var v'authorship = sc_0~load_ref().begin_parse();
     var v'authorshipHash = sc_0~load_ref().begin_parse();
     var v'authorAddress = sc_0~__tact_load_address();
@@ -68,6 +68,24 @@ cell $DeployOk$_store_cell((int) v) inline {
     var v'data = sc_1~load_ref().begin_parse();
     var v'tags = sc_1~load_ref().begin_parse();
     return (sc_0, (v'authorship, v'authorshipHash, v'authorAddress, v'description, v'rootHash, v'data, v'tags));
+}
+
+;;
+;; Type: TransferExclusiveRights
+;; Header: 0x511d5af1
+;; TLB: transfer_exclusive_rights#511d5af1 authorName:^string author:address clientName:^string client:address signedDocumentHash:^string declarationTransactionId:^string = TransferExclusiveRights
+;;
+
+(slice, ((slice, slice, slice, slice, slice, slice))) $TransferExclusiveRights$_load(slice sc_0) inline_ref {
+    throw_unless(129, sc_0~load_uint(32) == 1360878321);
+    var v'authorName = sc_0~load_ref().begin_parse();
+    var v'author = sc_0~__tact_load_address();
+    var v'clientName = sc_0~load_ref().begin_parse();
+    var v'client = sc_0~__tact_load_address();
+    var v'signedDocumentHash = sc_0~load_ref().begin_parse();
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'declarationTransactionId = sc_1~load_ref().begin_parse();
+    return (sc_0, (v'authorName, v'author, v'clientName, v'client, v'signedDocumentHash, v'declarationTransactionId));
 }
 
 ;;

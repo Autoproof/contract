@@ -18,8 +18,8 @@ yarn deploy # To deploy contract
 To send a transaction:
 
 ```shell
-cp sources/message.json.example sources/message.json
-# change the contents of the `sources/message.json`
+cp sources/declaration.json.example sources/declaration.json
+# change the contents of the `sources/declaration.json`
 yarn send
 ```
 

@@ -4,9 +4,12 @@
     "build": "tact --config ./tact.config.json",
     "test": "jest",
     "deploy": "ts-node ./sources/contract.deploy.ts",
-    "send": "ts-node ./sources/sendtx.ts",
     "read": "ts-node ./sources/contract.read.ts",
-    "buildpage": "ts-node ./sources/buildpage.ts"
+
+    "send-declaration-tx": "ts-node ./sources/send-declaration-tx.ts",
+    "send-transfer-rights-tx": "ts-node ./sources/send-transfer-rights-tx.ts",
+
+    "build-page": "ts-node ./sources/build-page.ts"
   },
   "dependencies": {
     "@orbs-network/ton-access": "^2.3.3",
