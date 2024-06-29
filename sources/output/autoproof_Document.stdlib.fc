@@ -44,9 +44,11 @@ int __tact_slice_eq_bits(slice a, slice b) inline {
     return equal_slice_bits(a, b);
 }
 
-forall X0, X1 -> tuple __tact_tuple_create_2((X0, X1) v) asm "2 TUPLE";
-
 forall X0, X1 -> (X0, X1) __tact_tuple_destroy_2(tuple v) asm "2 UNTUPLE";
+
+forall X0, X1, X2, X3 -> tuple __tact_tuple_create_4((X0, X1, X2, X3) v) asm "4 TUPLE";
+
+forall X0, X1, X2, X3 -> (X0, X1, X2, X3) __tact_tuple_destroy_4(tuple v) asm "4 UNTUPLE";
 
 () $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref {
     var (($params'bounce, $params'to, $params'value, $params'mode, $params'body, $params'code, $params'data)) = $params;
@@ -92,7 +94,7 @@ forall X0, X1 -> (X0, X1) __tact_tuple_destroy_2(tuple v) asm "2 UNTUPLE";
 }
 
 ((slice, int, int, tuple, slice, slice), ()) $Document$_fun_forward((slice, int, int, tuple, slice, slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)) = $self;
+    var (($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)) = $self;
     var ($init) = $init;
     cell $code = null();
     cell $data = null();
@@ -108,15 +110,15 @@ forall X0, X1 -> (X0, X1) __tact_tuple_destroy_2(tuple v) asm "2 UNTUPLE";
         if (($balanceBeforeMessage < 0)) {
             raw_reserve(0, 0);
             $global_send($SendParameters$_constructor_bounce_to_value_mode_body_code_data($bounce, $to, 0, 130, $body, $code, $data));
-            return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), ());
+            return (($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner), ());
         }
     }
     $global_send($SendParameters$_constructor_bounce_to_value_mode_body_code_data($bounce, $to, 0, 66, $body, $code, $data));
-    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), ());
+    return (($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner), ());
 }
 
 ((slice, int, int, tuple, slice, slice), ()) $Document$_fun_reply((slice, int, int, tuple, slice, slice) $self, cell $body) impure inline {
-    var (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)) = $self;
-    ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_forward(__tact_context_get_sender(), $body, true, null());
-    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), ());
+    var (($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)) = $self;
+    ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_forward(__tact_context_get_sender(), $body, true, null());
+    return (($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner), ());
 }

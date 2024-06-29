@@ -55,7 +55,13 @@ builder $DeployOk$_store(builder build_0, (int) v) inline;
 cell $DeployOk$_store_cell((int) v) inline;
 
 ;; $DeclareDocuments$_load
-(slice, ((slice, slice, slice, slice, slice, slice))) $DeclareDocuments$_load(slice sc_0) inline_ref;
+(slice, ((slice, slice, slice, slice, slice))) $DeclareDocuments$_load(slice sc_0) inline;
+
+;; $DocumentDeclaration$_store
+builder $DocumentDeclaration$_store(builder build_0, (slice) v) inline;
+
+;; $DocumentDeclaration$_store_cell
+cell $DocumentDeclaration$_store_cell((slice) v) inline;
 
 ;; $GetFunds$_load
 (slice, ((int))) $GetFunds$_load(slice sc_0) inline;
@@ -100,7 +106,7 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ((slice, int), slice) $Autoproof$_fun_documentAddress((slice, int) $self, int $seqno, slice $author) impure inline_ref;
 
 ;; $Autoproof$_fun_validateDeclaration
-((slice, int), ()) $Autoproof$_fun_validateDeclaration((slice, int) $self, (slice, slice, slice, slice, slice, slice) $msg) impure inline_ref;
+((slice, int), ()) $Autoproof$_fun_validateDeclaration((slice, int) $self, (slice, slice, slice, slice, slice) $msg) impure inline_ref;
 
 ;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
@@ -117,11 +123,14 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $Autoproof$_fun_owner
 ((slice, int), slice) $Autoproof$_fun_owner((slice, int) $self) impure inline_ref;
 
-;; $SendParameters$_constructor_to_value_mode_code_data
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_code_data(slice to, int value, int mode, cell code, cell data) inline;
+;; $SendParameters$_constructor_to_body_value_mode_code_data
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_mode_code_data(slice to, cell body, int value, int mode, cell code, cell data) inline;
 
-;; $SendParameters$_constructor_to_value_mode
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode(slice to, int value, int mode) inline;
+;; $DocumentDeclaration$_constructor_address
+((slice)) $DocumentDeclaration$_constructor_address(slice address) inline;
+
+;; $SendParameters$_constructor_to_value_mode_body
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;
 
 ;; $DeployOk$_constructor_queryId
 ((int)) $DeployOk$_constructor_queryId(int queryId) inline;

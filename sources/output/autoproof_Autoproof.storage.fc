@@ -28,12 +28,12 @@ _ $Context$_get_value((int, slice, int, slice) v) inline {
     return (bounce, to, value, mode, body, code, data);
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_code_data(slice to, int value, int mode, cell code, cell data) inline {
-    return (true, to, value, mode, null(), code, data);
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_mode_code_data(slice to, cell body, int value, int mode, cell code, cell data) inline {
+    return (true, to, value, mode, body, code, data);
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode(slice to, int value, int mode) inline {
-    return (true, to, value, mode, null(), null(), null());
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline {
+    return (true, to, value, mode, body, null(), null());
 }
 
 ;;
@@ -71,23 +71,43 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ;;
 ;; Type: DeclareDocuments
-;; Header: 0xa952d383
-;; TLB: declare_documents#a952d383 authorship:^string authorshipHash:^string description:^string rootHash:^string data:^string tags:^string = DeclareDocuments
+;; Header: 0x0646f512
+;; TLB: declare_documents#0646f512 authorship:^string description:^string rootHash:^string data:^string tags:^string = DeclareDocuments
 ;;
 
-(slice, ((slice, slice, slice, slice, slice, slice))) $DeclareDocuments$_load(slice sc_0) inline_ref {
-    throw_unless(129, sc_0~load_uint(32) == 2840777603);
+(slice, ((slice, slice, slice, slice, slice))) $DeclareDocuments$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 105313554);
     var v'authorship = sc_0~load_ref().begin_parse();
-    var v'authorshipHash = sc_0~load_ref().begin_parse();
     var v'description = sc_0~load_ref().begin_parse();
+    var v'rootHash = sc_0~load_ref().begin_parse();
     slice sc_1 = sc_0~load_ref().begin_parse();
-    var v'rootHash = sc_1~load_ref().begin_parse();
     var v'data = sc_1~load_ref().begin_parse();
     var v'tags = sc_1~load_ref().begin_parse();
-    return (sc_0, (v'authorship, v'authorshipHash, v'description, v'rootHash, v'data, v'tags));
+    return (sc_0, (v'authorship, v'description, v'rootHash, v'data, v'tags));
 }
 
-((slice, slice, slice, slice, slice, slice)) $DeclareDocuments$_tensor_cast((slice, slice, slice, slice, slice, slice) v) asm "NOP";
+((slice, slice, slice, slice, slice)) $DeclareDocuments$_tensor_cast((slice, slice, slice, slice, slice) v) asm "NOP";
+
+;;
+;; Type: DocumentDeclaration
+;; Header: 0x8ea29cef
+;; TLB: document_declaration#8ea29cef address:address = DocumentDeclaration
+;;
+
+builder $DocumentDeclaration$_store(builder build_0, (slice) v) inline {
+    var (v'address) = v;
+    build_0 = store_uint(build_0, 2393021679, 32);
+    build_0 = __tact_store_address(build_0, v'address);
+    return build_0;
+}
+
+cell $DocumentDeclaration$_store_cell((slice) v) inline {
+    return $DocumentDeclaration$_store(begin_cell(), v).end_cell();
+}
+
+((slice)) $DocumentDeclaration$_constructor_address(slice address) inline {
+    return (address);
+}
 
 ;;
 ;; Type: GetFunds

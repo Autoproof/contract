@@ -1,5 +1,5 @@
 import { TonClient, Address, Cell } from "@ton/ton";
-import { loadDeclareDocuments, loadTransferExclusiveRights } from "./output/autoproof_AutoproofContract";
+import { loadDeclareDocuments } from "./output/autoproof_Autoproof";
 
 (async () => {
     const client = new TonClient({
@@ -16,11 +16,7 @@ import { loadDeclareDocuments, loadTransferExclusiveRights } from "./output/auto
         try {
             txBody = loadDeclareDocuments(tx.inMessage?.body.asSlice() ?? Cell.EMPTY.asSlice())
         } catch(e){
-            try {
-                txBody = loadTransferExclusiveRights(tx.inMessage?.body.asSlice() ?? Cell.EMPTY.asSlice())
-            } catch (e) {
-                // ignore
-            }
+            // ignore
         }
 
         if (txBody != undefined) {

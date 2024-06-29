@@ -17,6 +17,8 @@ PROGRAM{
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
   DECLPROC $DeclareDocuments$_load
+  DECLPROC $DocumentDeclaration$_store
+  DECLPROC $DocumentDeclaration$_store_cell
   DECLPROC $GetFunds$_load
   DECLPROC $Autoproof$_store
   DECLPROC $Autoproof$_load
@@ -37,8 +39,9 @@ PROGRAM{
   DECLPROC $Autoproof$_fun_reply
   DECLPROC $Autoproof$_fun_notify
   DECLPROC $Autoproof$_fun_owner
-  DECLPROC $SendParameters$_constructor_to_value_mode_code_data
-  DECLPROC $SendParameters$_constructor_to_value_mode
+  DECLPROC $SendParameters$_constructor_to_body_value_mode_code_data
+  DECLPROC $DocumentDeclaration$_constructor_address
+  DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $Autoproof$_internal_binary_DeclareDocuments
   DECLPROC $Autoproof$_internal_binary_GetFunds
@@ -176,10 +179,10 @@ PROGRAM{
     $DeployOk$_store INLINECALLDICT
     ENDC
   }>
-  $DeclareDocuments$_load PROCREF:<{
+  $DeclareDocuments$_load PROCINLINE:<{
     32 LDU
     SWAP
-    2840777603 PUSHINT
+    105313554 PUSHINT
     EQUAL
     129 THROWIFNOT
     LDREF
@@ -202,15 +205,24 @@ PROGRAM{
     CTOS
     SWAP
     LDREF
-    SWAP
-    CTOS
-    SWAP
-    LDREF
     DROP
     CTOS
-    s3 s6 XCHG
-    s3 s5 XCHG
-    s3 s4 XCHG
+    s2 s5 XCHG
+    s2 s4 XCHG
+    s2 s3 XCHG
+  }>
+  $DocumentDeclaration$_store PROCINLINE:<{
+    2393021679 PUSHINT
+    ROT
+    32 STU
+    SWAP
+    __tact_store_address INLINECALLDICT
+  }>
+  $DocumentDeclaration$_store_cell PROCINLINE:<{
+    NEWC
+    SWAP
+    $DocumentDeclaration$_store INLINECALLDICT
+    ENDC
   }>
   $GetFunds$_load PROCINLINE:<{
     32 LDU
@@ -438,20 +450,15 @@ PROGRAM{
     DROP
     28490 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
-    s0 s6 XCHG2
+    s0 s5 XCHG2
     __tact_slice_neq INLINECALLDICT
-    s1 s5 XCHG
-    THROWANYIFNOT
-    54709 PUSHINT
-    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
-    s0 s4 XCHG2
-    __tact_slice_neq INLINECALLDICT
-    s1 s3 XCHG
+    s1 s4 XCHG
     THROWANYIFNOT
     59821 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
-    ROT
+    s0 s3 XCHG2
     __tact_slice_neq INLINECALLDICT
+    s1 s2 XCHG
     THROWANYIFNOT
     62718 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
@@ -505,18 +512,16 @@ PROGRAM{
   $Autoproof$_fun_owner PROCREF:<{
     OVER
   }>
-  $SendParameters$_constructor_to_value_mode_code_data PROCINLINE:<{
+  $SendParameters$_constructor_to_body_value_mode_code_data PROCINLINE:<{
     TRUE
-    s0 s5 XCHG
-    s0 s4 XCHG
-    s3 s1 s3 XCHG3
-    PUSHNULL
-    s0 s2 XCHG
+    s0 s6 XCHG
+    s5 s5 s5 XCHG3
   }>
-  $SendParameters$_constructor_to_value_mode PROCINLINE:<{
+  $DocumentDeclaration$_constructor_address PROCINLINE:<{
+  }>
+  $SendParameters$_constructor_to_value_mode_body PROCINLINE:<{
     TRUE
-    3 -ROLL
-    PUSHNULL
+    4 -ROLL
     PUSHNULL
     PUSHNULL
   }>
@@ -538,12 +543,18 @@ PROGRAM{
     $Document$_init_child INLINECALLDICT
     2DUP
     $global_contractAddress INLINECALLDICT
+    B{b5ee9c7241010101001300002200000000496e697420646f63756d656e74e01ad0fd} B>boc PUSHREF
+    s1 s3 XCHG
     10000000 PUSHINT
     2SWAP
     2 PUSHINT
-    -ROT
-    $SendParameters$_constructor_to_value_mode_code_data INLINECALLDICT
+    s0 s2 XCHG
+    $SendParameters$_constructor_to_body_value_mode_code_data INLINECALLDICT
     $global_send INLINECALLDICT
+    MYADDR
+    $DocumentDeclaration$_constructor_address INLINECALLDICT
+    $DocumentDeclaration$_store_cell INLINECALLDICT
+    $Autoproof$_fun_reply INLINECALLDICT
   }>
   $Autoproof$_internal_binary_GetFunds PROCINLINE:<{
     61678 PUSHINT
@@ -556,9 +567,10 @@ PROGRAM{
     GREATER
     IF:<{
       __tact_context_get_sender INLINECALLDICT
-      SWAP
       2 PUSHINT
-      $SendParameters$_constructor_to_value_mode INLINECALLDICT
+      B{b5ee9c7241010101001d0000360000000053656e642066756e647320746f20746865206f776e6572652d4940} B>boc PUSHREF
+      s2 s3 XCHG
+      $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
       $global_send INLINECALLDICT
     }>ELSE<{
       DROP
@@ -596,7 +608,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d505a6a47387334313571576d75433557346b61334378506b47364b6373374573516145645a6b7835745a6b63} PUSHSLICE
+    x{697066733a2f2f516d516e3948575452344c567131375a3778394a79426a65436876354d58334b4342483354474779356f70786b4c} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -620,12 +632,12 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    2840777603 PUSHINT
+    105313554 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       $DeclareDocuments$_load INLINECALLDICT
-      1 6 BLKDROP2
+      1 5 BLKDROP2
       $Autoproof$_internal_binary_DeclareDocuments INLINECALLDICT
       TRUE
     }>

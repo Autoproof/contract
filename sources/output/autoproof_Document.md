@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 1661 bytes
+BOC Size: 2079 bytes
 
 # Types
 Total Types: 13
@@ -38,8 +38,12 @@ TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
 ## DeclareDocuments
-TLB: `declare_documents#a952d383 authorship:^string authorshipHash:^string description:^string rootHash:^string data:^string tags:^string = DeclareDocuments`
-Signature: `DeclareDocuments{authorship:^string,authorshipHash:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
+TLB: `declare_documents#0646f512 authorship:^string description:^string rootHash:^string data:^string tags:^string = DeclareDocuments`
+Signature: `DeclareDocuments{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
+
+## DocumentDeclaration
+TLB: `document_declaration#8ea29cef address:address = DocumentDeclaration`
+Signature: `DocumentDeclaration{address:address}`
 
 ## GetFunds
 TLB: `get_funds#0a30a01f amount:coins = GetFunds`
@@ -49,20 +53,16 @@ Signature: `GetFunds{amount:coins}`
 TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
 Signature: `SetCost{cost:Maybe coins}`
 
-## ClaimRightsTransfer
-TLB: `claim_rights_transfer#342f3ed2 origin:address = ClaimRightsTransfer`
-Signature: `ClaimRightsTransfer{origin:address}`
-
-## ExclusiveRightsBid
-TLB: `_ author:address amount:coins = ExclusiveRightsBid`
-Signature: `ExclusiveRightsBid{author:address,amount:coins}`
+## ExclusiveRightsClaim
+TLB: `_ author:address amount:coins sentDocuments:bool viewedDocuments:bool = ExclusiveRightsClaim`
+Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,viewedDocuments:bool}`
 
 # Get Methods
 Total Get Methods: 4
 
 ## currentCost
 
-## currentBid
+## currentClaim
 
 ## author
 
@@ -93,16 +93,23 @@ Total Get Methods: 4
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
-1434: Only exclusive rights owner or author of the bid can approve
+3861: Only author of the claim can approve
 5688: Only exclusive rights owner can set the cost
+7765: Can't approve without a claim
+7782: Can't cancel without a claim
 8086: Not enough funds
 12393: Data hash can't be empty
 14555: Exclusive rights transfer is not available
 19061: Only exclusive rights owner can get funds
-22537: Only author of the bid can approve
+19102: Transfer is in progress
+19201: Can't view documents if they are not sent
 28490: Authorship can't be empty
-37377: Can't approve without a bid
-54709: Authorship hash can't be empty
+30316: Can't approve if documents are not sent
+41504: Can't update without a claim
+44565: Only the exclusive rights have access
+50544: Only exclusive rights owner or author of the claim can cancel
+53932: Can't cancel if documents were sent but not viewed
 59821: Description hash can't be empty
 61678: Only owner can get funds
+61716: Only the author of the claim have access
 62718: RootHash hash can't be empty

@@ -36,23 +36,20 @@ int __tact_slice_eq_bits(slice a, slice b) inline;
 ;; $SetCost$_load
 (slice, ((int))) $SetCost$_load(slice sc_0) inline;
 
-;; $ClaimRightsTransfer$_load
-(slice, ((slice))) $ClaimRightsTransfer$_load(slice sc_0) inline;
+;; $ExclusiveRightsClaim$_store
+builder $ExclusiveRightsClaim$_store(builder build_0, (slice, int, int, int) v) inline;
 
-;; $ExclusiveRightsBid$_store
-builder $ExclusiveRightsBid$_store(builder build_0, (slice, int) v) inline;
+;; $ExclusiveRightsClaim$_load
+(slice, ((slice, int, int, int))) $ExclusiveRightsClaim$_load(slice sc_0) inline;
 
-;; $ExclusiveRightsBid$_load
-(slice, ((slice, int))) $ExclusiveRightsBid$_load(slice sc_0) inline;
-
-;; $ExclusiveRightsBid$_not_null
-((slice, int)) $ExclusiveRightsBid$_not_null(tuple v) inline;
+;; $ExclusiveRightsClaim$_not_null
+((slice, int, int, int)) $ExclusiveRightsClaim$_not_null(tuple v) inline;
 
 ;; $Document$_store
 builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice) v) inline;
 
-;; $ExclusiveRightsBid$_as_optional
-tuple $ExclusiveRightsBid$_as_optional((slice, int) v) inline;
+;; $ExclusiveRightsClaim$_as_optional
+tuple $ExclusiveRightsClaim$_as_optional((slice, int, int, int) v) inline;
 
 ;; $Document$_load
 (slice, ((slice, int, int, tuple, slice, slice))) $Document$_load(slice sc_0) inline;
@@ -63,20 +60,26 @@ tuple $ExclusiveRightsBid$_as_optional((slice, int) v) inline;
 ;; $Context$_get_value
 _ $Context$_get_value((int, slice, int, slice) v) inline;
 
-;; $ExclusiveRightsBid$_get_author
-_ $ExclusiveRightsBid$_get_author((slice, int) v) inline;
+;; $ExclusiveRightsClaim$_get_author
+_ $ExclusiveRightsClaim$_get_author((slice, int, int, int) v) inline;
 
-;; $ExclusiveRightsBid$_get_amount
-_ $ExclusiveRightsBid$_get_amount((slice, int) v) inline;
+;; $ExclusiveRightsClaim$_get_amount
+_ $ExclusiveRightsClaim$_get_amount((slice, int, int, int) v) inline;
 
-;; $ExclusiveRightsBid$_to_tuple
-tuple $ExclusiveRightsBid$_to_tuple(((slice, int)) v) inline;
+;; $ExclusiveRightsClaim$_get_sentDocuments
+_ $ExclusiveRightsClaim$_get_sentDocuments((slice, int, int, int) v) inline;
 
-;; $ExclusiveRightsBid$_to_opt_tuple
-tuple $ExclusiveRightsBid$_to_opt_tuple(tuple v) inline;
+;; $ExclusiveRightsClaim$_get_viewedDocuments
+_ $ExclusiveRightsClaim$_get_viewedDocuments((slice, int, int, int) v) inline;
 
-;; $ExclusiveRightsBid$_to_opt_external
-tuple $ExclusiveRightsBid$_to_opt_external(tuple v) inline;
+;; $ExclusiveRightsClaim$_to_tuple
+tuple $ExclusiveRightsClaim$_to_tuple(((slice, int, int, int)) v) inline;
+
+;; $ExclusiveRightsClaim$_to_opt_tuple
+tuple $ExclusiveRightsClaim$_to_opt_tuple(tuple v) inline;
+
+;; $ExclusiveRightsClaim$_to_opt_external
+tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline;
 
 ;; $Document$init$_load
 (slice, ((slice, int, slice))) $Document$init$_load(slice sc_0) inline;
@@ -99,8 +102,8 @@ tuple $ExclusiveRightsBid$_to_opt_external(tuple v) inline;
 ;; $Document$_fun_currentCost
 ((slice, int, int, tuple, slice, slice), int) $Document$_fun_currentCost((slice, int, int, tuple, slice, slice) $self) impure inline_ref;
 
-;; $Document$_fun_currentBid
-((slice, int, int, tuple, slice, slice), tuple) $Document$_fun_currentBid((slice, int, int, tuple, slice, slice) $self) impure inline_ref;
+;; $Document$_fun_currentClaim
+((slice, int, int, tuple, slice, slice), tuple) $Document$_fun_currentClaim((slice, int, int, tuple, slice, slice) $self) impure inline_ref;
 
 ;; $Document$_fun_author
 ((slice, int, int, tuple, slice, slice), slice) $Document$_fun_author((slice, int, int, tuple, slice, slice) $self) impure inline_ref;
@@ -114,8 +117,8 @@ tuple $ExclusiveRightsBid$_to_opt_external(tuple v) inline;
 ;; $Document$_fun_reply
 ((slice, int, int, tuple, slice, slice), ()) $Document$_fun_reply((slice, int, int, tuple, slice, slice) $self, cell $body) impure inline;
 
-;; $SendParameters$_constructor_to_value_mode
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode(slice to, int value, int mode) inline;
+;; $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments
+((slice, int, int, int)) $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments(slice author, int amount, int sentDocuments, int viewedDocuments) inline;
 
-;; $ExclusiveRightsBid$_constructor_author_amount
-((slice, int)) $ExclusiveRightsBid$_constructor_author_amount(slice author, int amount) inline;
+;; $SendParameters$_constructor_to_value_mode_body
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;

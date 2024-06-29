@@ -5,13 +5,16 @@ import "@stdlib/deploy";
 
 message DeclareDocuments {
     authorship: String;
-    authorshipHash: String;
 
     description: String;
     rootHash: String;
 
     data: String;
     tags: String;
+}
+
+message DocumentDeclaration {
+    address: Address;
 }
 
 message GetFunds {
@@ -50,6 +53,8 @@ contract Autoproof with Deployable, Ownable {
             code: init.code,
             data: init.data
         });
+
+        self.reply(DocumentDeclaration{ address: myAddress() }.toCell());
     }
 
     receive(msg: GetFunds) {
@@ -69,7 +74,6 @@ contract Autoproof with Deployable, Ownable {
     // internals
     fun validateDeclaration(msg: DeclareDocuments) {
         require(msg.authorship != "", "Authorship can't be empty");
-        require(msg.authorshipHash != "", "Authorship hash can't be empty");
         require(msg.description != "", "Description hash can't be empty");
         require(msg.rootHash != "", "RootHash hash can't be empty");
         require(msg.data != "", "Data hash can't be empty");

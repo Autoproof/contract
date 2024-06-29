@@ -1,4 +1,6 @@
 {
+  "name": "mini-app-tact",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "build": "tact --config ./tact.config.json",
