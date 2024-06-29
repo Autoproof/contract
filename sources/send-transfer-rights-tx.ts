@@ -1,6 +1,5 @@
 import { TonClient, WalletContractV4, internal, Address, beginCell } from "@ton/ton";
 import { mnemonicToPrivateKey } from "@ton/crypto";
-import { storeTransferExclusiveRights } from "./output/autoproof_AutoproofContract";
 import transferRightsMessage from "./transfer-rights.json";
 
 (async () => {

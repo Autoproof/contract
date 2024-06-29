@@ -129,6 +129,7 @@ contract Document {
 
     receive(msg: SetCost) {
         require(self.exclusiveRightsOwner == sender(), "Only exclusive rights owner can set the cost");
+        require(self.currentClaim == null, "Transfer is in progress");
         self.cost = msg.cost;
         self.reply("Cost is updated".asComment());
     }
