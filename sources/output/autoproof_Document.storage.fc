@@ -1,0 +1,189 @@
+;;
+;; Type: StateInit
+;; TLB: _ code:^cell data:^cell = StateInit
+;;
+
+((cell, cell)) $StateInit$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (cell vvv'code, cell vvv'data) = __tact_tuple_destroy_2(v);
+    return (vvv'code, vvv'data);
+}
+
+;;
+;; Type: Context
+;; TLB: _ bounced:bool sender:address value:int257 raw:^slice = Context
+;;
+
+_ $Context$_get_value((int, slice, int, slice) v) inline {
+    var (v'bounced, v'sender, v'value, v'raw) = v;
+    return v'value;
+}
+
+;;
+;; Type: SendParameters
+;; TLB: _ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters
+;;
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline {
+    return (bounce, to, value, mode, body, code, data);
+}
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode(slice to, int value, int mode) inline {
+    return (true, to, value, mode, null(), null(), null());
+}
+
+;;
+;; Type: GetFunds
+;; Header: 0x0a30a01f
+;; TLB: get_funds#0a30a01f amount:coins = GetFunds
+;;
+
+(slice, ((int))) $GetFunds$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 170958879);
+    var v'amount = sc_0~load_coins();
+    return (sc_0, (v'amount));
+}
+
+;;
+;; Type: SetCost
+;; Header: 0x9121b3af
+;; TLB: set_cost#9121b3af cost:Maybe coins = SetCost
+;;
+
+(slice, ((int))) $SetCost$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2434905007);
+    var v'cost = sc_0~load_int(1) ? sc_0~load_coins() : null();
+    return (sc_0, (v'cost));
+}
+
+;;
+;; Type: ClaimRightsTransfer
+;; Header: 0x342f3ed2
+;; TLB: claim_rights_transfer#342f3ed2 origin:address = ClaimRightsTransfer
+;;
+
+(slice, ((slice))) $ClaimRightsTransfer$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 875511506);
+    var v'origin = sc_0~__tact_load_address();
+    return (sc_0, (v'origin));
+}
+
+;;
+;; Type: ExclusiveRightsBid
+;; TLB: _ author:address amount:coins = ExclusiveRightsBid
+;;
+
+builder $ExclusiveRightsBid$_store(builder build_0, (slice, int) v) inline {
+    var (v'author, v'amount) = v;
+    build_0 = __tact_store_address(build_0, v'author);
+    build_0 = build_0.store_coins(v'amount);
+    return build_0;
+}
+
+(slice, ((slice, int))) $ExclusiveRightsBid$_load(slice sc_0) inline {
+    var v'author = sc_0~__tact_load_address();
+    var v'amount = sc_0~load_coins();
+    return (sc_0, (v'author, v'amount));
+}
+
+((slice, int)) $ExclusiveRightsBid$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (slice vvv'author, int vvv'amount) = __tact_tuple_destroy_2(v);
+    return (vvv'author, vvv'amount);
+}
+
+tuple $ExclusiveRightsBid$_as_optional((slice, int) v) inline {
+    var (v'author, v'amount) = v;
+    return __tact_tuple_create_2(v'author, v'amount);
+}
+
+_ $ExclusiveRightsBid$_get_author((slice, int) v) inline {
+    var (v'author, v'amount) = v;
+    return v'author;
+}
+
+_ $ExclusiveRightsBid$_get_amount((slice, int) v) inline {
+    var (v'author, v'amount) = v;
+    return v'amount;
+}
+
+tuple $ExclusiveRightsBid$_to_tuple(((slice, int)) v) inline {
+    var (v'author, v'amount) = v;
+    return __tact_tuple_create_2(v'author, v'amount);
+}
+
+tuple $ExclusiveRightsBid$_to_opt_tuple(tuple v) inline {
+    if (null?(v)) { return null(); } 
+    return $ExclusiveRightsBid$_to_tuple($ExclusiveRightsBid$_not_null(v)); 
+}
+
+tuple $ExclusiveRightsBid$_to_opt_external(tuple v) inline {
+    var loaded = $ExclusiveRightsBid$_to_opt_tuple(v);
+    if (null?(loaded)) {
+        return null();
+    } else {
+        return (loaded);
+    }
+}
+
+((slice, int)) $ExclusiveRightsBid$_constructor_author_amount(slice author, int amount) inline {
+    return (author, amount);
+}
+
+;;
+;; Type: Document
+;;
+
+builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice) v) inline {
+    var (v'parent, v'seqno, v'cost, v'currentBid, v'author, v'exclusiveRightsOwner) = v;
+    build_0 = __tact_store_address(build_0, v'parent);
+    build_0 = build_0.store_uint(v'seqno, 256);
+    build_0 = ~ null?(v'cost) ? build_0.store_int(true, 1).store_coins(v'cost) : build_0.store_int(false, 1);
+    var build_1 = begin_cell();
+    build_1 = ~ null?(v'currentBid) ? build_1.store_int(true, 1).$ExclusiveRightsBid$_store($ExclusiveRightsBid$_not_null(v'currentBid)) : build_1.store_int(false, 1);
+    build_1 = __tact_store_address(build_1, v'author);
+    build_1 = __tact_store_address(build_1, v'exclusiveRightsOwner);
+    build_0 = store_ref(build_0, build_1.end_cell());
+    return build_0;
+}
+
+(slice, ((slice, int, int, tuple, slice, slice))) $Document$_load(slice sc_0) inline {
+    var v'parent = sc_0~__tact_load_address();
+    var v'seqno = sc_0~load_uint(256);
+    var v'cost = sc_0~load_int(1) ? sc_0~load_coins() : null();
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'currentBid = sc_1~load_int(1) ? $ExclusiveRightsBid$_as_optional(sc_1~$ExclusiveRightsBid$_load()) : null();
+    var v'author = sc_1~__tact_load_address();
+    var v'exclusiveRightsOwner = sc_1~__tact_load_address();
+    return (sc_0, (v'parent, v'seqno, v'cost, v'currentBid, v'author, v'exclusiveRightsOwner));
+}
+
+(slice, ((slice, int, slice))) $Document$init$_load(slice sc_0) inline {
+    var v'parent = sc_0~__tact_load_address();
+    var v'seqno = sc_0~load_int(257);
+    var v'author = sc_0~__tact_load_address();
+    return (sc_0, (v'parent, v'seqno, v'author));
+}
+
+(slice, int, int, tuple, slice, slice) $Document$_contract_load() impure inline_ref {
+    slice $sc = get_data().begin_parse();
+    __tact_context_sys = $sc~load_ref();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$Document$_load();
+    } else {
+        ;; Allow only workchain deployments
+        throw_unless(137, my_address().preload_uint(11) == 1024);
+        (slice parent, int seqno, slice author) = $sc~$Document$init$_load();
+        $sc.end_parse();
+        return $Document$_contract_init(parent, seqno, author);
+    }
+}
+
+() $Document$_contract_store((slice, int, int, tuple, slice, slice) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_ref(__tact_context_sys);
+    b = b.store_int(true, 1);
+    b = $Document$_store(b, v);
+    set_data(b.end_cell());
+}

@@ -1,0 +1,223 @@
+#pragma version =0.4.4;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "autoproof_Document.headers.fc";
+#include "autoproof_Document.stdlib.fc";
+#include "autoproof_Document.constants.fc";
+#include "autoproof_Document.storage.fc";
+
+;;
+;; Contract Document functions
+;;
+
+(slice, int, int, tuple, slice, slice) $Document$_contract_init(slice $parent, int $seqno, slice $author) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)) = (null(), null(), null(), null(), null(), null());
+    $self'parent = $parent;
+    $self'seqno = $seqno;
+    $self'author = $author;
+    $self'exclusiveRightsOwner = $author;
+    return ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner);
+}
+
+((slice, int, int, tuple, slice, slice), int) $Document$_fun_currentCost((slice, int, int, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)) = $self;
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), $self'cost);
+}
+
+((slice, int, int, tuple, slice, slice), tuple) $Document$_fun_currentBid((slice, int, int, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)) = $self;
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), $self'currentBid);
+}
+
+((slice, int, int, tuple, slice, slice), slice) $Document$_fun_author((slice, int, int, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)) = $self;
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), $self'author);
+}
+
+((slice, int, int, tuple, slice, slice), slice) $Document$_fun_exclusiveRightsOwner((slice, int, int, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)) = $self;
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), $self'exclusiveRightsOwner);
+}
+
+;;
+;; Receivers of a Contract Document
+;;
+
+(((slice, int, int, tuple, slice, slice)), ()) $Document$_internal_binary_SetCost((slice, int, int, tuple, slice, slice) $self, (int) $msg) impure inline {
+    var ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner) = $self;
+    var ($msg'cost) = $msg;
+    throw_unless(5688, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'exclusiveRightsOwner) ));
+    $self'cost = $msg'cost;
+    ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_reply(__gen_cell_comment_a24d893b68056ad3627081dd73aacc5ab96ab402e7b838b57661cc9f23b84206());
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), ());
+}
+
+(((slice, int, int, tuple, slice, slice)), ()) $Document$_internal_binary_ClaimRightsTransfer((slice, int, int, tuple, slice, slice) $self, (slice) $msg) impure inline {
+    var ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner) = $self;
+    var ($msg'origin) = $msg;
+    throw_unless(14555, (~ null?($self'cost)));
+    throw_unless(8086, (__tact_not_null($self'cost) >= $Context$_get_value(__tact_context_get())));
+    if ((~ null?($self'currentBid))) {
+        $global_send($SendParameters$_constructor_to_value_mode($ExclusiveRightsBid$_get_author($ExclusiveRightsBid$_not_null($self'currentBid)), $ExclusiveRightsBid$_get_amount($ExclusiveRightsBid$_not_null($self'currentBid)), 2));
+    }
+    $self'currentBid = $ExclusiveRightsBid$_as_optional($ExclusiveRightsBid$_constructor_author_amount(__tact_context_get_sender(), $Context$_get_value(__tact_context_get())));
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), ());
+}
+
+((slice, int, int, tuple, slice, slice), ()) $Document$_internal_text_2088bed5eb15098db31a789b138887229874eaf35590b3ca8550c4f300921634((slice, int, int, tuple, slice, slice) $self) impure inline {
+    var ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner) = $self;
+    throw_unless(37377, (~ null?($self'currentBid)));
+    throw_unless(22537, ( __tact_slice_eq_bits($ExclusiveRightsBid$_get_author($ExclusiveRightsBid$_not_null($self'currentBid)), __tact_context_get_sender()) ));
+    $global_send($SendParameters$_constructor_to_value_mode($self'exclusiveRightsOwner, $ExclusiveRightsBid$_get_amount($ExclusiveRightsBid$_not_null($self'currentBid)), 2));
+    $self'exclusiveRightsOwner = __tact_context_get_sender();
+    $self'cost = null();
+    $self'currentBid = null();
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), ());
+}
+
+((slice, int, int, tuple, slice, slice), ()) $Document$_internal_text_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4((slice, int, int, tuple, slice, slice) $self) impure inline {
+    var ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner) = $self;
+    throw_unless(1434, ( (( __tact_slice_eq_bits($self'exclusiveRightsOwner, __tact_context_get_sender()) )) ? (true) : (( __tact_slice_eq_bits($ExclusiveRightsBid$_get_author($ExclusiveRightsBid$_not_null($self'currentBid)), __tact_context_get_sender()) )) ));
+    $global_send($SendParameters$_constructor_to_value_mode($ExclusiveRightsBid$_get_author($ExclusiveRightsBid$_not_null($self'currentBid)), $ExclusiveRightsBid$_get_amount($ExclusiveRightsBid$_not_null($self'currentBid)), 2));
+    $self'currentBid = null();
+    ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_reply(__gen_cell_comment_454f210b63748787df840166ff508059f3b7d9bf366684e13ba2068b6d79d066());
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), ());
+}
+
+(((slice, int, int, tuple, slice, slice)), ()) $Document$_internal_binary_GetFunds((slice, int, int, tuple, slice, slice) $self, (int) $msg) impure inline {
+    var ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner) = $self;
+    var ($msg'amount) = $msg;
+    throw_unless(19061, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'exclusiveRightsOwner) ));
+    if ((__tact_my_balance() > $msg'amount)) {
+        $global_send($SendParameters$_constructor_to_value_mode(__tact_context_get_sender(), $msg'amount, 2));
+    }
+    ($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_reply(__gen_cell_comment_5bc8a6e8d9a82b5ef01360492b216c474c9393b374fa2cdc661735ea2f0a3b85());
+    return (($self'parent, $self'seqno, $self'cost, $self'currentBid, $self'author, $self'exclusiveRightsOwner), ());
+}
+
+;;
+;; Get methods of a Contract Document
+;;
+
+_ %currentCost() method_id(96567) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_currentCost();
+    return res;
+}
+
+_ %currentBid() method_id(86355) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_currentBid();
+    return $ExclusiveRightsBid$_to_opt_external(res);
+}
+
+_ %author() method_id(121830) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_author();
+    return res;
+}
+
+_ %exclusiveRightsOwner() method_id(77639) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_exclusiveRightsOwner();
+    return res;
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.deploy.lazy.v0"H >> 128,
+        "org.ton.chain.workchain.v0"H >> 128
+    );
+}
+
+_ get_abi_ipfs() method_id {
+    return "ipfs://QmfHYbQpa4SpPv3mPQRvfzLtW2DGTjWSpEVnhdLqhpay7B";
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract Document
+;;
+
+((slice, int, int, tuple, slice, slice), int) $Document$_contract_router_internal((slice, int, int, tuple, slice, slice) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive SetCost message
+    if (op == 2434905007) {
+        var msg = in_msg~$SetCost$_load();
+        self~$Document$_internal_binary_SetCost(msg);
+        return (self, true);
+    }
+    
+    ;; Receive ClaimRightsTransfer message
+    if (op == 875511506) {
+        var msg = in_msg~$ClaimRightsTransfer$_load();
+        self~$Document$_internal_binary_ClaimRightsTransfer(msg);
+        return (self, true);
+    }
+    
+    ;; Receive GetFunds message
+    if (op == 170958879) {
+        var msg = in_msg~$GetFunds$_load();
+        self~$Document$_internal_binary_GetFunds(msg);
+        return (self, true);
+    }
+    
+    ;; Text Receivers
+    if (op == 0) {
+        var text_op = slice_hash(in_msg);
+        
+        ;; Receive "approve" message
+        if (text_op == 0x2088bed5eb15098db31a789b138887229874eaf35590b3ca8550c4f300921634) {
+            self~$Document$_internal_text_2088bed5eb15098db31a789b138887229874eaf35590b3ca8550c4f300921634();
+            return (self, true);
+        }
+        
+        ;; Receive "cancel" message
+        if (text_op == 0x58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4) {
+            self~$Document$_internal_text_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4();
+            return (self, true);
+        }
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $Document$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$Document$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $Document$_contract_store(self);
+}

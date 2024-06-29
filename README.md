@@ -20,7 +20,7 @@ To send a transaction:
 ```shell
 cp sources/declaration.json.example sources/declaration.json
 # change the contents of the `sources/declaration.json`
-yarn send
+yarn send-declaration-tx
 ```
 
 ## License

@@ -1,9 +1,9 @@
 # TACT Compilation Report
-Contract: AutoproofContract
-BOC Size: 956 bytes
+Contract: Document
+BOC Size: 1661 bytes
 
 # Types
-Total Types: 10
+Total Types: 13
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -38,17 +38,35 @@ TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
 ## DeclareDocuments
-TLB: `declare_documents#b2dfba6e authorship:^string authorshipHash:^string authorAddress:address description:^string rootHash:^string data:^string tags:^string = DeclareDocuments`
-Signature: `DeclareDocuments{authorship:^string,authorshipHash:^string,authorAddress:address,description:^string,rootHash:^string,data:^string,tags:^string}`
+TLB: `declare_documents#a952d383 authorship:^string authorshipHash:^string description:^string rootHash:^string data:^string tags:^string = DeclareDocuments`
+Signature: `DeclareDocuments{authorship:^string,authorshipHash:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
 
-## TransferExclusiveRights
-TLB: `transfer_exclusive_rights#511d5af1 authorName:^string author:address clientName:^string client:address signedDocumentHash:^string declarationTransactionId:^string = TransferExclusiveRights`
-Signature: `TransferExclusiveRights{authorName:^string,author:address,clientName:^string,client:address,signedDocumentHash:^string,declarationTransactionId:^string}`
+## GetFunds
+TLB: `get_funds#0a30a01f amount:coins = GetFunds`
+Signature: `GetFunds{amount:coins}`
+
+## SetCost
+TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
+Signature: `SetCost{cost:Maybe coins}`
+
+## ClaimRightsTransfer
+TLB: `claim_rights_transfer#342f3ed2 origin:address = ClaimRightsTransfer`
+Signature: `ClaimRightsTransfer{origin:address}`
+
+## ExclusiveRightsBid
+TLB: `_ author:address amount:coins = ExclusiveRightsBid`
+Signature: `ExclusiveRightsBid{author:address,amount:coins}`
 
 # Get Methods
-Total Get Methods: 1
+Total Get Methods: 4
 
-## owner
+## currentCost
+
+## currentBid
+
+## author
+
+## exclusiveRightsOwner
 
 # Error Codes
 2: Stack underflow
@@ -75,3 +93,16 @@ Total Get Methods: 1
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
+1434: Only exclusive rights owner or author of the bid can approve
+5688: Only exclusive rights owner can set the cost
+8086: Not enough funds
+12393: Data hash can't be empty
+14555: Exclusive rights transfer is not available
+19061: Only exclusive rights owner can get funds
+22537: Only author of the bid can approve
+28490: Authorship can't be empty
+37377: Can't approve without a bid
+54709: Authorship hash can't be empty
+59821: Description hash can't be empty
+61678: Only owner can get funds
+62718: RootHash hash can't be empty

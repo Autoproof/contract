@@ -31,8 +31,6 @@ import declaration from "./declaration.json";
       $$type: "DeclareDocuments",
       authorship: declaration.authorship,
       authorshipHash: declaration.authorshipHash,
-      authorAddress: Address.parse(declaration.authorAddress),
-
       description: declaration.description,
       rootHash: declaration.rootHash,
       data: declaration.data,
