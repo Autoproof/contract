@@ -3,14 +3,16 @@ import "@stdlib/deploy";
 
 // Contract for autoproof document claim mechanism.
 
-message DeclareDocuments {
+struct DocumentData {
     authorship: String;
-
     description: String;
     rootHash: String;
-
     data: String;
     tags: String;
+}
+
+message DeclareDocument {
+    document: DocumentData;
 }
 
 message DocumentDeclaration {
@@ -33,23 +35,20 @@ contract Autoproof with Deployable, Ownable {
         return self.documentsNumber;
     }
 
-    get fun documentAddress(seqno: Int, author: Address): Address {
-        return contractAddress(initOf Document(myAddress(), seqno, author));
-    }
+    // get fun documentAddress(seqno: Int, author: Address): Address {
+    //     return contractAddress(initOf Document(myAddress(), seqno, author));
+    // }
 
-    receive(msg: DeclareDocuments) {
-        require(context().value > ton("0.02"), "Not enough funds");
-
-        self.validateDeclaration(msg);
+    receive(msg: DeclareDocument) {
+        self.validateDeclaration(msg.document);
 
         self.documentsNumber = self.documentsNumber + 1;
 
-        let init: StateInit = initOf Document(myAddress(), self.documentsNumber, sender());
+        let init: StateInit = initOf Document(myAddress(), self.documentsNumber, sender(), msg.document);
         send(SendParameters{
             to: contractAddress(init),
-            body: "Init document".asComment(),
-            value: ton("0.01"),
-            mode: SendIgnoreErrors,
+            body: "Declared document".asComment(),
+            value: ton("0.1"),
             code: init.code,
             data: init.data
         });
@@ -70,11 +69,12 @@ contract Autoproof with Deployable, Ownable {
     }
 
     // internals
-    fun validateDeclaration(msg: DeclareDocuments) {
-        require(msg.authorship != "", "Authorship can't be empty");
-        require(msg.description != "", "Description hash can't be empty");
-        require(msg.rootHash != "", "RootHash hash can't be empty");
-        require(msg.data != "", "Data hash can't be empty");
+    fun validateDeclaration(document: DocumentData) {
+        require(document.authorship != "", "Authorship can't be empty");
+        require(document.description != "", "Description hash can't be empty");
+        require(document.rootHash != "", "RootHash hash can't be empty");
+        require(document.data != "", "Data can't be empty");
+        require(document.tags != "", "Tags can't be empty");
     }
 }
 
@@ -100,13 +100,17 @@ contract Document {
     author: Address;
     exclusiveRightsOwner: Address;
 
+    document: DocumentData;
+
     // author is owner when created
-    init(parent: Address, seqno: Int, author: Address) {
+    init(parent: Address, seqno: Int, author: Address, documentData: DocumentData) {
         self.parent = parent;
         self.seqno = seqno;
 
         self.author = author;
         self.exclusiveRightsOwner = author;
+
+        self.document = documentData;
     }
 
     get fun currentCost(): Int? {
@@ -123,6 +127,10 @@ contract Document {
 
     get fun exclusiveRightsOwner(): Address {
         return self.exclusiveRightsOwner;
+    }
+
+    get fun documentData(): DocumentData {
+        return self.document;
     }
 
     // returns 10% Autoproof commission

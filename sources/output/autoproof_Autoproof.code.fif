@@ -16,14 +16,15 @@ PROGRAM{
   DECLPROC $Deploy$_load
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
-  DECLPROC $DeclareDocuments$_load
+  DECLPROC $DocumentData$_store
+  DECLPROC $DocumentData$_load
+  DECLPROC $DeclareDocument$_load
   DECLPROC $DocumentDeclaration$_store
   DECLPROC $DocumentDeclaration$_store_cell
   DECLPROC $GetFunds$_load
   DECLPROC $Autoproof$_store
   DECLPROC $Autoproof$_load
   DECLPROC $StateInit$_not_null
-  DECLPROC $Context$_get_value
   DECLPROC $Document$init$_store
   DECLPROC $Autoproof$_contract_init
   DECLPROC $Autoproof$_contract_load
@@ -31,23 +32,21 @@ PROGRAM{
   DECLPROC $global_contractAddress
   DECLPROC $global_send
   DECLPROC $Autoproof$_fun_documentsNumber
-  DECLPROC $Document$_init_child
-  DECLPROC $Autoproof$_fun_documentAddress
   DECLPROC $Autoproof$_fun_validateDeclaration
   DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
   DECLPROC $Autoproof$_fun_forward
   DECLPROC $Autoproof$_fun_reply
   DECLPROC $Autoproof$_fun_notify
   DECLPROC $Autoproof$_fun_owner
-  DECLPROC $SendParameters$_constructor_to_body_value_mode_code_data
+  DECLPROC $Document$_init_child
+  DECLPROC $SendParameters$_constructor_to_body_value_code_data
   DECLPROC $DocumentDeclaration$_constructor_address
   DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $DeployOk$_constructor_queryId
-  DECLPROC $Autoproof$_internal_binary_DeclareDocuments
+  DECLPROC $Autoproof$_internal_binary_DeclareDocument
   DECLPROC $Autoproof$_internal_binary_GetFunds
   DECLPROC $Autoproof$_internal_binary_Deploy
   130065 DECLMETHOD %documentsNumber
-  76627 DECLMETHOD %documentAddress
   83229 DECLMETHOD %owner
   113617 DECLMETHOD supported_interfaces
   121275 DECLMETHOD get_abi_ipfs
@@ -179,12 +178,43 @@ PROGRAM{
     $DeployOk$_store INLINECALLDICT
     ENDC
   }>
-  $DeclareDocuments$_load PROCINLINE:<{
-    32 LDU
+  $DocumentData$_store PROCINLINE:<{
+    NEWC
+    s0 s5 XCHG2
+    STSLICER
+    ENDC
+    s0 s5 XCHG2
+    STREF
+    NEWC
+    s0 s3 XCHG2
+    STSLICER
+    ENDC
+    ROT
+    STREF
+    NEWC
+    ROT
+    STSLICER
+    ENDC
     SWAP
-    105313554 PUSHINT
-    EQUAL
-    129 THROWIFNOT
+    STREF
+    NEWC
+    NEWC
+    s0 s4 XCHG2
+    STSLICER
+    ENDC
+    s0 s3 XCHG2
+    STREF
+    NEWC
+    ROT
+    STSLICER
+    ENDC
+    SWAP
+    STREF
+    ENDC
+    SWAP
+    STREF
+  }>
+  $DocumentData$_load PROCINLINE:<{
     LDREF
     SWAP
     CTOS
@@ -210,6 +240,14 @@ PROGRAM{
     s2 s5 XCHG
     s2 s4 XCHG
     s2 s3 XCHG
+  }>
+  $DeclareDocument$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    1278208621 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    $DocumentData$_load INLINECALLDICT
   }>
   $DocumentDeclaration$_store PROCINLINE:<{
     2393021679 PUSHINT
@@ -250,18 +288,20 @@ PROGRAM{
     128 THROWIF
     2 UNTUPLE
   }>
-  $Context$_get_value PROCINLINE:<{
-    s1 s3 XCHG
-    3 BLKDROP
-  }>
   $Document$init$_store PROCINLINE:<{
-    2SWAP
+    s8 s7 XCHG2
     __tact_store_address INLINECALLDICT
-    s1 s2 XCHG
+    s1 s5 XCHG
     257 PUSHINT
     STIX
-    SWAP
+    s0 s3 XCHG2
     __tact_store_address INLINECALLDICT
+    NEWC
+    s4 s6 s5 XCHG3
+    $DocumentData$_store INLINECALLDICT
+    ENDC
+    SWAP
+    STREF
   }>
   $Autoproof$_contract_init PROCREF:<{
     0 PUSHINT
@@ -411,61 +451,30 @@ PROGRAM{
   $Autoproof$_fun_documentsNumber PROCREF:<{
     DUP
   }>
-  $Document$_init_child PROCREF:<{
-    s0 s3 XCHG
-    CTOS
-    LDDICT
-    DROP
-    NEWDICT
-    SWAP
-    27038 PUSHINT
-    __tact_dict_get_code INLINECALLDICT
-    SWAP
-    27038 PUSHINT
-    s2 PUSH
-    __tact_dict_set_code INLINECALLDICT
-    NEWC
-    SWAP
-    NEWC
-    STDICT
-    ENDC
-    SWAP
-    STREF
-    FALSE
-    SWAP
-    1 STI
-    3 -ROLL
-    s0 s4 XCHG
-    $Document$init$_store INLINECALLDICT
-    ENDC
-  }>
-  $Autoproof$_fun_documentAddress PROCREF:<{
-    __tact_context_sys GETGLOB
-    MYADDR
-    2SWAP
-    $Document$_init_child INLINECALLDICT
-    $global_contractAddress INLINECALLDICT
-  }>
   $Autoproof$_fun_validateDeclaration PROCREF:<{
-    DROP
     28490 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
-    s0 s5 XCHG2
+    s0 s6 XCHG2
     __tact_slice_neq INLINECALLDICT
-    s1 s4 XCHG
+    s1 s5 XCHG
     THROWANYIFNOT
     59821 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
-    s0 s3 XCHG2
+    s0 s4 XCHG2
     __tact_slice_neq INLINECALLDICT
-    s1 s2 XCHG
+    s1 s3 XCHG
     THROWANYIFNOT
     62718 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
     ROT
     __tact_slice_neq INLINECALLDICT
     THROWANYIFNOT
-    12393 PUSHINT
+    61064 PUSHINT
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    ROT
+    __tact_slice_neq INLINECALLDICT
+    THROWANYIFNOT
+    3545 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
     ROT
     __tact_slice_neq INLINECALLDICT
@@ -512,10 +521,40 @@ PROGRAM{
   $Autoproof$_fun_owner PROCREF:<{
     OVER
   }>
-  $SendParameters$_constructor_to_body_value_mode_code_data PROCINLINE:<{
+  $Document$_init_child PROCREF:<{
+    s0 s8 XCHG
+    CTOS
+    LDDICT
+    DROP
+    NEWDICT
+    SWAP
+    27038 PUSHINT
+    __tact_dict_get_code INLINECALLDICT
+    SWAP
+    27038 PUSHINT
+    s2 PUSH
+    __tact_dict_set_code INLINECALLDICT
+    NEWC
+    SWAP
+    NEWC
+    STDICT
+    ENDC
+    SWAP
+    STREF
+    FALSE
+    SWAP
+    1 STI
+    8 -ROLL
+    s0 s9 XCHG
+    $Document$init$_store INLINECALLDICT
+    ENDC
+  }>
+  $SendParameters$_constructor_to_body_value_code_data PROCINLINE:<{
     TRUE
-    s0 s6 XCHG
-    s5 s5 s5 XCHG3
+    s0 s5 XCHG
+    s0 s4 XCHG
+    0 PUSHINT
+    s1 s3 s3 XCHG3
   }>
   $DocumentDeclaration$_constructor_address PROCINLINE:<{
   }>
@@ -527,29 +566,30 @@ PROGRAM{
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
-  $Autoproof$_internal_binary_DeclareDocuments PROCINLINE:<{
-    8086 PUSHINT
-    __tact_context_get INLINECALLDICT
-    $Context$_get_value INLINECALLDICT
-    20000000 PUSHINT
-    GREATER
-    THROWANYIFNOT
+  $Autoproof$_internal_binary_DeclareDocument PROCINLINE:<{
+    s4 s3 s2 PUSH3
+    s4 s3 PUSH2
+    s6 s11 XCHG
+    s5 s10 XCHG
     $Autoproof$_fun_validateDeclaration INLINECALLDICT
     INC
     __tact_context_sys GETGLOB
     MYADDR
     __tact_context_get_sender INLINECALLDICT
-    s3 s(-1) PUXC
+    s7 s6 s0 XCHG3
+    s3 PUSH
+    s5 s6 XCHG2
+    s3 s4 XCHG
+    s0 s1 s3 XCHG3
+    s10 s9 XCHG2
     $Document$_init_child INLINECALLDICT
     2DUP
     $global_contractAddress INLINECALLDICT
-    B{b5ee9c7241010101001300002200000000496e697420646f63756d656e74e01ad0fd} B>boc PUSHREF
-    s1 s3 XCHG
-    10000000 PUSHINT
+    B{b5ee9c7241010101001700002a000000004465636c6172656420646f63756d656e7478f09399} B>boc PUSHREF
     2SWAP
-    2 PUSHINT
-    s0 s2 XCHG
-    $SendParameters$_constructor_to_body_value_mode_code_data INLINECALLDICT
+    100000000 PUSHINT
+    -ROT
+    $SendParameters$_constructor_to_body_value_code_data INLINECALLDICT
     $global_send INLINECALLDICT
     MYADDR
     $DocumentDeclaration$_constructor_address INLINECALLDICT
@@ -584,13 +624,6 @@ PROGRAM{
     $Autoproof$_fun_documentsNumber INLINECALLDICT
     2 1 BLKDROP2
   }>
-  %documentAddress PROC:<{
-    __tact_verify_address INLINECALLDICT
-    $Autoproof$_contract_load INLINECALLDICT
-    2SWAP
-    $Autoproof$_fun_documentAddress INLINECALLDICT
-    2 1 BLKDROP2
-  }>
   %owner PROC:<{
     $Autoproof$_contract_load INLINECALLDICT
     $Autoproof$_fun_owner INLINECALLDICT
@@ -604,7 +637,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d555a72707068647973476778794168795650655232766b346847433133704777635148695777707a7174554c} PUSHSLICE
+    x{697066733a2f2f516d52524e5a476b7144424a644e535875526a67635567373472344e624b52336d686671384e4a70754b58337439} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -628,13 +661,13 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    105313554 PUSHINT
+    1278208621 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
-      $DeclareDocuments$_load INLINECALLDICT
+      $DeclareDocument$_load INLINECALLDICT
       1 5 BLKDROP2
-      $Autoproof$_internal_binary_DeclareDocuments INLINECALLDICT
+      $Autoproof$_internal_binary_DeclareDocument INLINECALLDICT
       TRUE
     }>
     DUP

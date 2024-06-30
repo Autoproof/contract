@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Autoproof
-BOC Size: 1378 bytes
+BOC Size: 1331 bytes
 
 # Types
-Total Types: 13
+Total Types: 14
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -37,9 +37,13 @@ Signature: `DeployOk{queryId:uint64}`
 TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
-## DeclareDocuments
-TLB: `declare_documents#0646f512 authorship:^string description:^string rootHash:^string data:^string tags:^string = DeclareDocuments`
-Signature: `DeclareDocuments{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
+## DocumentData
+TLB: `_ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData`
+Signature: `DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
+
+## DeclareDocument
+TLB: `declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument`
+Signature: `DeclareDocument{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}}`
 
 ## DocumentDeclaration
 TLB: `document_declaration#8ea29cef address:address = DocumentDeclaration`
@@ -58,13 +62,9 @@ TLB: `_ author:address amount:coins sentDocuments:bool viewedDocuments:bool = Ex
 Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,viewedDocuments:bool}`
 
 # Get Methods
-Total Get Methods: 3
+Total Get Methods: 2
 
 ## documentsNumber
-
-## documentAddress
-Argument: seqno
-Argument: author
 
 ## owner
 
@@ -93,12 +93,12 @@ Argument: author
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
+3545: Tags can't be empty
 3861: Only author of the claim can approve
 5688: Only exclusive rights owner can set the cost
 7765: Can't approve without a claim
 7782: Can't cancel without a claim
 8086: Not enough funds
-12393: Data hash can't be empty
 14555: Exclusive rights transfer is not available
 19061: Only exclusive rights owner can get funds
 19102: Transfer is in progress
@@ -113,6 +113,7 @@ Argument: author
 50544: Only exclusive rights owner or author of the claim can cancel
 53932: Can't cancel if documents were sent but not viewed
 59821: Description hash can't be empty
+61064: Data can't be empty
 61678: Only owner can get funds
 61716: Only the author of the claim have access
 62718: RootHash hash can't be empty

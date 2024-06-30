@@ -22,18 +22,14 @@
     return (($self'owner, $self'documentsNumber), $self'documentsNumber);
 }
 
-((slice, int), slice) $Autoproof$_fun_documentAddress((slice, int) $self, int $seqno, slice $author) impure inline_ref {
+((slice, int), ()) $Autoproof$_fun_validateDeclaration((slice, int) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref {
     var (($self'owner, $self'documentsNumber)) = $self;
-    return (($self'owner, $self'documentsNumber), $global_contractAddress($Document$_init_child(__tact_context_sys, my_address(), $seqno, $author)));
-}
-
-((slice, int), ()) $Autoproof$_fun_validateDeclaration((slice, int) $self, (slice, slice, slice, slice, slice) $msg) impure inline_ref {
-    var (($self'owner, $self'documentsNumber)) = $self;
-    var (($msg'authorship, $msg'description, $msg'rootHash, $msg'data, $msg'tags)) = $msg;
-    throw_unless(28490, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'authorship));
-    throw_unless(59821, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'description));
-    throw_unless(62718, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'rootHash));
-    throw_unless(12393, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'data));
+    var (($document'authorship, $document'description, $document'rootHash, $document'data, $document'tags)) = $document;
+    throw_unless(28490, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'authorship));
+    throw_unless(59821, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'description));
+    throw_unless(62718, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'rootHash));
+    throw_unless(61064, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'data));
+    throw_unless(3545, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'tags));
     return (($self'owner, $self'documentsNumber), ());
 }
 
@@ -46,14 +42,13 @@
 ;; Receivers of a Contract Autoproof
 ;;
 
-(((slice, int)), ()) $Autoproof$_internal_binary_DeclareDocuments((slice, int) $self, (slice, slice, slice, slice, slice) $msg) impure inline {
+(((slice, int)), ()) $Autoproof$_internal_binary_DeclareDocument((slice, int) $self, ((slice, slice, slice, slice, slice)) $msg) impure inline {
     var ($self'owner, $self'documentsNumber) = $self;
-    var ($msg'authorship, $msg'description, $msg'rootHash, $msg'data, $msg'tags) = $msg;
-    throw_unless(8086, ($Context$_get_value(__tact_context_get()) > 20000000));
-    ($self'owner, $self'documentsNumber)~$Autoproof$_fun_validateDeclaration($DeclareDocuments$_tensor_cast(($msg'authorship, $msg'description, $msg'rootHash, $msg'data, $msg'tags)));
+    var (($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags)) = $msg;
+    ($self'owner, $self'documentsNumber)~$Autoproof$_fun_validateDeclaration($DocumentData$_tensor_cast(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags)));
     $self'documentsNumber = ($self'documentsNumber + 1);
-    var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender());
-    $global_send($SendParameters$_constructor_to_body_value_mode_code_data($global_contractAddress(($init'code, $init'data)), __gen_cell_comment_2460de719c9e898d52925d8df01687b5a29499284125bc717627271c99ad37d5(), 10000000, 2, $init'code, $init'data));
+    var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender(), ($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags));
+    $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), __gen_cell_comment_d3cfddc05aee05389ca9b8037aaf6348141ca0c22ab77ccbe24619e21f64d35a(), 100000000, $init'code, $init'data));
     ($self'owner, $self'documentsNumber)~$Autoproof$_fun_reply($DocumentDeclaration$_store_cell($DocumentDeclaration$_constructor_address(my_address())));
     return (($self'owner, $self'documentsNumber), ());
 }
@@ -84,14 +79,6 @@ _ %documentsNumber() method_id(130065) {
     return res;
 }
 
-_ %documentAddress(int $$seqno, slice $$author) method_id(76627) {
-    int $seqno = $$seqno;
-    slice $author = __tact_verify_address($$author);
-    var self = $Autoproof$_contract_load();
-    var res = self~$Autoproof$_fun_documentAddress($seqno, $author);
-    return res;
-}
-
 _ %owner() method_id(83229) {
     var self = $Autoproof$_contract_load();
     var res = self~$Autoproof$_fun_owner();
@@ -109,7 +96,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmUZrpphdysGgxyAhyVPeR2vk4hGC13pGwcQHiWwpzqtUL";
+    return "ipfs://QmRRNZGkqDBJdNSXuRjgcUg74r4NbKR3mhfq8NJpuKX3t9";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -133,10 +120,10 @@ _ lazy_deployment_completed() method_id {
     }
     
     
-    ;; Receive DeclareDocuments message
-    if (op == 105313554) {
-        var msg = in_msg~$DeclareDocuments$_load();
-        self~$Autoproof$_internal_binary_DeclareDocuments(msg);
+    ;; Receive DeclareDocument message
+    if (op == 1278208621) {
+        var msg = in_msg~$DeclareDocument$_load();
+        self~$Autoproof$_internal_binary_DeclareDocument(msg);
         return (self, true);
     }
     

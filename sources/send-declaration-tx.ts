@@ -1,6 +1,6 @@
 import { TonClient, WalletContractV4, internal, Address, beginCell } from "@ton/ton";
 import { mnemonicToPrivateKey } from "@ton/crypto";
-import { storeDeclareDocuments } from "./output/autoproof_Autoproof";
+import { storeDeclareDocument } from "./output/autoproof_Autoproof";
 import declaration from "./declaration.json";
 
 (async () => {
@@ -21,13 +21,16 @@ import declaration from "./declaration.json";
 
   // Create a bodyCell
   let bodyCell = beginCell();
-  storeDeclareDocuments({
-      $$type: "DeclareDocuments",
-      authorship: declaration.authorship,
-      description: declaration.description,
-      rootHash: declaration.rootHash,
-      data: declaration.data,
-      tags: declaration.tags
+  storeDeclareDocument({
+      $$type: "DeclareDocument",
+      document: {
+        $$type: "DocumentData",
+        authorship: declaration.authorship,
+        description: declaration.description,
+        rootHash: declaration.rootHash,
+        data: declaration.data,
+        tags: declaration.tags
+      }
   })(bodyCell);
 
   // Create a transfer
@@ -36,7 +39,7 @@ import declaration from "./declaration.json";
     seqno,
     secretKey: keyPair.secretKey,
     messages: [internal({
-      value: '0.1',
+      value: '0.15',
       to: process.env.DEPLOYED_AUTOPROOF_ADDRESS ?? "",
       body: bodyCell.endCell()
     })]

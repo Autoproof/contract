@@ -415,8 +415,8 @@ function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
     }
 }
 
-export type DeclareDocuments = {
-    $$type: 'DeclareDocuments';
+export type DocumentData = {
+    $$type: 'DocumentData';
     authorship: string;
     description: string;
     rootHash: string;
@@ -424,10 +424,9 @@ export type DeclareDocuments = {
     tags: string;
 }
 
-export function storeDeclareDocuments(src: DeclareDocuments) {
+export function storeDocumentData(src: DocumentData) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(105313554, 32);
         b_0.storeStringRefTail(src.authorship);
         b_0.storeStringRefTail(src.description);
         b_0.storeStringRefTail(src.rootHash);
@@ -438,28 +437,27 @@ export function storeDeclareDocuments(src: DeclareDocuments) {
     };
 }
 
-export function loadDeclareDocuments(slice: Slice) {
+export function loadDocumentData(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 105313554) { throw Error('Invalid prefix'); }
     let _authorship = sc_0.loadStringRefTail();
     let _description = sc_0.loadStringRefTail();
     let _rootHash = sc_0.loadStringRefTail();
     let sc_1 = sc_0.loadRef().beginParse();
     let _data = sc_1.loadStringRefTail();
     let _tags = sc_1.loadStringRefTail();
-    return { $$type: 'DeclareDocuments' as const, authorship: _authorship, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
+    return { $$type: 'DocumentData' as const, authorship: _authorship, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
 }
 
-function loadTupleDeclareDocuments(source: TupleReader) {
+function loadTupleDocumentData(source: TupleReader) {
     let _authorship = source.readString();
     let _description = source.readString();
     let _rootHash = source.readString();
     let _data = source.readString();
     let _tags = source.readString();
-    return { $$type: 'DeclareDocuments' as const, authorship: _authorship, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
+    return { $$type: 'DocumentData' as const, authorship: _authorship, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
 }
 
-function storeTupleDeclareDocuments(source: DeclareDocuments) {
+function storeTupleDocumentData(source: DocumentData) {
     let builder = new TupleBuilder();
     builder.writeString(source.authorship);
     builder.writeString(source.description);
@@ -469,13 +467,55 @@ function storeTupleDeclareDocuments(source: DeclareDocuments) {
     return builder.build();
 }
 
-function dictValueParserDeclareDocuments(): DictionaryValue<DeclareDocuments> {
+function dictValueParserDocumentData(): DictionaryValue<DocumentData> {
     return {
         serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeDeclareDocuments(src)).endCell());
+            builder.storeRef(beginCell().store(storeDocumentData(src)).endCell());
         },
         parse: (src) => {
-            return loadDeclareDocuments(src.loadRef().beginParse());
+            return loadDocumentData(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type DeclareDocument = {
+    $$type: 'DeclareDocument';
+    document: DocumentData;
+}
+
+export function storeDeclareDocument(src: DeclareDocument) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(1278208621, 32);
+        b_0.store(storeDocumentData(src.document));
+    };
+}
+
+export function loadDeclareDocument(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 1278208621) { throw Error('Invalid prefix'); }
+    let _document = loadDocumentData(sc_0);
+    return { $$type: 'DeclareDocument' as const, document: _document };
+}
+
+function loadTupleDeclareDocument(source: TupleReader) {
+    const _document = loadTupleDocumentData(source.readTuple());
+    return { $$type: 'DeclareDocument' as const, document: _document };
+}
+
+function storeTupleDeclareDocument(source: DeclareDocument) {
+    let builder = new TupleBuilder();
+    builder.writeTuple(storeTupleDocumentData(source.document));
+    return builder.build();
+}
+
+function dictValueParserDeclareDocument(): DictionaryValue<DeclareDocument> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeDeclareDocument(src)).endCell());
+        },
+        parse: (src) => {
+            return loadDeclareDocument(src.loadRef().beginParse());
         }
     }
 }
@@ -672,8 +712,8 @@ function initAutoproof_init_args(src: Autoproof_init_args) {
 }
 
 async function Autoproof_init() {
-    const __code = Cell.fromBase64('te6ccgECHwEABVYAART/APSkE/S88sgLAQIBYgIDAtTQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxa2zzy4ILI+EMBzH8BygBZWSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsv/ye1UHAQCASAPEAPCAZIwf+BwIddJwh+VMCDXCx/eIIIQBkb1ErqOrzDTHwGCEAZG9RK68uCB1AHQAdQB0AHUAdAB1AHQ1AHQAdQw0BAlECQQI2wV2zx/4CCCEAowoB+64wKCEJRqmLa64wIwcAUGBwTegR+W+EFvJBNfA4IJMS0AvPL02zyk+EP4KPhCUjDbPFxwWchwAcsBcwHLAXABywASzMzJ+QDIcgHLAXABywASygfL/8nQINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiIgTggiYloBacgJ/BkVVCBQJCgJsMNMfAYIQCjCgH7ry4IH6AAExggDw7vhCJMcF8vSBH5b4J28QIrzy9PhCcogQI39VMG1t2zx/Cw0BTtMfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8fwwAhjCBb0qLCFAFAfkBAfkBvRTy9IIA6a2LCFADAfkBAfkBvRLy9IIA9P6LCFgB+QEB+QG98vSBMGmLCFgB+QEB+QG98vQAIgAAAABJbml0IGRvY3VtZW50AmzbPPgoyAGCEI6inO9Yyx8BINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WyfhCAX9t2zwNDAA2AAAAAFNlbmQgZnVuZHMgdG8gdGhlIG93bmVyATptbSJus5lbIG7y0IBvIgGRMuIQJHADBIBCUCPbPA0ByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsADgCYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzAIBIBESAgEgFhcCS7q1Mg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCI2zxa2zxsIYHBMCEbhR3bPNs8bCGBwVAZD4Q/goWts8cFnIcAHLAXMBywFwAcsAEszMyfkAyHIBywFwAcsAEsoHy//J0CDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgUAOQD0PQEMG0BgWmeAYAQ9A9vofLghwGBaZ4iAoAQ9BfIAcj0AMkBzHABygBVIARaINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEoEBAc8AASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFskAAiEAubu9GCcFzsPV0srnsehOw51kqFG2aCcJ3WNS0rZHyzItOvLf3xYjmCcCBVwBuAZ2OUzlg6rkclssOCcJ2XTlqzTstzOg6WbZRm6KSCcEDOdWnnFfnSULAdYW4mR7KAIBIBgZAgEgGhsCEbeCO2ebZ42EMBwdABGwr7tRNDSAAGAAdbJu40NWlwZnM6Ly9RbVVacnBwaGR5c0dneHlBaHlWUGVSMnZrNGhHQzEzcEd3Y1FIaVd3cHpxdFVMggAYDtRNDUAfhj0gABjiX6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdP/WWwS4DD4KNcLCoMJuvLgids8HgACIAAIcPhCAQ==');
-    const __system = Cell.fromBase64('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');
+    const __code = Cell.fromBase64('te6ccgECHQEABScAART/APSkE/S88sgLAQIBYgIDAtTQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxa2zzy4ILI+EMBzH8BygBZWSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsv/ye1UGgQCASAREgPCAZIwf+BwIddJwh+VMCDXCx/eIIIQTC/qbbqOrzDTHwGCEEwv6m268uCB1AHQAdQB0AHUAdAB1AHQ1AHQAdQw0BAlECQQI2wV2zx/4CCCEAowoB+64wKCEJRqmLa64wIwcAUGBwTgVHQyU0MQaxBa2zyk+EP4KPhCR2AjUFYQNEATUKnbPFxwWchwAcsBcwHLAXABywASzMzJ+QDIcgHLAXABywASygfL/8nQINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiIhaghAF9eEAWX8FBHBBMwgJCgsCbDDTHwGCEAowoB+68uCB+gABMYIA8O74QiTHBfL0gR+W+CdvECK88vT4QnKIECN/VTBtbds8fw0PAU7THwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH8OAKSBb0qLCFAGAfkBAfkBvRXy9IIA6a2LCFAEAfkBAfkBvRPy9IIA9P6LCFgB+QEB+QG98vSCAO6IiwhYAfkBAfkBvfL0gQ3ZiwhYAfkBAfkBvfL0AVoI0PQEMG0BgWmeAYAQ9A9vofLghwGBaZ4iAoAQ9BfIAcj0AMkBzHABygBVcAkMACoAAAAARGVjbGFyZWQgZG9jdW1lbnQCbNs8+CjIAYIQjqKc71jLHwEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbJ+EIBf23bPA8OAPJQhyDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFhWBAQHPAFADINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WyERlyFAFzxbJUAXMyFADzxbJWMzIWM8WyQHMyMhQBM8WyVADzMhYzxbJAczJAczJAczJADYAAAAAU2VuZCBmdW5kcyB0byB0aGUgb3duZXIBOm1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8DwHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wAQAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+KO7Z5tnjYQwaEwIBIBQVAAIhALm7vRgnBc7D1dLK57HoTsOdZKhRtmgnCd1jUtK2R8syLTry398WI5gnAgVcAbgGdjlM5YOq5HJbLDgnCdl05as07LczoOlm2UZuikgnBAznVp5xX50lCwHWFuJkeygCASAWFwIBIBgZAhG3gjtnm2eNhDAaGwARsK+7UTQ0gABgAHWybuNDVpcGZzOi8vUW1SUk5aR2txREJKZE5TWHVSamdjVWc3NHI0TmJLUjNtaGZxOE5KcHVLWDN0OYIAGA7UTQ1AH4Y9IAAY4l+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHT/1lsEuAw+CjXCwqDCbry4InbPBwAAiAACHD4QgE=');
+    const __system = Cell.fromBase64('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');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -707,12 +747,12 @@ const Autoproof_errors: { [key: number]: { message: string } } = {
     135: { message: `Code of a contract was not found` },
     136: { message: `Invalid address` },
     137: { message: `Masterchain support is not enabled for this contract` },
+    3545: { message: `Tags can't be empty` },
     3861: { message: `Only author of the claim can approve` },
     5688: { message: `Only exclusive rights owner can set the cost` },
     7765: { message: `Can't approve without a claim` },
     7782: { message: `Can't cancel without a claim` },
     8086: { message: `Not enough funds` },
-    12393: { message: `Data hash can't be empty` },
     14555: { message: `Exclusive rights transfer is not available` },
     19061: { message: `Only exclusive rights owner can get funds` },
     19102: { message: `Transfer is in progress` },
@@ -727,6 +767,7 @@ const Autoproof_errors: { [key: number]: { message: string } } = {
     50544: { message: `Only exclusive rights owner or author of the claim can cancel` },
     53932: { message: `Can't cancel if documents were sent but not viewed` },
     59821: { message: `Description hash can't be empty` },
+    61064: { message: `Data can't be empty` },
     61678: { message: `Only owner can get funds` },
     61716: { message: `Only the author of the claim have access` },
     62718: { message: `RootHash hash can't be empty` },
@@ -741,7 +782,8 @@ const Autoproof_types: ABIType[] = [
     {"name":"Deploy","header":2490013878,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"DeployOk","header":2952335191,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"DeclareDocuments","header":105313554,"fields":[{"name":"authorship","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"rootHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"data","type":{"kind":"simple","type":"string","optional":false}},{"name":"tags","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"DocumentData","header":null,"fields":[{"name":"authorship","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"rootHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"data","type":{"kind":"simple","type":"string","optional":false}},{"name":"tags","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"DeclareDocument","header":1278208621,"fields":[{"name":"document","type":{"kind":"simple","type":"DocumentData","optional":false}}]},
     {"name":"DocumentDeclaration","header":2393021679,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"GetFunds","header":170958879,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"SetCost","header":2434905007,"fields":[{"name":"cost","type":{"kind":"simple","type":"uint","optional":true,"format":"coins"}}]},
@@ -750,12 +792,11 @@ const Autoproof_types: ABIType[] = [
 
 const Autoproof_getters: ABIGetter[] = [
     {"name":"documentsNumber","arguments":[],"returnType":{"kind":"simple","type":"int","optional":false,"format":257}},
-    {"name":"documentAddress","arguments":[{"name":"seqno","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"author","type":{"kind":"simple","type":"address","optional":false}}],"returnType":{"kind":"simple","type":"address","optional":false}},
     {"name":"owner","arguments":[],"returnType":{"kind":"simple","type":"address","optional":false}},
 ]
 
 const Autoproof_receivers: ABIReceiver[] = [
-    {"receiver":"internal","message":{"kind":"typed","type":"DeclareDocuments"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"DeclareDocument"}},
     {"receiver":"internal","message":{"kind":"typed","type":"GetFunds"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Deploy"}},
 ]
@@ -790,11 +831,11 @@ export class Autoproof implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: DeclareDocuments | GetFunds | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: DeclareDocument | GetFunds | Deploy) {
         
         let body: Cell | null = null;
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'DeclareDocuments') {
-            body = beginCell().store(storeDeclareDocuments(message)).endCell();
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'DeclareDocument') {
+            body = beginCell().store(storeDeclareDocument(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'GetFunds') {
             body = beginCell().store(storeGetFunds(message)).endCell();
@@ -812,15 +853,6 @@ export class Autoproof implements Contract {
         let builder = new TupleBuilder();
         let source = (await provider.get('documentsNumber', builder.build())).stack;
         let result = source.readBigNumber();
-        return result;
-    }
-    
-    async getDocumentAddress(provider: ContractProvider, seqno: bigint, author: Address) {
-        let builder = new TupleBuilder();
-        builder.writeNumber(seqno);
-        builder.writeAddress(author);
-        let source = (await provider.get('documentAddress', builder.build())).stack;
-        let result = source.readAddress();
         return result;
     }
     
