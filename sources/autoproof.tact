@@ -15,10 +15,6 @@ message DeclareDocument {
     document: DocumentData;
 }
 
-message DocumentDeclaration {
-    address: Address;
-}
-
 message GetFunds {
     amount: Int as coins;
 }

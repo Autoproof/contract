@@ -3,7 +3,7 @@ Contract: Autoproof
 BOC Size: 1381 bytes
 
 # Types
-Total Types: 14
+Total Types: 13
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -44,10 +44,6 @@ Signature: `DocumentData{authorship:^string,description:^string,rootHash:^string
 ## DeclareDocument
 TLB: `declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument`
 Signature: `DeclareDocument{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}}`
-
-## DocumentDeclaration
-TLB: `document_declaration#8ea29cef address:address = DocumentDeclaration`
-Signature: `DocumentDeclaration{address:address}`
 
 ## GetFunds
 TLB: `get_funds#0a30a01f amount:coins = GetFunds`
