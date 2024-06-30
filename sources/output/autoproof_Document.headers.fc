@@ -111,6 +111,9 @@ tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline;
 ;; $Document$_fun_exclusiveRightsOwner
 ((slice, int, int, tuple, slice, slice), slice) $Document$_fun_exclusiveRightsOwner((slice, int, int, tuple, slice, slice) $self) impure inline_ref;
 
+;; $Document$_fun_commission
+((slice, int, int, tuple, slice, slice), int) $Document$_fun_commission((slice, int, int, tuple, slice, slice) $self) impure inline_ref;
+
 ;; $Document$_fun_forward
 ((slice, int, int, tuple, slice, slice), ()) $Document$_fun_forward((slice, int, int, tuple, slice, slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 

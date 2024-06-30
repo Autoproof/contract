@@ -127,6 +127,15 @@ contract Document {
         return self.exclusiveRightsOwner;
     }
 
+    // returns 10% Autoproof commission
+    fun commission(): Int {
+        if (self.cost != null) {
+            return self.cost!! / 100 * 10;
+        } else {
+            return 0;
+        }
+    }
+
     receive(msg: SetCost) {
         require(self.exclusiveRightsOwner == sender(), "Only exclusive rights owner can set the cost");
         require(self.currentClaim == null, "Transfer is in progress");
@@ -136,7 +145,7 @@ contract Document {
 
     receive("claim-rights-transfer") {
         require(self.cost != null, "Exclusive rights transfer is not available");
-        require(self.cost!! >= context().value, "Not enough funds");
+        require((context().value + self.commission()) > self.cost!!, "Not enough funds.");
         require(self.currentClaim == null, "Transfer is in progress");
 
         // set the new claim
@@ -158,6 +167,7 @@ contract Document {
             sentDocuments: true,
             viewedDocuments: false
         };
+        self.reply("Documents are marked as sent".asComment());
     }
 
     receive("viewed-documents") {
@@ -171,12 +181,13 @@ contract Document {
             sentDocuments: true,
             viewedDocuments: true
         };
+        self.reply("Documents are marked as viewed".asComment());
     }
 
     receive("approve") {
         require(self.currentClaim != null, "Can't approve without a claim");
         require(self.currentClaim!!.sentDocuments, "Can't approve if documents are not sent");
-        require(self.currentClaim!!.viewedDocuments, "Can't approve if documents are not sent");
+        require(self.currentClaim!!.viewedDocuments, "Can't approve if documents are not viewed");
         require(sender() == self.currentClaim!!.author, "Only author of the claim can approve");
 
         // send funds to the current exclusive rights owner
@@ -187,10 +198,19 @@ contract Document {
             body: "Send funds to the exclusive rights owner".asComment(),
         });
 
+        // send commission to the parent contract
+        send(SendParameters{
+            to: self.parent,
+            value: self.commission(),
+            mode: SendIgnoreErrors,
+            body: "Send commission to Autoproof".asComment(),
+        });
+
         // change the exclusive rights owner
         self.exclusiveRightsOwner = sender();
         self.cost = null;
         self.currentClaim = null;
+        self.reply("Claim is approved".asComment());
     }
 
     receive("cancel") {

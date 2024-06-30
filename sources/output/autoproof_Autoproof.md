@@ -103,6 +103,8 @@ Argument: author
 19061: Only exclusive rights owner can get funds
 19102: Transfer is in progress
 19201: Can't view documents if they are not sent
+21953: Not enough funds.
+23073: Can't approve if documents are not viewed
 28490: Authorship can't be empty
 30316: Can't approve if documents are not sent
 41504: Can't update without a claim
