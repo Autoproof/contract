@@ -18,13 +18,7 @@ import { storeSetCost } from "./output/autoproof_Document";
   let wallet = WalletContractV4.create({ workchain, publicKey: keyPair.publicKey });
   const walletContract = client.open(wallet);
 
-  // Get balance
-  let balance: bigint = await walletContract.getBalance();
-
-  console.log(balance);
-
   // Create a bodyCell
-  let seqno: number = await walletContract.getSeqno();
   let bodyCell = beginCell();
   storeSetCost({
       $$type: "SetCost",
@@ -32,6 +26,7 @@ import { storeSetCost } from "./output/autoproof_Document";
   })(bodyCell);
 
   // Create a transfer
+  let seqno: number = await walletContract.getSeqno();
   let transfer = walletContract.createTransfer({
     seqno,
     secretKey: keyPair.secretKey,
@@ -43,6 +38,5 @@ import { storeSetCost } from "./output/autoproof_Document";
   });
 
   // Send
-  let r = await walletContract.send(transfer);
-  console.log(r);
+  await walletContract.send(transfer);
 })();

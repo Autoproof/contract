@@ -59,16 +59,14 @@ contract Autoproof with Deployable, Ownable {
 
     receive(msg: GetFunds) {
         require(self.owner == sender(), "Only owner can get funds");
+        require(myBalance() > msg.amount, "Not enough funds");
 
-        if (myBalance() > msg.amount) {
-            send(SendParameters{
-                to: sender(),
-                value: msg.amount,
-                mode: SendIgnoreErrors,
-                body: "Send funds to the owner".asComment(),
-            });
-        }
-        self.reply("Sent funds to the owner".asComment());
+        send(SendParameters{
+            to: sender(),
+            value: msg.amount,
+            mode: SendIgnoreErrors,
+            body: "Send funds to the owner".asComment(),
+        });
     }
 
     // internals
@@ -145,7 +143,7 @@ contract Document {
 
     receive("claim-rights-transfer") {
         require(self.cost != null, "Exclusive rights transfer is not available");
-        require((context().value + self.commission()) > self.cost!!, "Not enough funds.");
+        require(context().value > (self.cost!! + self.commission()), "Not enough funds.");
         require(self.currentClaim == null, "Transfer is in progress");
 
         // set the new claim
@@ -202,6 +200,7 @@ contract Document {
         send(SendParameters{
             to: self.parent,
             value: self.commission(),
+            bounce: false,
             mode: SendIgnoreErrors,
             body: "Send commission to Autoproof".asComment(),
         });
@@ -223,7 +222,7 @@ contract Document {
 
         send(SendParameters{
                 to: self.currentClaim!!.author,
-                value: self.currentClaim!!.amount,
+                value: self.currentClaim!!.amount + self.commission(),
                 mode: SendIgnoreErrors,
                 body: "Return funds to the claimer".asComment(),
         });
@@ -234,15 +233,14 @@ contract Document {
 
     receive(msg: GetFunds) {
         require(self.exclusiveRightsOwner == sender(), "Only exclusive rights owner can get funds");
+        require(self.currentClaim == null, "Can't get funds during the transfer");
+        require(myBalance() > msg.amount, "Not enough funds");
 
-        if (myBalance() > msg.amount) {
-            send(SendParameters{
-                to: sender(),
-                value: msg.amount,
-                mode: SendIgnoreErrors,
-                body: "Return funds to the exclusive rights owner".asComment(),
-            });
-        }
-        self.reply("Sent funds to the exclusive rights owner".asComment());
+        send(SendParameters{
+            to: sender(),
+            value: msg.amount,
+            mode: SendIgnoreErrors,
+            body: "Return funds to the exclusive rights owner".asComment(),
+        });
     }
 }

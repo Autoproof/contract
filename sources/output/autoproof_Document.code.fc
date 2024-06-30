@@ -66,7 +66,7 @@
 ((slice, int, int, tuple, slice, slice), ()) $Document$_internal_text_8b659ceff9a6a3c20aa31a7bb878a3a04fb8b758f0079c869f0f4fb7d071b14e((slice, int, int, tuple, slice, slice) $self) impure inline {
     var ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner) = $self;
     throw_unless(14555, (~ null?($self'cost)));
-    throw_unless(21953, (($Context$_get_value(__tact_context_get()) + ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_commission()) > __tact_not_null($self'cost)));
+    throw_unless(21953, ($Context$_get_value(__tact_context_get()) > (__tact_not_null($self'cost) + ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_commission())));
     throw_unless(19102, null?($self'currentClaim));
     $self'currentClaim = $ExclusiveRightsClaim$_as_optional($ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), false, false));
     return (($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner), ());
@@ -98,7 +98,7 @@
     throw_unless(23073, $ExclusiveRightsClaim$_get_viewedDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)));
     throw_unless(3861, ( __tact_slice_eq_bits($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), __tact_context_get_sender()) ));
     $global_send($SendParameters$_constructor_to_value_mode_body($self'exclusiveRightsOwner, $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)), 2, __gen_cell_comment_b46e5aff89477cef681bdcd8d8b06e707cbcdaa00c24228e98bf3ad1fdf8d64c()));
-    $global_send($SendParameters$_constructor_to_value_mode_body($self'parent, ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_commission(), 2, __gen_cell_comment_bd417ae69986f41c9e3c311f8930a86cc7b1c0a7266c3fc5854255da54b73d7e()));
+    $global_send($SendParameters$_constructor_to_value_bounce_mode_body($self'parent, ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_commission(), false, 2, __gen_cell_comment_bd417ae69986f41c9e3c311f8930a86cc7b1c0a7266c3fc5854255da54b73d7e()));
     $self'exclusiveRightsOwner = __tact_context_get_sender();
     $self'cost = null();
     $self'currentClaim = null();
@@ -111,7 +111,7 @@
     throw_unless(7782, (~ null?($self'currentClaim)));
     throw_unless(50544, ( (( __tact_slice_eq_bits($self'exclusiveRightsOwner, __tact_context_get_sender()) )) ? (true) : (( __tact_slice_eq_bits($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), __tact_context_get_sender()) )) ));
     throw_unless(53932, ( (($ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)) == false)) ? (true) : (( ($ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim))) ? ($ExclusiveRightsClaim$_get_viewedDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim))) : (false) )) ));
-    $global_send($SendParameters$_constructor_to_value_mode_body($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)), 2, __gen_cell_comment_3ecc56424eae26fb2057e77fc13803917f73e6a91a7e5b542f0e2c56da70cd01()));
+    $global_send($SendParameters$_constructor_to_value_mode_body($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), ($ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)) + ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_commission()), 2, __gen_cell_comment_3ecc56424eae26fb2057e77fc13803917f73e6a91a7e5b542f0e2c56da70cd01()));
     $self'currentClaim = null();
     ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_reply(__gen_cell_comment_7bcf1cb8246d0fb1f98ccbb1b4e387d55fe728b52756389c67687a576907b365());
     return (($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner), ());
@@ -121,10 +121,9 @@
     var ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner) = $self;
     var ($msg'amount) = $msg;
     throw_unless(19061, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'exclusiveRightsOwner) ));
-    if ((__tact_my_balance() > $msg'amount)) {
-        $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $msg'amount, 2, __gen_cell_comment_3732868cf69df09fbb4e4fc919f0437763aa85503e8e4485543dc7ffa417f1d7()));
-    }
-    ($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner)~$Document$_fun_reply(__gen_cell_comment_5bc8a6e8d9a82b5ef01360492b216c474c9393b374fa2cdc661735ea2f0a3b85());
+    throw_unless(35980, null?($self'currentClaim));
+    throw_unless(8086, (__tact_my_balance() > $msg'amount));
+    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $msg'amount, 2, __gen_cell_comment_3732868cf69df09fbb4e4fc919f0437763aa85503e8e4485543dc7ffa417f1d7()));
     return (($self'parent, $self'seqno, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner), ());
 }
 
@@ -166,7 +165,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmYs5QBFrNuLa4zvxbFew7SXF47SBk5t8aDjXB3v7F1HED";
+    return "ipfs://QmP9p6hPdFmGHv1CfGNQ6FdSVx79HjGPyPSX7QpqgojGeL";
 }
 
 _ lazy_deployment_completed() method_id {

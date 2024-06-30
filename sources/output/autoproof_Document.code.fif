@@ -40,6 +40,7 @@ PROGRAM{
   DECLPROC $Document$_fun_reply
   DECLPROC $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments
   DECLPROC $SendParameters$_constructor_to_value_mode_body
+  DECLPROC $SendParameters$_constructor_to_value_bounce_mode_body
   DECLPROC $Document$_internal_binary_SetCost
   DECLPROC $Document$_internal_text_8b659ceff9a6a3c20aa31a7bb878a3a04fb8b758f0079c869f0f4fb7d071b14e
   DECLPROC $Document$_internal_text_b9f1ba120cb2ba414dc6e46ab801c29fa13c4d7f1e91726f63f55ec0b168b103
@@ -500,6 +501,12 @@ PROGRAM{
     PUSHNULL
     PUSHNULL
   }>
+  $SendParameters$_constructor_to_value_bounce_mode_body PROCINLINE:<{
+    s2 s4 XCHG
+    s2 s3 XCHG
+    PUSHNULL
+    PUSHNULL
+  }>
   $Document$_internal_binary_SetCost PROCINLINE:<{
     s4 POP
     5688 PUSHINT
@@ -523,18 +530,20 @@ PROGRAM{
     21953 PUSHINT
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
-    6 2 BLKSWAP
+    s5 PUSH
+    __tact_not_null INLINECALLDICT
+    6 3 BLKSWAP
     $Document$_fun_commission INLINECALLDICT
     s1 s7 XCHG
     ADD
-    s3 PUSH
-    __tact_not_null INLINECALLDICT
+    s1 s7 XCHG
     GREATER
     s1 s7 XCHG
     THROWANYIFNOT
     19102 PUSHINT
-    SWAP
+    s0 s6 XCHG
     ISNULL
+    s1 s6 XCHG
     THROWANYIFNOT
     __tact_context_get_sender INLINECALLDICT
     __tact_context_get INLINECALLDICT
@@ -543,7 +552,8 @@ PROGRAM{
     FALSE
     $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments INLINECALLDICT
     $ExclusiveRightsClaim$_as_optional INLINECALLDICT
-    2 4 BLKSWAP
+    s0 s1 s5 XCHG3
+    s4 s3 XCHG2
   }>
   $Document$_internal_text_b9f1ba120cb2ba414dc6e46ab801c29fa13c4d7f1e91726f63f55ec0b168b103 PROCINLINE:<{
     41504 PUSHINT
@@ -643,10 +653,11 @@ PROGRAM{
     $Document$_fun_commission INLINECALLDICT
     NIP
     2 2 BLKDROP2
+    FALSE
     2 PUSHINT
     B{b5ee9c724101010100220000400000000053656e6420636f6d6d697373696f6e20746f204175746f70726f6f663d436200} B>boc PUSHREF
-    s3 s6 XCHG
-    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    s4 s7 XCHG
+    $SendParameters$_constructor_to_value_bounce_mode_body INLINECALLDICT
     $global_send INLINECALLDICT
     __tact_context_get_sender INLINECALLDICT
     PUSHNULL
@@ -700,17 +711,25 @@ PROGRAM{
     s2 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_author INLINECALLDICT
-    s0 s3 XCHG
+    s3 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_amount INLINECALLDICT
+    6 2 BLKSWAP
+    $Document$_fun_commission INLINECALLDICT
+    s3 POP
+    s6 s2 XCHG2
+    ADD
     2 PUSHINT
     B{b5ee9c7241010101002100003e0000000052657475726e2066756e647320746f2074686520636c61696d6572d1b329c2} B>boc PUSHREF
-    s3 s5 XCHG
+    s3 s8 XCHG
     $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
     $global_send INLINECALLDICT
     PUSHNULL
     B{b5ee9c7241010101001700002a00000000436c61696d2069732063616e63656c6564f23499d4} B>boc PUSHREF
-    s1 s3 XCHG
+    s4 s6 XCHG
+    s3 s5 XCHG
+    s4 s3 s0 XCHG3
+    s1 s2 XCHG
     $Document$_fun_reply INLINECALLDICT
   }>
   $Document$_internal_binary_GetFunds PROCINLINE:<{
@@ -719,21 +738,21 @@ PROGRAM{
     s3 PUSH
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
+    35980 PUSHINT
+    s4 PUSH
+    ISNULL
+    THROWANYIFNOT
+    8086 PUSHINT
     __tact_my_balance INLINECALLDICT
-    OVER
+    s2 PUSH
     GREATER
-    IF:<{
-      __tact_context_get_sender INLINECALLDICT
-      2 PUSHINT
-      B{b5ee9c7241010101003000005c0000000052657475726e2066756e647320746f20746865206578636c757369766520726967687473206f776e6572bc883faa} B>boc PUSHREF
-      s2 s3 XCHG
-      $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
-      $global_send INLINECALLDICT
-    }>ELSE<{
-      DROP
-    }>
-    B{b5ee9c7241010101002e0000580000000053656e742066756e647320746f20746865206578636c757369766520726967687473206f776e6572912293fb} B>boc PUSHREF
-    $Document$_fun_reply INLINECALLDICT
+    THROWANYIFNOT
+    __tact_context_get_sender INLINECALLDICT
+    2 PUSHINT
+    B{b5ee9c7241010101003000005c0000000052657475726e2066756e647320746f20746865206578636c757369766520726967687473206f776e6572bc883faa} B>boc PUSHREF
+    s2 s3 XCHG
+    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $global_send INLINECALLDICT
   }>
   %currentCost PROC:<{
     $Document$_contract_load INLINECALLDICT
@@ -763,7 +782,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d597335514246724e754c61347a76786246657737535846343753426b35743861446a58423376374631484544} PUSHSLICE
+    x{697066733a2f2f516d50397036685064466d474876314366474e513646645356783739486a47507950535837517071676f6a47654c} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

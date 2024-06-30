@@ -62,10 +62,8 @@
     var ($self'owner, $self'documentsNumber) = $self;
     var ($msg'amount) = $msg;
     throw_unless(61678, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'owner) ));
-    if ((__tact_my_balance() > $msg'amount)) {
-        $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $msg'amount, 2, __gen_cell_comment_a2bc8cfe94b4563ee077edfc741ef4054b338e6882d5bef111b1f185b4af9367()));
-    }
-    ($self'owner, $self'documentsNumber)~$Autoproof$_fun_reply(__gen_cell_comment_1e7c083269553d21698395edac9ff5496c971af5e79400d711d5fd84d381d34e());
+    throw_unless(8086, (__tact_my_balance() > $msg'amount));
+    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $msg'amount, 2, __gen_cell_comment_a2bc8cfe94b4563ee077edfc741ef4054b338e6882d5bef111b1f185b4af9367()));
     return (($self'owner, $self'documentsNumber), ());
 }
 
@@ -111,7 +109,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmVMyxuNzvRvbJ7J9k5hACpHbWr6aUAxXbdoCJ5QDcU4QY";
+    return "ipfs://QmUZrpphdysGgxyAhyVPeR2vk4hGC13pGwcQHiWwpzqtUL";
 }
 
 _ lazy_deployment_completed() method_id {

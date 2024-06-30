@@ -19,13 +19,7 @@ import declaration from "./declaration.json";
   let wallet = WalletContractV4.create({ workchain, publicKey: keyPair.publicKey });
   const walletContract = client.open(wallet);
 
-  // Get balance
-  let balance: bigint = await walletContract.getBalance();
-
-  console.log(balance);
-
   // Create a bodyCell
-  let seqno: number = await walletContract.getSeqno();
   let bodyCell = beginCell();
   storeDeclareDocuments({
       $$type: "DeclareDocuments",
@@ -37,6 +31,7 @@ import declaration from "./declaration.json";
   })(bodyCell);
 
   // Create a transfer
+  let seqno: number = await walletContract.getSeqno();
   let transfer = walletContract.createTransfer({
     seqno,
     secretKey: keyPair.secretKey,
@@ -48,6 +43,5 @@ import declaration from "./declaration.json";
   });
 
   // Send
-  let r = await walletContract.send(transfer);
-  console.log(r);
+  await walletContract.send(transfer);
 })();

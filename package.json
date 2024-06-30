@@ -14,6 +14,8 @@
     "send-viewed-documents-tx": "ts-node ./sources/send-viewed-documents-tx.ts",
     "send-approve-tx": "ts-node ./sources/send-approve-tx.ts",
     "send-cancel-tx": "ts-node ./sources/send-cancel-tx.ts",
+    "send-get-funds-autoproof-tx": "ts-node ./sources/send-get-funds-autoproof-tx.ts",
+    "send-get-funds-document-tx": "ts-node ./sources/send-get-funds-document-tx.ts",
 
     "get-txs": "ts-node ./sources/get-txs.ts"
   },

@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Autoproof
-BOC Size: 1423 bytes
+BOC Size: 1378 bytes
 
 # Types
 Total Types: 13
@@ -107,6 +107,7 @@ Argument: author
 23073: Can't approve if documents are not viewed
 28490: Authorship can't be empty
 30316: Can't approve if documents are not sent
+35980: Can't get funds during the transfer
 41504: Can't update without a claim
 44565: Only the exclusive rights have access
 50544: Only exclusive rights owner or author of the claim can cancel
