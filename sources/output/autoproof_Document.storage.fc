@@ -63,9 +63,46 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
     return (sc_0, (v'authorship, v'description, v'rootHash, v'data, v'tags));
 }
 
-(slice, slice, slice, slice, slice) $DocumentData$_to_external(((slice, slice, slice, slice, slice)) v) inline {
-    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v; 
-    return (v'authorship, v'description, v'rootHash, v'data, v'tags);
+((slice, slice, slice, slice, slice)) $DocumentData$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (slice vvv'authorship, slice vvv'description, slice vvv'rootHash, slice vvv'data, slice vvv'tags) = __tact_tuple_destroy_5(v);
+    return (vvv'authorship, vvv'description, vvv'rootHash, vvv'data, vvv'tags);
+}
+
+tuple $DocumentData$_as_optional((slice, slice, slice, slice, slice) v) inline {
+    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
+    return __tact_tuple_create_5(v'authorship, v'description, v'rootHash, v'data, v'tags);
+}
+
+tuple $DocumentData$_to_tuple(((slice, slice, slice, slice, slice)) v) inline {
+    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
+    return __tact_tuple_create_5(v'authorship, v'description, v'rootHash, v'data, v'tags);
+}
+
+tuple $DocumentData$_to_opt_tuple(tuple v) inline {
+    if (null?(v)) { return null(); } 
+    return $DocumentData$_to_tuple($DocumentData$_not_null(v)); 
+}
+
+tuple $DocumentData$_to_opt_external(tuple v) inline {
+    var loaded = $DocumentData$_to_opt_tuple(v);
+    if (null?(loaded)) {
+        return null();
+    } else {
+        return (loaded);
+    }
+}
+
+;;
+;; Type: DeclareDocument
+;; Header: 0x4c2fea6d
+;; TLB: declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument
+;;
+
+(slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 1278208621);
+    var v'document = sc_0~$DocumentData$_load();
+    return (sc_0, (v'document));
 }
 
 ;;
@@ -172,8 +209,8 @@ tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline {
 ;; Type: Document
 ;;
 
-builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice, (slice, slice, slice, slice, slice)) v) inline {
-    var (v'parent, v'seqno, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags)) = v;
+builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice, tuple) v) inline {
+    var (v'parent, v'seqno, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, v'document) = v;
     build_0 = __tact_store_address(build_0, v'parent);
     build_0 = build_0.store_uint(v'seqno, 256);
     build_0 = ~ null?(v'cost) ? build_0.store_int(true, 1).store_coins(v'cost) : build_0.store_int(false, 1);
@@ -181,12 +218,12 @@ builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice,
     build_1 = ~ null?(v'currentClaim) ? build_1.store_int(true, 1).$ExclusiveRightsClaim$_store($ExclusiveRightsClaim$_not_null(v'currentClaim)) : build_1.store_int(false, 1);
     build_1 = __tact_store_address(build_1, v'author);
     build_1 = __tact_store_address(build_1, v'exclusiveRightsOwner);
-    build_1 = $DocumentData$_store(build_1, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags));
+    build_1 = ~ null?(v'document) ? build_1.store_int(true, 1).$DocumentData$_store($DocumentData$_not_null(v'document)) : build_1.store_int(false, 1);
     build_0 = store_ref(build_0, build_1.end_cell());
     return build_0;
 }
 
-(slice, ((slice, int, int, tuple, slice, slice, (slice, slice, slice, slice, slice)))) $Document$_load(slice sc_0) inline {
+(slice, ((slice, int, int, tuple, slice, slice, tuple))) $Document$_load(slice sc_0) inline {
     var v'parent = sc_0~__tact_load_address();
     var v'seqno = sc_0~load_uint(256);
     var v'cost = sc_0~load_int(1) ? sc_0~load_coins() : null();
@@ -194,20 +231,18 @@ builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice,
     var v'currentClaim = sc_1~load_int(1) ? $ExclusiveRightsClaim$_as_optional(sc_1~$ExclusiveRightsClaim$_load()) : null();
     var v'author = sc_1~__tact_load_address();
     var v'exclusiveRightsOwner = sc_1~__tact_load_address();
-    var v'document = sc_1~$DocumentData$_load();
+    var v'document = sc_1~load_int(1) ? $DocumentData$_as_optional(sc_1~$DocumentData$_load()) : null();
     return (sc_0, (v'parent, v'seqno, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, v'document));
 }
 
-(slice, ((slice, int, slice, (slice, slice, slice, slice, slice)))) $Document$init$_load(slice sc_0) inline {
+(slice, ((slice, int, slice))) $Document$init$_load(slice sc_0) inline {
     var v'parent = sc_0~__tact_load_address();
     var v'seqno = sc_0~load_int(257);
     var v'author = sc_0~__tact_load_address();
-    slice sc_1 = sc_0~load_ref().begin_parse();
-    var v'documentData = sc_1~$DocumentData$_load();
-    return (sc_0, (v'parent, v'seqno, v'author, v'documentData));
+    return (sc_0, (v'parent, v'seqno, v'author));
 }
 
-(slice, int, int, tuple, slice, slice, (slice, slice, slice, slice, slice)) $Document$_contract_load() impure inline_ref {
+(slice, int, int, tuple, slice, slice, tuple) $Document$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -216,13 +251,13 @@ builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice,
     } else {
         ;; Allow only workchain deployments
         throw_unless(137, my_address().preload_uint(11) == 1024);
-        (slice parent, int seqno, slice author, (slice, slice, slice, slice, slice) documentData) = $sc~$Document$init$_load();
+        (slice parent, int seqno, slice author) = $sc~$Document$init$_load();
         $sc.end_parse();
-        return $Document$_contract_init(parent, seqno, author, documentData);
+        return $Document$_contract_init(parent, seqno, author);
     }
 }
 
-() $Document$_contract_store((slice, int, int, tuple, slice, slice, (slice, slice, slice, slice, slice)) v) impure inline {
+() $Document$_contract_store((slice, int, int, tuple, slice, slice, tuple) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);

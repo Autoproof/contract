@@ -60,14 +60,14 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ;; $DocumentData$_load
 (slice, ((slice, slice, slice, slice, slice))) $DocumentData$_load(slice sc_0) inline;
 
+;; $DeclareDocument$_store
+builder $DeclareDocument$_store(builder build_0, ((slice, slice, slice, slice, slice)) v) inline;
+
+;; $DeclareDocument$_store_cell
+cell $DeclareDocument$_store_cell(((slice, slice, slice, slice, slice)) v) inline;
+
 ;; $DeclareDocument$_load
 (slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline;
-
-;; $DocumentDeclaration$_store
-builder $DocumentDeclaration$_store(builder build_0, (slice) v) inline;
-
-;; $DocumentDeclaration$_store_cell
-cell $DocumentDeclaration$_store_cell((slice) v) inline;
 
 ;; $GetFunds$_load
 (slice, ((int))) $GetFunds$_load(slice sc_0) inline;
@@ -81,8 +81,11 @@ builder $Autoproof$_store(builder build_0, (slice, int) v) inline;
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
 
+;; $Context$_get_value
+_ $Context$_get_value((int, slice, int, slice) v) inline;
+
 ;; $Document$init$_store
-builder $Document$init$_store(builder build_0, (slice, int, slice, (slice, slice, slice, slice, slice)) v) inline;
+builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline;
 
 ;; $Autoproof$_contract_init
 (slice, int) $Autoproof$_contract_init() impure inline_ref;
@@ -102,6 +105,12 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $Autoproof$_fun_documentsNumber
 ((slice, int), int) $Autoproof$_fun_documentsNumber((slice, int) $self) impure inline_ref;
 
+;; $Document$_init_child
+(cell, cell) $Document$_init_child(cell sys', slice $parent, int $seqno, slice $author) inline_ref;
+
+;; $Autoproof$_fun_documentAddress
+((slice, int), slice) $Autoproof$_fun_documentAddress((slice, int) $self, int $seqno, slice $author) impure inline_ref;
+
 ;; $Autoproof$_fun_validateDeclaration
 ((slice, int), ()) $Autoproof$_fun_validateDeclaration((slice, int) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref;
 
@@ -111,23 +120,14 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $Autoproof$_fun_forward
 ((slice, int), ()) $Autoproof$_fun_forward((slice, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 
-;; $Autoproof$_fun_reply
-((slice, int), ()) $Autoproof$_fun_reply((slice, int) $self, cell $body) impure inline;
-
 ;; $Autoproof$_fun_notify
 ((slice, int), ()) $Autoproof$_fun_notify((slice, int) $self, cell $body) impure inline;
 
 ;; $Autoproof$_fun_owner
 ((slice, int), slice) $Autoproof$_fun_owner((slice, int) $self) impure inline_ref;
 
-;; $Document$_init_child
-(cell, cell) $Document$_init_child(cell sys', slice $parent, int $seqno, slice $author, (slice, slice, slice, slice, slice) $documentData) inline_ref;
-
 ;; $SendParameters$_constructor_to_body_value_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice to, cell body, int value, cell code, cell data) inline;
-
-;; $DocumentDeclaration$_constructor_address
-((slice)) $DocumentDeclaration$_constructor_address(slice address) inline;
 
 ;; $SendParameters$_constructor_to_value_mode_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;

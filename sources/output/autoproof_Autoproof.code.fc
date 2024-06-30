@@ -22,6 +22,11 @@
     return (($self'owner, $self'documentsNumber), $self'documentsNumber);
 }
 
+((slice, int), slice) $Autoproof$_fun_documentAddress((slice, int) $self, int $seqno, slice $author) impure inline_ref {
+    var (($self'owner, $self'documentsNumber)) = $self;
+    return (($self'owner, $self'documentsNumber), $global_contractAddress($Document$_init_child(__tact_context_sys, my_address(), $seqno, $author)));
+}
+
 ((slice, int), ()) $Autoproof$_fun_validateDeclaration((slice, int) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref {
     var (($self'owner, $self'documentsNumber)) = $self;
     var (($document'authorship, $document'description, $document'rootHash, $document'data, $document'tags)) = $document;
@@ -47,9 +52,8 @@
     var (($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags)) = $msg;
     ($self'owner, $self'documentsNumber)~$Autoproof$_fun_validateDeclaration($DocumentData$_tensor_cast(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags)));
     $self'documentsNumber = ($self'documentsNumber + 1);
-    var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender(), ($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags));
-    $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), __gen_cell_comment_d3cfddc05aee05389ca9b8037aaf6348141ca0c22ab77ccbe24619e21f64d35a(), 100000000, $init'code, $init'data));
-    ($self'owner, $self'documentsNumber)~$Autoproof$_fun_reply($DocumentDeclaration$_store_cell($DocumentDeclaration$_constructor_address(my_address())));
+    var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender());
+    $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), $DeclareDocument$_store_cell((($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags))), $Context$_get_value(__tact_context_get()), $init'code, $init'data));
     return (($self'owner, $self'documentsNumber), ());
 }
 
@@ -79,6 +83,14 @@ _ %documentsNumber() method_id(130065) {
     return res;
 }
 
+_ %documentAddress(int $$seqno, slice $$author) method_id(76627) {
+    int $seqno = $$seqno;
+    slice $author = __tact_verify_address($$author);
+    var self = $Autoproof$_contract_load();
+    var res = self~$Autoproof$_fun_documentAddress($seqno, $author);
+    return res;
+}
+
 _ %owner() method_id(83229) {
     var self = $Autoproof$_contract_load();
     var res = self~$Autoproof$_fun_owner();
@@ -96,7 +108,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmRRNZGkqDBJdNSXuRjgcUg74r4NbKR3mhfq8NJpuKX3t9";
+    return "ipfs://QmV4bouPUr8ZnAnXtkagr9R3SW7yF51jdtwrQrWRFkeEf3";
 }
 
 _ lazy_deployment_completed() method_id {

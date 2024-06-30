@@ -35,25 +35,22 @@ contract Autoproof with Deployable, Ownable {
         return self.documentsNumber;
     }
 
-    // get fun documentAddress(seqno: Int, author: Address): Address {
-    //     return contractAddress(initOf Document(myAddress(), seqno, author));
-    // }
+    get fun documentAddress(seqno: Int, author: Address): Address {
+        return contractAddress(initOf Document(myAddress(), seqno, author));
+    }
 
     receive(msg: DeclareDocument) {
         self.validateDeclaration(msg.document);
-
         self.documentsNumber = self.documentsNumber + 1;
 
-        let init: StateInit = initOf Document(myAddress(), self.documentsNumber, sender(), msg.document);
+        let init: StateInit = initOf Document(myAddress(), self.documentsNumber, sender());
         send(SendParameters{
             to: contractAddress(init),
-            body: "Declared document".asComment(),
-            value: ton("0.1"),
+            body: msg.toCell(),
+            value: context().value,
             code: init.code,
             data: init.data
         });
-
-        self.reply(DocumentDeclaration{ address: myAddress() }.toCell());
     }
 
     receive(msg: GetFunds) {
@@ -100,17 +97,15 @@ contract Document {
     author: Address;
     exclusiveRightsOwner: Address;
 
-    document: DocumentData;
+    document: DocumentData?;
 
     // author is owner when created
-    init(parent: Address, seqno: Int, author: Address, documentData: DocumentData) {
+    init(parent: Address, seqno: Int, author: Address) {
         self.parent = parent;
         self.seqno = seqno;
 
         self.author = author;
         self.exclusiveRightsOwner = author;
-
-        self.document = documentData;
     }
 
     get fun currentCost(): Int? {
@@ -129,7 +124,7 @@ contract Document {
         return self.exclusiveRightsOwner;
     }
 
-    get fun documentData(): DocumentData {
+    get fun documentData(): DocumentData? {
         return self.document;
     }
 
@@ -140,6 +135,12 @@ contract Document {
         } else {
             return 0;
         }
+    }
+
+    receive(msg: DeclareDocument) {
+        require(sender() == self.parent, "Only Autoproof is allowed to set the document data");
+        require(self.document == null, "Document data can be declared only once");
+        self.document = msg.document;
     }
 
     receive(msg: SetCost) {

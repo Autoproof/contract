@@ -153,12 +153,6 @@ slice $global_contractAddress((cell, cell) $s) impure inline {
     return (($self'owner, $self'documentsNumber), ());
 }
 
-((slice, int), ()) $Autoproof$_fun_reply((slice, int) $self, cell $body) impure inline {
-    var (($self'owner, $self'documentsNumber)) = $self;
-    ($self'owner, $self'documentsNumber)~$Autoproof$_fun_forward(__tact_context_get_sender(), $body, true, null());
-    return (($self'owner, $self'documentsNumber), ());
-}
-
 ((slice, int), ()) $Autoproof$_fun_notify((slice, int) $self, cell $body) impure inline {
     var (($self'owner, $self'documentsNumber)) = $self;
     ($self'owner, $self'documentsNumber)~$Autoproof$_fun_forward(__tact_context_get_sender(), $body, false, null());

@@ -10,6 +10,16 @@
 }
 
 ;;
+;; Type: Context
+;; TLB: _ bounced:bool sender:address value:int257 raw:^slice = Context
+;;
+
+_ $Context$_get_value((int, slice, int, slice) v) inline {
+    var (v'bounced, v'sender, v'value, v'raw) = v;
+    return v'value;
+}
+
+;;
 ;; Type: SendParameters
 ;; TLB: _ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters
 ;;
@@ -94,31 +104,21 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ;; TLB: declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument
 ;;
 
+builder $DeclareDocument$_store(builder build_0, ((slice, slice, slice, slice, slice)) v) inline {
+    var ((v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags)) = v;
+    build_0 = store_uint(build_0, 1278208621, 32);
+    build_0 = $DocumentData$_store(build_0, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags));
+    return build_0;
+}
+
+cell $DeclareDocument$_store_cell(((slice, slice, slice, slice, slice)) v) inline {
+    return $DeclareDocument$_store(begin_cell(), v).end_cell();
+}
+
 (slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline {
     throw_unless(129, sc_0~load_uint(32) == 1278208621);
     var v'document = sc_0~$DocumentData$_load();
     return (sc_0, (v'document));
-}
-
-;;
-;; Type: DocumentDeclaration
-;; Header: 0x8ea29cef
-;; TLB: document_declaration#8ea29cef address:address = DocumentDeclaration
-;;
-
-builder $DocumentDeclaration$_store(builder build_0, (slice) v) inline {
-    var (v'address) = v;
-    build_0 = store_uint(build_0, 2393021679, 32);
-    build_0 = __tact_store_address(build_0, v'address);
-    return build_0;
-}
-
-cell $DocumentDeclaration$_store_cell((slice) v) inline {
-    return $DocumentDeclaration$_store(begin_cell(), v).end_cell();
-}
-
-((slice)) $DocumentDeclaration$_constructor_address(slice address) inline {
-    return (address);
 }
 
 ;;
@@ -175,18 +175,15 @@ builder $Autoproof$_store(builder build_0, (slice, int) v) inline {
 ;; Type: Document
 ;;
 
-builder $Document$init$_store(builder build_0, (slice, int, slice, (slice, slice, slice, slice, slice)) v) inline {
-    var (v'parent, v'seqno, v'author, (v'documentData'authorship, v'documentData'description, v'documentData'rootHash, v'documentData'data, v'documentData'tags)) = v;
+builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline {
+    var (v'parent, v'seqno, v'author) = v;
     build_0 = __tact_store_address(build_0, v'parent);
     build_0 = build_0.store_int(v'seqno, 257);
     build_0 = __tact_store_address(build_0, v'author);
-    var build_1 = begin_cell();
-    build_1 = $DocumentData$_store(build_1, (v'documentData'authorship, v'documentData'description, v'documentData'rootHash, v'documentData'data, v'documentData'tags));
-    build_0 = store_ref(build_0, build_1.end_cell());
     return build_0;
 }
 
-(cell, cell) $Document$_init_child(cell sys', slice $parent, int $seqno, slice $author, (slice, slice, slice, slice, slice) $documentData) inline_ref {
+(cell, cell) $Document$_init_child(cell sys', slice $parent, int $seqno, slice $author) inline_ref {
     slice sc' = sys'.begin_parse();
     cell source = sc'~load_dict();
     cell contracts = new_dict();
@@ -199,6 +196,6 @@ builder $Document$init$_store(builder build_0, (slice, int, slice, (slice, slice
     builder b = begin_cell();
     b = b.store_ref(begin_cell().store_dict(contracts).end_cell());
     b = b.store_int(false, 1);
-    b = $Document$init$_store(b, ($parent, $seqno, $author, $documentData));
+    b = $Document$init$_store(b, ($parent, $seqno, $author));
     return (mine, b.end_cell());
 }

@@ -39,9 +39,10 @@ import declaration from "./declaration.json";
     seqno,
     secretKey: keyPair.secretKey,
     messages: [internal({
-      value: '0.15',
+      value: '0.01',
       to: process.env.DEPLOYED_AUTOPROOF_ADDRESS ?? "",
-      body: bodyCell.endCell()
+      body: bodyCell.endCell(),
+      bounce: true
     })]
   });
 

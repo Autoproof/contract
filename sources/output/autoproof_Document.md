@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 2498 bytes
+BOC Size: 2533 bytes
 
 # Types
 Total Types: 14
@@ -116,6 +116,8 @@ Total Get Methods: 5
 35980: Can't get funds during the transfer
 41504: Can't update without a claim
 44565: Only the exclusive rights have access
+46455: Document data can be declared only once
+48674: Only Autoproof is allowed to set the document data
 50544: Only exclusive rights owner or author of the claim can cancel
 53932: Can't cancel if documents were sent but not viewed
 59821: Description hash can't be empty
