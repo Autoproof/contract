@@ -85,10 +85,7 @@ contract Autoproof with Deployable, Resumable {
     receive(msg: SetCommissions) {
         require(self.owner == sender(), "Only owner can set the commissions");
 
-        require(msg.commissions.transfershipCommissionPercentage >= 0, "Transfership commission percentage can't be less than 0");
-        require(msg.commissions.transfershipCommissionPercentage <= 100, "Transfership commission percentage can't be greater than 100");
-        require(msg.commissions.royaltyCommissionPercentage >= 0, "Royalty commission percentage can't be less than 0");
-        require(msg.commissions.royaltyCommissionPercentage <= 100, "Royalty commission percentage can't be greater than 100");
+        validateCommissions(msg.commissions);
 
         if (msg.documentAddress == null) {
             self.commissions = msg.commissions;

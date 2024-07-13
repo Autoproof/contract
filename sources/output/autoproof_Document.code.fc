@@ -20,6 +20,14 @@
     return ($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash);
 }
 
+() $global_validateCommissions((int, int) $commissions) impure inline_ref {
+    var (($commissions'transfershipCommissionPercentage, $commissions'royaltyCommissionPercentage)) = $commissions;
+    throw_unless(23942, ($commissions'transfershipCommissionPercentage >= 0));
+    throw_unless(31610, ($commissions'transfershipCommissionPercentage <= 1000));
+    throw_unless(21449, ($commissions'royaltyCommissionPercentage >= 0));
+    throw_unless(11428, ($commissions'royaltyCommissionPercentage <= 1000));
+}
+
 ((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice), tuple) $Document$_fun_currentCommissions((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) $self) impure inline_ref {
     var (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash)) = $self;
     return (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash), $self'commissions);
@@ -187,10 +195,7 @@
     var ($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash) = $self;
     var (($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage), $msg'documentAddress) = $msg;
     throw_unless(48939, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'parent) ));
-    throw_unless(23942, ($msg'commissions'transfershipCommissionPercentage >= 0));
-    throw_unless(24203, ($msg'commissions'transfershipCommissionPercentage <= 100));
-    throw_unless(21449, ($msg'commissions'royaltyCommissionPercentage >= 0));
-    throw_unless(2128, ($msg'commissions'royaltyCommissionPercentage <= 100));
+    $global_validateCommissions(($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage));
     $self'commissions = $Commissions$_as_optional(($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage));
     $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_6103e86002c4636a8d77df79a7d1a17097a99e41cecb074abce3ed0cb153ddd3()));
     return (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash), ());
@@ -292,7 +297,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmNc67ZGJBvhgT1QLVUGMDG9XUrwGcyuuoeeEPt2AYnQPF";
+    return "ipfs://QmUxF3veVMX4DCNgEVBtfSnq3FNCYjQX9up2UvYXgpQ1Nk";
 }
 
 _ lazy_deployment_completed() method_id {

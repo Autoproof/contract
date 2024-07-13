@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 3467 bytes
+BOC Size: 3478 bytes
 
 # Types
 Total Types: 18
@@ -57,10 +57,6 @@ Signature: `ClaimApproval{assignmentHash:^string}`
 TLB: `_ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData`
 Signature: `DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
 
-## Commissions
-TLB: `_ transfershipCommissionPercentage:uint256 royaltyCommissionPercentage:uint256 = Commissions`
-Signature: `Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256}`
-
 ## GetFunds
 TLB: `get_funds#0a30a01f amount:coins = GetFunds`
 Signature: `GetFunds{amount:coins}`
@@ -68,6 +64,10 @@ Signature: `GetFunds{amount:coins}`
 ## SetCommissions
 TLB: `set_commissions#4b486165 commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} documentAddress:Maybe address = SetCommissions`
 Signature: `SetCommissions{commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256},documentAddress:Maybe address}`
+
+## Commissions
+TLB: `_ transfershipCommissionPercentage:uint256 royaltyCommissionPercentage:uint256 = Commissions`
+Signature: `Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256}`
 
 ## DeclareDocument
 TLB: `declare_document#6f05cf40 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocument`
@@ -129,13 +129,13 @@ Total Get Methods: 12
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
-2128: Royalty commission percentage can't be greater than 100
 3545: Tags can't be empty
 3861: Only author of the claim can approve
 5688: Only exclusive rights owner can set the cost
 7765: Can't approve without a claim
 7782: Can't cancel without a claim
 8086: Not enough funds
+11428: Royalty commission percentage can't be greater than 1000
 14555: Exclusive rights transfer is not available
 19061: Only exclusive rights owner can get funds
 19102: Transfer is in progress
@@ -145,9 +145,9 @@ Total Get Methods: 12
 21953: Not enough funds.
 23073: Can't approve if documents are not viewed
 23942: Transfership commission percentage can't be less than 0
-24203: Transfership commission percentage can't be greater than 100
 28490: Authorship can't be empty
 30316: Can't approve if documents are not sent
+31610: Transfership commission percentage can't be greater than 1000
 34015: Only owner can cancel a document contract
 40368: Contract stopped
 41504: Can't update without a claim

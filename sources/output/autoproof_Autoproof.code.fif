@@ -46,6 +46,7 @@ PROGRAM{
   DECLPROC $Autoproof$_contract_store
   DECLPROC $global_contractAddress
   DECLPROC $global_send
+  DECLPROC $global_validateCommissions
   DECLPROC $Document$_init_child
   DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
   DECLPROC $Autoproof$_fun_documentsNumber
@@ -614,6 +615,27 @@ PROGRAM{
     SWAP
     SENDRAWMSG
   }>
+  $global_validateCommissions PROCREF:<{
+    23942 PUSHINT
+    s2 PUSH
+    -1 GTINT
+    THROWANYIFNOT
+    31610 PUSHINT
+    s0 s2 XCHG
+    1000 PUSHINT
+    LEQ
+    s1 s2 XCHG
+    THROWANYIFNOT
+    21449 PUSHINT
+    OVER
+    -1 GTINT
+    THROWANYIFNOT
+    11428 PUSHINT
+    SWAP
+    1000 PUSHINT
+    LEQ
+    THROWANYIFNOT
+  }>
   $Document$_init_child PROCREF:<{
     s0 s3 XCHG
     CTOS
@@ -822,22 +844,8 @@ PROGRAM{
     s9 PUSH
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    23942 PUSHINT
-    s3 PUSH
-    -1 GTINT
-    THROWANYIFNOT
-    24203 PUSHINT
-    s3 PUSH
-    101 LESSINT
-    THROWANYIFNOT
-    21449 PUSHINT
-    s2 PUSH
-    -1 GTINT
-    THROWANYIFNOT
-    2128 PUSHINT
-    s2 PUSH
-    101 LESSINT
-    THROWANYIFNOT
+    s2 s1 PUSH2
+    $global_validateCommissions INLINECALLDICT
     DUP
     ISNULL
     IF:<{
@@ -952,7 +960,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d61545a5232416f696158574c7a6a3270773864426364735943387954734a37354a6f6f714c48476e4d576d67} PUSHSLICE
+    x{697066733a2f2f516d563233586a45314359324251686561337869317643413173695276753132586645426e615172785133643475} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

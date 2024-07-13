@@ -51,6 +51,7 @@ PROGRAM{
   DECLPROC $Document$_contract_load
   DECLPROC $Document$_contract_store
   DECLPROC $global_send
+  DECLPROC $global_validateCommissions
   DECLPROC $Document$_fun_currentCommissions
   DECLPROC $Document$_fun_currentTransfershipCommissionPercentage
   DECLPROC $Document$_fun_currentRoyaltyCommissionPercentage
@@ -781,6 +782,27 @@ PROGRAM{
     SWAP
     SENDRAWMSG
   }>
+  $global_validateCommissions PROCREF:<{
+    23942 PUSHINT
+    s2 PUSH
+    -1 GTINT
+    THROWANYIFNOT
+    31610 PUSHINT
+    s0 s2 XCHG
+    1000 PUSHINT
+    LEQ
+    s1 s2 XCHG
+    THROWANYIFNOT
+    21449 PUSHINT
+    OVER
+    -1 GTINT
+    THROWANYIFNOT
+    11428 PUSHINT
+    SWAP
+    1000 PUSHINT
+    LEQ
+    THROWANYIFNOT
+  }>
   $Document$_fun_currentCommissions PROCREF:<{
     s7 PUSH
   }>
@@ -1261,22 +1283,8 @@ PROGRAM{
     s12 PUSH
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    23942 PUSHINT
-    OVER
-    -1 GTINT
-    THROWANYIFNOT
-    24203 PUSHINT
-    OVER
-    101 LESSINT
-    THROWANYIFNOT
-    21449 PUSHINT
-    s9 PUSH
-    -1 GTINT
-    THROWANYIFNOT
-    2128 PUSHINT
-    s9 PUSH
-    101 LESSINT
-    THROWANYIFNOT
+    s0 s8 PUSH2
+    $global_validateCommissions INLINECALLDICT
     s0 s8 XCHG2
     $Commissions$_as_optional INLINECALLDICT
     __tact_context_get_sender INLINECALLDICT
@@ -1387,7 +1395,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d4e6336375a474a427668675431514c5655474d4447395855727747637975756f65654550743241596e515046} PUSHSLICE
+    x{697066733a2f2f516d557846337665564d583444434e674556427466536e7133464e43596a51583975703255765958677051314e6b} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

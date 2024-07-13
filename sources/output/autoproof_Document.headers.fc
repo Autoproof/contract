@@ -159,6 +159,9 @@ tuple $Commissions$_to_opt_external(tuple v) inline;
 ;; $global_send
 () $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
 
+;; $global_validateCommissions
+() $global_validateCommissions((int, int) $commissions) impure inline_ref;
+
 ;; $Document$_fun_currentCommissions
 ((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice), tuple) $Document$_fun_currentCommissions((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) $self) impure inline_ref;
 

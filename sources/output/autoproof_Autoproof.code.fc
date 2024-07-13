@@ -19,6 +19,14 @@
     return ($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage));
 }
 
+() $global_validateCommissions((int, int) $commissions) impure inline_ref {
+    var (($commissions'transfershipCommissionPercentage, $commissions'royaltyCommissionPercentage)) = $commissions;
+    throw_unless(23942, ($commissions'transfershipCommissionPercentage >= 0));
+    throw_unless(31610, ($commissions'transfershipCommissionPercentage <= 1000));
+    throw_unless(21449, ($commissions'royaltyCommissionPercentage >= 0));
+    throw_unless(11428, ($commissions'royaltyCommissionPercentage <= 1000));
+}
+
 ((slice, int, int, (int, int)), int) $Autoproof$_fun_documentsNumber((slice, int, int, (int, int)) $self) impure inline_ref {
     var (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage))) = $self;
     return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage)), $self'documentsNumber);
@@ -110,10 +118,7 @@
     var ($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage)) = $self;
     var (($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage), $msg'documentAddress) = $msg;
     throw_unless(19858, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'owner) ));
-    throw_unless(23942, ($msg'commissions'transfershipCommissionPercentage >= 0));
-    throw_unless(24203, ($msg'commissions'transfershipCommissionPercentage <= 100));
-    throw_unless(21449, ($msg'commissions'royaltyCommissionPercentage >= 0));
-    throw_unless(2128, ($msg'commissions'royaltyCommissionPercentage <= 100));
+    $global_validateCommissions(($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage));
     if (null?($msg'documentAddress)) {
         ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage) = ($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage);
         $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_88a22c484945bcc67e1de2ed597a76395f34f778369d67d8f1c4308791da4606()));
@@ -218,7 +223,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmaTZR2AoiaXWLzj2pw8dBcdsYC8yTsJ75JooqLHGnMWmg";
+    return "ipfs://QmV23XjE1CY2BQhea3xi1vCA1siRvu12XfEBnaQrxQ3d4u";
 }
 
 _ lazy_deployment_completed() method_id {

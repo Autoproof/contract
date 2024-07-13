@@ -241,10 +241,7 @@ contract Document {
     receive(msg: SetCommissions) {
         require(self.parent == sender(), "Only parent contract can set the commissions");
 
-        require(msg.commissions.transfershipCommissionPercentage >= 0, "Transfership commission percentage can't be less than 0");
-        require(msg.commissions.transfershipCommissionPercentage <= 100, "Transfership commission percentage can't be greater than 100");
-        require(msg.commissions.royaltyCommissionPercentage >= 0, "Royalty commission percentage can't be less than 0");
-        require(msg.commissions.royaltyCommissionPercentage <= 100, "Royalty commission percentage can't be greater than 100");
+        validateCommissions(msg.commissions);
 
         self.commissions = msg.commissions;
 
