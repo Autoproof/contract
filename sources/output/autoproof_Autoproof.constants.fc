@@ -1,5 +1,8 @@
 ;; String ""
 slice __gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7() asm "B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE";
 
+;; Comment "The Autoproof commission was updated"
+cell __gen_cell_comment_0ab40ab3deeb67b18cb882c4d5f1b292a54e5563cccb945154a5f0c7ba75d13a() asm "B{b5ee9c7241010101002a00005000000000546865204175746f70726f6f6620636f6d6d697373696f6e207761732075706461746564378c7770} B>boc PUSHREF";
+
 ;; Comment "Send funds to the owner"
 cell __gen_cell_comment_a2bc8cfe94b4563ee077edfc741ef4054b338e6882d5bef111b1f185b4af9367() asm "B{b5ee9c7241010101001d0000360000000053656e642066756e647320746f20746865206f776e6572652d4940} B>boc PUSHREF";

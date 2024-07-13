@@ -11,66 +11,86 @@
 ;; Contract Autoproof functions
 ;;
 
-(slice, int) $Autoproof$_contract_init() impure inline_ref {
-    var (($self'owner, $self'documentsNumber)) = (null(), 0);
+(slice, int, int) $Autoproof$_contract_init() impure inline_ref {
+    var (($self'owner, $self'documentsNumber, $self'commissionPercentage)) = (null(), 0, 10);
     $self'owner = __tact_context_get_sender();
-    return ($self'owner, $self'documentsNumber);
+    return ($self'owner, $self'documentsNumber, $self'commissionPercentage);
 }
 
-((slice, int), int) $Autoproof$_fun_documentsNumber((slice, int) $self) impure inline_ref {
-    var (($self'owner, $self'documentsNumber)) = $self;
-    return (($self'owner, $self'documentsNumber), $self'documentsNumber);
+((slice, int, int), int) $Autoproof$_fun_documentsNumber((slice, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'documentsNumber, $self'commissionPercentage)) = $self;
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), $self'documentsNumber);
 }
 
-((slice, int), slice) $Autoproof$_fun_documentAddress((slice, int) $self, int $seqno, slice $author) impure inline_ref {
-    var (($self'owner, $self'documentsNumber)) = $self;
-    return (($self'owner, $self'documentsNumber), $global_contractAddress($Document$_init_child(__tact_context_sys, my_address(), $seqno, $author)));
+((slice, int, int), int) $Autoproof$_fun_currentCommissionPercentage((slice, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'documentsNumber, $self'commissionPercentage)) = $self;
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), $self'commissionPercentage);
 }
 
-((slice, int), ()) $Autoproof$_fun_validateDeclaration((slice, int) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref {
-    var (($self'owner, $self'documentsNumber)) = $self;
+((slice, int, int), slice) $Autoproof$_fun_documentAddress((slice, int, int) $self, int $seqno, slice $author) impure inline_ref {
+    var (($self'owner, $self'documentsNumber, $self'commissionPercentage)) = $self;
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), $global_contractAddress($Document$_init_child(__tact_context_sys, my_address(), $seqno, $author)));
+}
+
+((slice, int, int), ()) $Autoproof$_fun_validateDeclaration((slice, int, int) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref {
+    var (($self'owner, $self'documentsNumber, $self'commissionPercentage)) = $self;
     var (($document'authorship, $document'description, $document'rootHash, $document'data, $document'tags)) = $document;
     throw_unless(28490, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'authorship));
     throw_unless(59821, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'description));
     throw_unless(62718, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'rootHash));
     throw_unless(61064, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'data));
     throw_unless(3545, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'tags));
-    return (($self'owner, $self'documentsNumber), ());
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), ());
 }
 
-((slice, int), slice) $Autoproof$_fun_owner((slice, int) $self) impure inline_ref {
-    var (($self'owner, $self'documentsNumber)) = $self;
-    return (($self'owner, $self'documentsNumber), $self'owner);
+((slice, int, int), slice) $Autoproof$_fun_owner((slice, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'documentsNumber, $self'commissionPercentage)) = $self;
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), $self'owner);
 }
 
 ;;
 ;; Receivers of a Contract Autoproof
 ;;
 
-(((slice, int)), ()) $Autoproof$_internal_binary_DeclareDocument((slice, int) $self, ((slice, slice, slice, slice, slice)) $msg) impure inline {
-    var ($self'owner, $self'documentsNumber) = $self;
+(((slice, int, int)), ()) $Autoproof$_internal_binary_DeclareDocument((slice, int, int) $self, ((slice, slice, slice, slice, slice)) $msg) impure inline {
+    var ($self'owner, $self'documentsNumber, $self'commissionPercentage) = $self;
     var (($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags)) = $msg;
-    ($self'owner, $self'documentsNumber)~$Autoproof$_fun_validateDeclaration($DocumentData$_tensor_cast(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags)));
+    ($self'owner, $self'documentsNumber, $self'commissionPercentage)~$Autoproof$_fun_validateDeclaration($DocumentData$_tensor_cast(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags)));
     $self'documentsNumber = ($self'documentsNumber + 1);
     var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender());
-    $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), $DeclareDocument$_store_cell((($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags))), $Context$_get_value(__tact_context_get()), $init'code, $init'data));
-    return (($self'owner, $self'documentsNumber), ());
+    $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), $DeclareDocumentWithComission$_store_cell($DeclareDocumentWithComission$_constructor_document_commissionPercentage(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $self'commissionPercentage)), $Context$_get_value(__tact_context_get()), $init'code, $init'data));
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), ());
 }
 
-(((slice, int)), ()) $Autoproof$_internal_binary_GetFunds((slice, int) $self, (int) $msg) impure inline {
-    var ($self'owner, $self'documentsNumber) = $self;
+(((slice, int, int)), ()) $Autoproof$_internal_binary_SetCommissionPercentage((slice, int, int) $self, (int, slice) $msg) impure inline {
+    var ($self'owner, $self'documentsNumber, $self'commissionPercentage) = $self;
+    var ($msg'commissionPercentage, $msg'documentAddress) = $msg;
+    throw_unless(30875, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'owner) ));
+    throw_unless(10382, ($msg'commissionPercentage >= 0));
+    throw_unless(14578, ($msg'commissionPercentage <= 100));
+    if (null?($msg'documentAddress)) {
+        $self'commissionPercentage = $msg'commissionPercentage;
+        $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_0ab40ab3deeb67b18cb882c4d5f1b292a54e5563cccb945154a5f0c7ba75d13a()));
+    } else {
+        $global_send($SendParameters$_constructor_to_value_mode_body(__tact_not_null($msg'documentAddress), $Context$_get_value(__tact_context_get()), 2, $SetCommissionPercentage$_store_cell(($msg'commissionPercentage, $msg'documentAddress))));
+    }
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), ());
+}
+
+(((slice, int, int)), ()) $Autoproof$_internal_binary_GetFunds((slice, int, int) $self, (int) $msg) impure inline {
+    var ($self'owner, $self'documentsNumber, $self'commissionPercentage) = $self;
     var ($msg'amount) = $msg;
     throw_unless(61678, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'owner) ));
     throw_unless(8086, (__tact_my_balance() > $msg'amount));
     $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $msg'amount, 2, __gen_cell_comment_a2bc8cfe94b4563ee077edfc741ef4054b338e6882d5bef111b1f185b4af9367()));
-    return (($self'owner, $self'documentsNumber), ());
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), ());
 }
 
-(((slice, int)), ()) $Autoproof$_internal_binary_Deploy((slice, int) $self, (int) $deploy) impure inline {
-    var ($self'owner, $self'documentsNumber) = $self;
+(((slice, int, int)), ()) $Autoproof$_internal_binary_Deploy((slice, int, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'documentsNumber, $self'commissionPercentage) = $self;
     var ($deploy'queryId) = $deploy;
-    ($self'owner, $self'documentsNumber)~$Autoproof$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
-    return (($self'owner, $self'documentsNumber), ());
+    ($self'owner, $self'documentsNumber, $self'commissionPercentage)~$Autoproof$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), ());
 }
 
 ;;
@@ -80,6 +100,12 @@
 _ %documentsNumber() method_id(130065) {
     var self = $Autoproof$_contract_load();
     var res = self~$Autoproof$_fun_documentsNumber();
+    return res;
+}
+
+_ %currentCommissionPercentage() method_id(113694) {
+    var self = $Autoproof$_contract_load();
+    var res = self~$Autoproof$_fun_currentCommissionPercentage();
     return res;
 }
 
@@ -108,7 +134,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmYXHzchWfjUMahoL1uX5nCDm6Sn9fYBGQj9YeMQFCqbvi";
+    return "ipfs://QmNo8jmn9Po98NoKRoUJ4A2V32Dc2Y8xcwD3uqQCu52vB9";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -119,7 +145,7 @@ _ lazy_deployment_completed() method_id {
 ;; Routing of a Contract Autoproof
 ;;
 
-((slice, int), int) $Autoproof$_contract_router_internal((slice, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+((slice, int, int), int) $Autoproof$_contract_router_internal((slice, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
         return (self, true);
@@ -136,6 +162,13 @@ _ lazy_deployment_completed() method_id {
     if (op == 1278208621) {
         var msg = in_msg~$DeclareDocument$_load();
         self~$Autoproof$_internal_binary_DeclareDocument(msg);
+        return (self, true);
+    }
+    
+    ;; Receive SetCommissionPercentage message
+    if (op == 3849317432) {
+        var msg = in_msg~$SetCommissionPercentage$_load();
+        self~$Autoproof$_internal_binary_SetCommissionPercentage(msg);
         return (self, true);
     }
     

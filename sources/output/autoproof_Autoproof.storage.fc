@@ -99,26 +99,25 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ((slice, slice, slice, slice, slice)) $DocumentData$_tensor_cast((slice, slice, slice, slice, slice) v) asm "NOP";
 
 ;;
-;; Type: DeclareDocument
-;; Header: 0x4c2fea6d
-;; TLB: declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument
+;; Type: DeclareDocumentWithComission
+;; Header: 0xcbbaf08b
+;; TLB: declare_document_with_comission#cbbaf08b document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissionPercentage:uint256 = DeclareDocumentWithComission
 ;;
 
-builder $DeclareDocument$_store(builder build_0, ((slice, slice, slice, slice, slice)) v) inline {
-    var ((v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags)) = v;
-    build_0 = store_uint(build_0, 1278208621, 32);
+builder $DeclareDocumentWithComission$_store(builder build_0, ((slice, slice, slice, slice, slice), int) v) inline {
+    var ((v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags), v'commissionPercentage) = v;
+    build_0 = store_uint(build_0, 3418026123, 32);
     build_0 = $DocumentData$_store(build_0, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags));
+    build_0 = build_0.store_uint(v'commissionPercentage, 256);
     return build_0;
 }
 
-cell $DeclareDocument$_store_cell(((slice, slice, slice, slice, slice)) v) inline {
-    return $DeclareDocument$_store(begin_cell(), v).end_cell();
+cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, slice), int) v) inline {
+    return $DeclareDocumentWithComission$_store(begin_cell(), v).end_cell();
 }
 
-(slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 1278208621);
-    var v'document = sc_0~$DocumentData$_load();
-    return (sc_0, (v'document));
+(((slice, slice, slice, slice, slice), int)) $DeclareDocumentWithComission$_constructor_document_commissionPercentage((slice, slice, slice, slice, slice) document, int commissionPercentage) inline {
+    return (document, commissionPercentage);
 }
 
 ;;
@@ -134,41 +133,40 @@ cell $DeclareDocument$_store_cell(((slice, slice, slice, slice, slice)) v) inlin
 }
 
 ;;
-;; Type: Autoproof
+;; Type: SetCommissionPercentage
+;; Header: 0xe56fec38
+;; TLB: set_commission_percentage#e56fec38 commissionPercentage:uint256 documentAddress:Maybe address = SetCommissionPercentage
 ;;
 
-builder $Autoproof$_store(builder build_0, (slice, int) v) inline {
-    var (v'owner, v'documentsNumber) = v;
-    build_0 = __tact_store_address(build_0, v'owner);
-    build_0 = build_0.store_uint(v'documentsNumber, 256);
+builder $SetCommissionPercentage$_store(builder build_0, (int, slice) v) inline {
+    var (v'commissionPercentage, v'documentAddress) = v;
+    build_0 = store_uint(build_0, 3849317432, 32);
+    build_0 = build_0.store_uint(v'commissionPercentage, 256);
+    build_0 = __tact_store_address_opt(build_0, v'documentAddress);
     return build_0;
 }
 
-(slice, ((slice, int))) $Autoproof$_load(slice sc_0) inline {
-    var v'owner = sc_0~__tact_load_address();
-    var v'documentsNumber = sc_0~load_uint(256);
-    return (sc_0, (v'owner, v'documentsNumber));
+cell $SetCommissionPercentage$_store_cell((int, slice) v) inline {
+    return $SetCommissionPercentage$_store(begin_cell(), v).end_cell();
 }
 
-(slice, int) $Autoproof$_contract_load() impure inline_ref {
-    slice $sc = get_data().begin_parse();
-    __tact_context_sys = $sc~load_ref();
-    int $loaded = $sc~load_int(1);
-    if ($loaded) {
-        return $sc~$Autoproof$_load();
-    } else {
-        ;; Allow only workchain deployments
-        throw_unless(137, my_address().preload_uint(11) == 1024);
-        return $Autoproof$_contract_init();
-    }
+(slice, ((int, slice))) $SetCommissionPercentage$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 3849317432);
+    var v'commissionPercentage = sc_0~load_uint(256);
+    var v'documentAddress = sc_0~__tact_load_address_opt();
+    return (sc_0, (v'commissionPercentage, v'documentAddress));
 }
 
-() $Autoproof$_contract_store((slice, int) v) impure inline {
-    builder b = begin_cell();
-    b = b.store_ref(__tact_context_sys);
-    b = b.store_int(true, 1);
-    b = $Autoproof$_store(b, v);
-    set_data(b.end_cell());
+;;
+;; Type: DeclareDocument
+;; Header: 0x4c2fea6d
+;; TLB: declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument
+;;
+
+(slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 1278208621);
+    var v'document = sc_0~$DocumentData$_load();
+    return (sc_0, (v'document));
 }
 
 ;;
@@ -198,4 +196,44 @@ builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline {
     b = b.store_int(false, 1);
     b = $Document$init$_store(b, ($parent, $seqno, $author));
     return (mine, b.end_cell());
+}
+
+;;
+;; Type: Autoproof
+;;
+
+builder $Autoproof$_store(builder build_0, (slice, int, int) v) inline {
+    var (v'owner, v'documentsNumber, v'commissionPercentage) = v;
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = build_0.store_uint(v'documentsNumber, 256);
+    build_0 = build_0.store_uint(v'commissionPercentage, 256);
+    return build_0;
+}
+
+(slice, ((slice, int, int))) $Autoproof$_load(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address();
+    var v'documentsNumber = sc_0~load_uint(256);
+    var v'commissionPercentage = sc_0~load_uint(256);
+    return (sc_0, (v'owner, v'documentsNumber, v'commissionPercentage));
+}
+
+(slice, int, int) $Autoproof$_contract_load() impure inline_ref {
+    slice $sc = get_data().begin_parse();
+    __tact_context_sys = $sc~load_ref();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$Autoproof$_load();
+    } else {
+        ;; Allow only workchain deployments
+        throw_unless(137, my_address().preload_uint(11) == 1024);
+        return $Autoproof$_contract_init();
+    }
+}
+
+() $Autoproof$_contract_store((slice, int, int) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_ref(__tact_context_sys);
+    b = b.store_int(true, 1);
+    b = $Autoproof$_store(b, v);
+    set_data(b.end_cell());
 }

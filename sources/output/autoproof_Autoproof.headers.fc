@@ -9,8 +9,14 @@ slice __tact_verify_address(slice address) inline;
 ;; __tact_load_address
 (slice, slice) __tact_load_address(slice cs) inline;
 
+;; __tact_load_address_opt
+(slice, slice) __tact_load_address_opt(slice cs) inline;
+
 ;; __tact_store_address
 builder __tact_store_address(builder b, slice address) inline;
+
+;; __tact_store_address_opt
+builder __tact_store_address_opt(builder b, slice address) inline;
 
 ;; __tact_create_address
 slice __tact_create_address(int chain, int hash) inline;
@@ -60,23 +66,32 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ;; $DocumentData$_load
 (slice, ((slice, slice, slice, slice, slice))) $DocumentData$_load(slice sc_0) inline;
 
-;; $DeclareDocument$_store
-builder $DeclareDocument$_store(builder build_0, ((slice, slice, slice, slice, slice)) v) inline;
+;; $DeclareDocumentWithComission$_store
+builder $DeclareDocumentWithComission$_store(builder build_0, ((slice, slice, slice, slice, slice), int) v) inline;
 
-;; $DeclareDocument$_store_cell
-cell $DeclareDocument$_store_cell(((slice, slice, slice, slice, slice)) v) inline;
-
-;; $DeclareDocument$_load
-(slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline;
+;; $DeclareDocumentWithComission$_store_cell
+cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, slice), int) v) inline;
 
 ;; $GetFunds$_load
 (slice, ((int))) $GetFunds$_load(slice sc_0) inline;
 
+;; $SetCommissionPercentage$_store
+builder $SetCommissionPercentage$_store(builder build_0, (int, slice) v) inline;
+
+;; $SetCommissionPercentage$_store_cell
+cell $SetCommissionPercentage$_store_cell((int, slice) v) inline;
+
+;; $SetCommissionPercentage$_load
+(slice, ((int, slice))) $SetCommissionPercentage$_load(slice sc_0) inline;
+
+;; $DeclareDocument$_load
+(slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline;
+
 ;; $Autoproof$_store
-builder $Autoproof$_store(builder build_0, (slice, int) v) inline;
+builder $Autoproof$_store(builder build_0, (slice, int, int) v) inline;
 
 ;; $Autoproof$_load
-(slice, ((slice, int))) $Autoproof$_load(slice sc_0) inline;
+(slice, ((slice, int, int))) $Autoproof$_load(slice sc_0) inline;
 
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
@@ -88,13 +103,13 @@ _ $Context$_get_value((int, slice, int, slice) v) inline;
 builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline;
 
 ;; $Autoproof$_contract_init
-(slice, int) $Autoproof$_contract_init() impure inline_ref;
+(slice, int, int) $Autoproof$_contract_init() impure inline_ref;
 
 ;; $Autoproof$_contract_load
-(slice, int) $Autoproof$_contract_load() impure inline_ref;
+(slice, int, int) $Autoproof$_contract_load() impure inline_ref;
 
 ;; $Autoproof$_contract_store
-() $Autoproof$_contract_store((slice, int) v) impure inline;
+() $Autoproof$_contract_store((slice, int, int) v) impure inline;
 
 ;; $global_contractAddress
 slice $global_contractAddress((cell, cell) $s) impure inline;
@@ -102,32 +117,38 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $global_send
 () $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
 
-;; $Autoproof$_fun_documentsNumber
-((slice, int), int) $Autoproof$_fun_documentsNumber((slice, int) $self) impure inline_ref;
-
 ;; $Document$_init_child
 (cell, cell) $Document$_init_child(cell sys', slice $parent, int $seqno, slice $author) inline_ref;
-
-;; $Autoproof$_fun_documentAddress
-((slice, int), slice) $Autoproof$_fun_documentAddress((slice, int) $self, int $seqno, slice $author) impure inline_ref;
-
-;; $Autoproof$_fun_validateDeclaration
-((slice, int), ()) $Autoproof$_fun_validateDeclaration((slice, int) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref;
 
 ;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
 
+;; $Autoproof$_fun_documentsNumber
+((slice, int, int), int) $Autoproof$_fun_documentsNumber((slice, int, int) $self) impure inline_ref;
+
+;; $Autoproof$_fun_currentCommissionPercentage
+((slice, int, int), int) $Autoproof$_fun_currentCommissionPercentage((slice, int, int) $self) impure inline_ref;
+
+;; $Autoproof$_fun_documentAddress
+((slice, int, int), slice) $Autoproof$_fun_documentAddress((slice, int, int) $self, int $seqno, slice $author) impure inline_ref;
+
+;; $Autoproof$_fun_validateDeclaration
+((slice, int, int), ()) $Autoproof$_fun_validateDeclaration((slice, int, int) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref;
+
 ;; $Autoproof$_fun_forward
-((slice, int), ()) $Autoproof$_fun_forward((slice, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+((slice, int, int), ()) $Autoproof$_fun_forward((slice, int, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 
 ;; $Autoproof$_fun_notify
-((slice, int), ()) $Autoproof$_fun_notify((slice, int) $self, cell $body) impure inline;
+((slice, int, int), ()) $Autoproof$_fun_notify((slice, int, int) $self, cell $body) impure inline;
 
 ;; $Autoproof$_fun_owner
-((slice, int), slice) $Autoproof$_fun_owner((slice, int) $self) impure inline_ref;
+((slice, int, int), slice) $Autoproof$_fun_owner((slice, int, int) $self) impure inline_ref;
 
 ;; $SendParameters$_constructor_to_body_value_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice to, cell body, int value, cell code, cell data) inline;
+
+;; $DeclareDocumentWithComission$_constructor_document_commissionPercentage
+(((slice, slice, slice, slice, slice), int)) $DeclareDocumentWithComission$_constructor_document_commissionPercentage((slice, slice, slice, slice, slice) document, int commissionPercentage) inline;
 
 ;; $SendParameters$_constructor_to_value_mode_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;

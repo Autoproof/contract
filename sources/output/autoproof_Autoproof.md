@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Autoproof
-BOC Size: 1381 bytes
+BOC Size: 1681 bytes
 
 # Types
-Total Types: 13
+Total Types: 15
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -37,18 +37,6 @@ Signature: `DeployOk{queryId:uint64}`
 TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
-## DocumentData
-TLB: `_ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData`
-Signature: `DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
-
-## DeclareDocument
-TLB: `declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument`
-Signature: `DeclareDocument{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}}`
-
-## GetFunds
-TLB: `get_funds#0a30a01f amount:coins = GetFunds`
-Signature: `GetFunds{amount:coins}`
-
 ## SetCost
 TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
 Signature: `SetCost{cost:Maybe coins}`
@@ -57,10 +45,32 @@ Signature: `SetCost{cost:Maybe coins}`
 TLB: `_ author:address amount:coins sentDocuments:bool viewedDocuments:bool = ExclusiveRightsClaim`
 Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,viewedDocuments:bool}`
 
+## DeclareDocumentWithComission
+TLB: `declare_document_with_comission#cbbaf08b document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissionPercentage:uint256 = DeclareDocumentWithComission`
+Signature: `DeclareDocumentWithComission{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},commissionPercentage:uint256}`
+
+## DocumentData
+TLB: `_ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData`
+Signature: `DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
+
+## GetFunds
+TLB: `get_funds#0a30a01f amount:coins = GetFunds`
+Signature: `GetFunds{amount:coins}`
+
+## SetCommissionPercentage
+TLB: `set_commission_percentage#e56fec38 commissionPercentage:uint256 documentAddress:Maybe address = SetCommissionPercentage`
+Signature: `SetCommissionPercentage{commissionPercentage:uint256,documentAddress:Maybe address}`
+
+## DeclareDocument
+TLB: `declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument`
+Signature: `DeclareDocument{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}}`
+
 # Get Methods
-Total Get Methods: 3
+Total Get Methods: 4
 
 ## documentsNumber
+
+## currentCommissionPercentage
 
 ## documentAddress
 Argument: seqno
@@ -99,15 +109,18 @@ Argument: author
 7765: Can't approve without a claim
 7782: Can't cancel without a claim
 8086: Not enough funds
+10382: Commission percentage can't be less than 0
 14555: Exclusive rights transfer is not available
+14578: Commission percentage can't be greater than 100
 19061: Only exclusive rights owner can get funds
 19102: Transfer is in progress
 19201: Can't view documents if they are not sent
 21953: Not enough funds.
 23073: Can't approve if documents are not viewed
 28490: Authorship can't be empty
+29100: Only parent contract can set the commission percentage
 30316: Can't approve if documents are not sent
-35980: Can't get funds during the transfer
+30875: Only owner can set the commission percentage
 41504: Can't update without a claim
 44565: Only the exclusive rights have access
 46455: Document data can be declared only once

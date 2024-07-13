@@ -37,87 +37,6 @@ _ $Context$_get_value((int, slice, int, slice) v) inline {
 }
 
 ;;
-;; Type: DocumentData
-;; TLB: _ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData
-;;
-
-builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice) v) inline {
-    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
-    build_0 = build_0.store_ref(begin_cell().store_slice(v'authorship).end_cell());
-    build_0 = build_0.store_ref(begin_cell().store_slice(v'description).end_cell());
-    build_0 = build_0.store_ref(begin_cell().store_slice(v'rootHash).end_cell());
-    var build_1 = begin_cell();
-    build_1 = build_1.store_ref(begin_cell().store_slice(v'data).end_cell());
-    build_1 = build_1.store_ref(begin_cell().store_slice(v'tags).end_cell());
-    build_0 = store_ref(build_0, build_1.end_cell());
-    return build_0;
-}
-
-(slice, ((slice, slice, slice, slice, slice))) $DocumentData$_load(slice sc_0) inline {
-    var v'authorship = sc_0~load_ref().begin_parse();
-    var v'description = sc_0~load_ref().begin_parse();
-    var v'rootHash = sc_0~load_ref().begin_parse();
-    slice sc_1 = sc_0~load_ref().begin_parse();
-    var v'data = sc_1~load_ref().begin_parse();
-    var v'tags = sc_1~load_ref().begin_parse();
-    return (sc_0, (v'authorship, v'description, v'rootHash, v'data, v'tags));
-}
-
-((slice, slice, slice, slice, slice)) $DocumentData$_not_null(tuple v) inline {
-    throw_if(128, null?(v));
-    var (slice vvv'authorship, slice vvv'description, slice vvv'rootHash, slice vvv'data, slice vvv'tags) = __tact_tuple_destroy_5(v);
-    return (vvv'authorship, vvv'description, vvv'rootHash, vvv'data, vvv'tags);
-}
-
-tuple $DocumentData$_as_optional((slice, slice, slice, slice, slice) v) inline {
-    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
-    return __tact_tuple_create_5(v'authorship, v'description, v'rootHash, v'data, v'tags);
-}
-
-tuple $DocumentData$_to_tuple(((slice, slice, slice, slice, slice)) v) inline {
-    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
-    return __tact_tuple_create_5(v'authorship, v'description, v'rootHash, v'data, v'tags);
-}
-
-tuple $DocumentData$_to_opt_tuple(tuple v) inline {
-    if (null?(v)) { return null(); } 
-    return $DocumentData$_to_tuple($DocumentData$_not_null(v)); 
-}
-
-tuple $DocumentData$_to_opt_external(tuple v) inline {
-    var loaded = $DocumentData$_to_opt_tuple(v);
-    if (null?(loaded)) {
-        return null();
-    } else {
-        return (loaded);
-    }
-}
-
-;;
-;; Type: DeclareDocument
-;; Header: 0x4c2fea6d
-;; TLB: declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument
-;;
-
-(slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 1278208621);
-    var v'document = sc_0~$DocumentData$_load();
-    return (sc_0, (v'document));
-}
-
-;;
-;; Type: GetFunds
-;; Header: 0x0a30a01f
-;; TLB: get_funds#0a30a01f amount:coins = GetFunds
-;;
-
-(slice, ((int))) $GetFunds$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 170958879);
-    var v'amount = sc_0~load_coins();
-    return (sc_0, (v'amount));
-}
-
-;;
 ;; Type: SetCost
 ;; Header: 0x9121b3af
 ;; TLB: set_cost#9121b3af cost:Maybe coins = SetCost
@@ -206,13 +125,109 @@ tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline {
 }
 
 ;;
+;; Type: DocumentData
+;; TLB: _ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData
+;;
+
+builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice) v) inline {
+    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'authorship).end_cell());
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'description).end_cell());
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'rootHash).end_cell());
+    var build_1 = begin_cell();
+    build_1 = build_1.store_ref(begin_cell().store_slice(v'data).end_cell());
+    build_1 = build_1.store_ref(begin_cell().store_slice(v'tags).end_cell());
+    build_0 = store_ref(build_0, build_1.end_cell());
+    return build_0;
+}
+
+(slice, ((slice, slice, slice, slice, slice))) $DocumentData$_load(slice sc_0) inline {
+    var v'authorship = sc_0~load_ref().begin_parse();
+    var v'description = sc_0~load_ref().begin_parse();
+    var v'rootHash = sc_0~load_ref().begin_parse();
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'data = sc_1~load_ref().begin_parse();
+    var v'tags = sc_1~load_ref().begin_parse();
+    return (sc_0, (v'authorship, v'description, v'rootHash, v'data, v'tags));
+}
+
+((slice, slice, slice, slice, slice)) $DocumentData$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (slice vvv'authorship, slice vvv'description, slice vvv'rootHash, slice vvv'data, slice vvv'tags) = __tact_tuple_destroy_5(v);
+    return (vvv'authorship, vvv'description, vvv'rootHash, vvv'data, vvv'tags);
+}
+
+tuple $DocumentData$_as_optional((slice, slice, slice, slice, slice) v) inline {
+    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
+    return __tact_tuple_create_5(v'authorship, v'description, v'rootHash, v'data, v'tags);
+}
+
+tuple $DocumentData$_to_tuple(((slice, slice, slice, slice, slice)) v) inline {
+    var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
+    return __tact_tuple_create_5(v'authorship, v'description, v'rootHash, v'data, v'tags);
+}
+
+tuple $DocumentData$_to_opt_tuple(tuple v) inline {
+    if (null?(v)) { return null(); } 
+    return $DocumentData$_to_tuple($DocumentData$_not_null(v)); 
+}
+
+tuple $DocumentData$_to_opt_external(tuple v) inline {
+    var loaded = $DocumentData$_to_opt_tuple(v);
+    if (null?(loaded)) {
+        return null();
+    } else {
+        return (loaded);
+    }
+}
+
+;;
+;; Type: DeclareDocumentWithComission
+;; Header: 0xcbbaf08b
+;; TLB: declare_document_with_comission#cbbaf08b document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissionPercentage:uint256 = DeclareDocumentWithComission
+;;
+
+(slice, (((slice, slice, slice, slice, slice), int))) $DeclareDocumentWithComission$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 3418026123);
+    var v'document = sc_0~$DocumentData$_load();
+    var v'commissionPercentage = sc_0~load_uint(256);
+    return (sc_0, (v'document, v'commissionPercentage));
+}
+
+;;
+;; Type: GetFunds
+;; Header: 0x0a30a01f
+;; TLB: get_funds#0a30a01f amount:coins = GetFunds
+;;
+
+(slice, ((int))) $GetFunds$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 170958879);
+    var v'amount = sc_0~load_coins();
+    return (sc_0, (v'amount));
+}
+
+;;
+;; Type: SetCommissionPercentage
+;; Header: 0xe56fec38
+;; TLB: set_commission_percentage#e56fec38 commissionPercentage:uint256 documentAddress:Maybe address = SetCommissionPercentage
+;;
+
+(slice, ((int, slice))) $SetCommissionPercentage$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 3849317432);
+    var v'commissionPercentage = sc_0~load_uint(256);
+    var v'documentAddress = sc_0~__tact_load_address_opt();
+    return (sc_0, (v'commissionPercentage, v'documentAddress));
+}
+
+;;
 ;; Type: Document
 ;;
 
-builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice, tuple) v) inline {
-    var (v'parent, v'seqno, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, v'document) = v;
+builder $Document$_store(builder build_0, (slice, int, int, int, tuple, slice, slice, tuple) v) inline {
+    var (v'parent, v'seqno, v'commissionPercentage, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, v'document) = v;
     build_0 = __tact_store_address(build_0, v'parent);
     build_0 = build_0.store_uint(v'seqno, 256);
+    build_0 = ~ null?(v'commissionPercentage) ? build_0.store_int(true, 1).store_uint(v'commissionPercentage, 256) : build_0.store_int(false, 1);
     build_0 = ~ null?(v'cost) ? build_0.store_int(true, 1).store_coins(v'cost) : build_0.store_int(false, 1);
     var build_1 = begin_cell();
     build_1 = ~ null?(v'currentClaim) ? build_1.store_int(true, 1).$ExclusiveRightsClaim$_store($ExclusiveRightsClaim$_not_null(v'currentClaim)) : build_1.store_int(false, 1);
@@ -223,16 +238,17 @@ builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice,
     return build_0;
 }
 
-(slice, ((slice, int, int, tuple, slice, slice, tuple))) $Document$_load(slice sc_0) inline {
+(slice, ((slice, int, int, int, tuple, slice, slice, tuple))) $Document$_load(slice sc_0) inline {
     var v'parent = sc_0~__tact_load_address();
     var v'seqno = sc_0~load_uint(256);
+    var v'commissionPercentage = sc_0~load_int(1) ? sc_0~load_uint(256) : null();
     var v'cost = sc_0~load_int(1) ? sc_0~load_coins() : null();
     slice sc_1 = sc_0~load_ref().begin_parse();
     var v'currentClaim = sc_1~load_int(1) ? $ExclusiveRightsClaim$_as_optional(sc_1~$ExclusiveRightsClaim$_load()) : null();
     var v'author = sc_1~__tact_load_address();
     var v'exclusiveRightsOwner = sc_1~__tact_load_address();
     var v'document = sc_1~load_int(1) ? $DocumentData$_as_optional(sc_1~$DocumentData$_load()) : null();
-    return (sc_0, (v'parent, v'seqno, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, v'document));
+    return (sc_0, (v'parent, v'seqno, v'commissionPercentage, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, v'document));
 }
 
 (slice, ((slice, int, slice))) $Document$init$_load(slice sc_0) inline {
@@ -242,7 +258,7 @@ builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice,
     return (sc_0, (v'parent, v'seqno, v'author));
 }
 
-(slice, int, int, tuple, slice, slice, tuple) $Document$_contract_load() impure inline_ref {
+(slice, int, int, int, tuple, slice, slice, tuple) $Document$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -257,7 +273,7 @@ builder $Document$_store(builder build_0, (slice, int, int, tuple, slice, slice,
     }
 }
 
-() $Document$_contract_store((slice, int, int, tuple, slice, slice, tuple) v) impure inline {
+() $Document$_contract_store((slice, int, int, int, tuple, slice, slice, tuple) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);

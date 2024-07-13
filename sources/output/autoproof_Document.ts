@@ -415,153 +415,6 @@ function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
     }
 }
 
-export type DocumentData = {
-    $$type: 'DocumentData';
-    authorship: string;
-    description: string;
-    rootHash: string;
-    data: string;
-    tags: string;
-}
-
-export function storeDocumentData(src: DocumentData) {
-    return (builder: Builder) => {
-        let b_0 = builder;
-        b_0.storeStringRefTail(src.authorship);
-        b_0.storeStringRefTail(src.description);
-        b_0.storeStringRefTail(src.rootHash);
-        let b_1 = new Builder();
-        b_1.storeStringRefTail(src.data);
-        b_1.storeStringRefTail(src.tags);
-        b_0.storeRef(b_1.endCell());
-    };
-}
-
-export function loadDocumentData(slice: Slice) {
-    let sc_0 = slice;
-    let _authorship = sc_0.loadStringRefTail();
-    let _description = sc_0.loadStringRefTail();
-    let _rootHash = sc_0.loadStringRefTail();
-    let sc_1 = sc_0.loadRef().beginParse();
-    let _data = sc_1.loadStringRefTail();
-    let _tags = sc_1.loadStringRefTail();
-    return { $$type: 'DocumentData' as const, authorship: _authorship, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
-}
-
-function loadTupleDocumentData(source: TupleReader) {
-    let _authorship = source.readString();
-    let _description = source.readString();
-    let _rootHash = source.readString();
-    let _data = source.readString();
-    let _tags = source.readString();
-    return { $$type: 'DocumentData' as const, authorship: _authorship, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
-}
-
-function storeTupleDocumentData(source: DocumentData) {
-    let builder = new TupleBuilder();
-    builder.writeString(source.authorship);
-    builder.writeString(source.description);
-    builder.writeString(source.rootHash);
-    builder.writeString(source.data);
-    builder.writeString(source.tags);
-    return builder.build();
-}
-
-function dictValueParserDocumentData(): DictionaryValue<DocumentData> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeDocumentData(src)).endCell());
-        },
-        parse: (src) => {
-            return loadDocumentData(src.loadRef().beginParse());
-        }
-    }
-}
-
-export type DeclareDocument = {
-    $$type: 'DeclareDocument';
-    document: DocumentData;
-}
-
-export function storeDeclareDocument(src: DeclareDocument) {
-    return (builder: Builder) => {
-        let b_0 = builder;
-        b_0.storeUint(1278208621, 32);
-        b_0.store(storeDocumentData(src.document));
-    };
-}
-
-export function loadDeclareDocument(slice: Slice) {
-    let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 1278208621) { throw Error('Invalid prefix'); }
-    let _document = loadDocumentData(sc_0);
-    return { $$type: 'DeclareDocument' as const, document: _document };
-}
-
-function loadTupleDeclareDocument(source: TupleReader) {
-    const _document = loadTupleDocumentData(source.readTuple());
-    return { $$type: 'DeclareDocument' as const, document: _document };
-}
-
-function storeTupleDeclareDocument(source: DeclareDocument) {
-    let builder = new TupleBuilder();
-    builder.writeTuple(storeTupleDocumentData(source.document));
-    return builder.build();
-}
-
-function dictValueParserDeclareDocument(): DictionaryValue<DeclareDocument> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeDeclareDocument(src)).endCell());
-        },
-        parse: (src) => {
-            return loadDeclareDocument(src.loadRef().beginParse());
-        }
-    }
-}
-
-export type GetFunds = {
-    $$type: 'GetFunds';
-    amount: bigint;
-}
-
-export function storeGetFunds(src: GetFunds) {
-    return (builder: Builder) => {
-        let b_0 = builder;
-        b_0.storeUint(170958879, 32);
-        b_0.storeCoins(src.amount);
-    };
-}
-
-export function loadGetFunds(slice: Slice) {
-    let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 170958879) { throw Error('Invalid prefix'); }
-    let _amount = sc_0.loadCoins();
-    return { $$type: 'GetFunds' as const, amount: _amount };
-}
-
-function loadTupleGetFunds(source: TupleReader) {
-    let _amount = source.readBigNumber();
-    return { $$type: 'GetFunds' as const, amount: _amount };
-}
-
-function storeTupleGetFunds(source: GetFunds) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.amount);
-    return builder.build();
-}
-
-function dictValueParserGetFunds(): DictionaryValue<GetFunds> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeGetFunds(src)).endCell());
-        },
-        parse: (src) => {
-            return loadGetFunds(src.loadRef().beginParse());
-        }
-    }
-}
-
 export type SetCost = {
     $$type: 'SetCost';
     cost: bigint | null;
@@ -659,6 +512,247 @@ function dictValueParserExclusiveRightsClaim(): DictionaryValue<ExclusiveRightsC
     }
 }
 
+export type DeclareDocumentWithComission = {
+    $$type: 'DeclareDocumentWithComission';
+    document: DocumentData;
+    commissionPercentage: bigint;
+}
+
+export function storeDeclareDocumentWithComission(src: DeclareDocumentWithComission) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(3418026123, 32);
+        b_0.store(storeDocumentData(src.document));
+        b_0.storeUint(src.commissionPercentage, 256);
+    };
+}
+
+export function loadDeclareDocumentWithComission(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 3418026123) { throw Error('Invalid prefix'); }
+    let _document = loadDocumentData(sc_0);
+    let _commissionPercentage = sc_0.loadUintBig(256);
+    return { $$type: 'DeclareDocumentWithComission' as const, document: _document, commissionPercentage: _commissionPercentage };
+}
+
+function loadTupleDeclareDocumentWithComission(source: TupleReader) {
+    const _document = loadTupleDocumentData(source.readTuple());
+    let _commissionPercentage = source.readBigNumber();
+    return { $$type: 'DeclareDocumentWithComission' as const, document: _document, commissionPercentage: _commissionPercentage };
+}
+
+function storeTupleDeclareDocumentWithComission(source: DeclareDocumentWithComission) {
+    let builder = new TupleBuilder();
+    builder.writeTuple(storeTupleDocumentData(source.document));
+    builder.writeNumber(source.commissionPercentage);
+    return builder.build();
+}
+
+function dictValueParserDeclareDocumentWithComission(): DictionaryValue<DeclareDocumentWithComission> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeDeclareDocumentWithComission(src)).endCell());
+        },
+        parse: (src) => {
+            return loadDeclareDocumentWithComission(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type DocumentData = {
+    $$type: 'DocumentData';
+    authorship: string;
+    description: string;
+    rootHash: string;
+    data: string;
+    tags: string;
+}
+
+export function storeDocumentData(src: DocumentData) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeStringRefTail(src.authorship);
+        b_0.storeStringRefTail(src.description);
+        b_0.storeStringRefTail(src.rootHash);
+        let b_1 = new Builder();
+        b_1.storeStringRefTail(src.data);
+        b_1.storeStringRefTail(src.tags);
+        b_0.storeRef(b_1.endCell());
+    };
+}
+
+export function loadDocumentData(slice: Slice) {
+    let sc_0 = slice;
+    let _authorship = sc_0.loadStringRefTail();
+    let _description = sc_0.loadStringRefTail();
+    let _rootHash = sc_0.loadStringRefTail();
+    let sc_1 = sc_0.loadRef().beginParse();
+    let _data = sc_1.loadStringRefTail();
+    let _tags = sc_1.loadStringRefTail();
+    return { $$type: 'DocumentData' as const, authorship: _authorship, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
+}
+
+function loadTupleDocumentData(source: TupleReader) {
+    let _authorship = source.readString();
+    let _description = source.readString();
+    let _rootHash = source.readString();
+    let _data = source.readString();
+    let _tags = source.readString();
+    return { $$type: 'DocumentData' as const, authorship: _authorship, description: _description, rootHash: _rootHash, data: _data, tags: _tags };
+}
+
+function storeTupleDocumentData(source: DocumentData) {
+    let builder = new TupleBuilder();
+    builder.writeString(source.authorship);
+    builder.writeString(source.description);
+    builder.writeString(source.rootHash);
+    builder.writeString(source.data);
+    builder.writeString(source.tags);
+    return builder.build();
+}
+
+function dictValueParserDocumentData(): DictionaryValue<DocumentData> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeDocumentData(src)).endCell());
+        },
+        parse: (src) => {
+            return loadDocumentData(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type GetFunds = {
+    $$type: 'GetFunds';
+    amount: bigint;
+}
+
+export function storeGetFunds(src: GetFunds) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(170958879, 32);
+        b_0.storeCoins(src.amount);
+    };
+}
+
+export function loadGetFunds(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 170958879) { throw Error('Invalid prefix'); }
+    let _amount = sc_0.loadCoins();
+    return { $$type: 'GetFunds' as const, amount: _amount };
+}
+
+function loadTupleGetFunds(source: TupleReader) {
+    let _amount = source.readBigNumber();
+    return { $$type: 'GetFunds' as const, amount: _amount };
+}
+
+function storeTupleGetFunds(source: GetFunds) {
+    let builder = new TupleBuilder();
+    builder.writeNumber(source.amount);
+    return builder.build();
+}
+
+function dictValueParserGetFunds(): DictionaryValue<GetFunds> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeGetFunds(src)).endCell());
+        },
+        parse: (src) => {
+            return loadGetFunds(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type SetCommissionPercentage = {
+    $$type: 'SetCommissionPercentage';
+    commissionPercentage: bigint;
+    documentAddress: Address | null;
+}
+
+export function storeSetCommissionPercentage(src: SetCommissionPercentage) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(3849317432, 32);
+        b_0.storeUint(src.commissionPercentage, 256);
+        b_0.storeAddress(src.documentAddress);
+    };
+}
+
+export function loadSetCommissionPercentage(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 3849317432) { throw Error('Invalid prefix'); }
+    let _commissionPercentage = sc_0.loadUintBig(256);
+    let _documentAddress = sc_0.loadMaybeAddress();
+    return { $$type: 'SetCommissionPercentage' as const, commissionPercentage: _commissionPercentage, documentAddress: _documentAddress };
+}
+
+function loadTupleSetCommissionPercentage(source: TupleReader) {
+    let _commissionPercentage = source.readBigNumber();
+    let _documentAddress = source.readAddressOpt();
+    return { $$type: 'SetCommissionPercentage' as const, commissionPercentage: _commissionPercentage, documentAddress: _documentAddress };
+}
+
+function storeTupleSetCommissionPercentage(source: SetCommissionPercentage) {
+    let builder = new TupleBuilder();
+    builder.writeNumber(source.commissionPercentage);
+    builder.writeAddress(source.documentAddress);
+    return builder.build();
+}
+
+function dictValueParserSetCommissionPercentage(): DictionaryValue<SetCommissionPercentage> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeSetCommissionPercentage(src)).endCell());
+        },
+        parse: (src) => {
+            return loadSetCommissionPercentage(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type DeclareDocument = {
+    $$type: 'DeclareDocument';
+    document: DocumentData;
+}
+
+export function storeDeclareDocument(src: DeclareDocument) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(1278208621, 32);
+        b_0.store(storeDocumentData(src.document));
+    };
+}
+
+export function loadDeclareDocument(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 1278208621) { throw Error('Invalid prefix'); }
+    let _document = loadDocumentData(sc_0);
+    return { $$type: 'DeclareDocument' as const, document: _document };
+}
+
+function loadTupleDeclareDocument(source: TupleReader) {
+    const _document = loadTupleDocumentData(source.readTuple());
+    return { $$type: 'DeclareDocument' as const, document: _document };
+}
+
+function storeTupleDeclareDocument(source: DeclareDocument) {
+    let builder = new TupleBuilder();
+    builder.writeTuple(storeTupleDocumentData(source.document));
+    return builder.build();
+}
+
+function dictValueParserDeclareDocument(): DictionaryValue<DeclareDocument> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeDeclareDocument(src)).endCell());
+        },
+        parse: (src) => {
+            return loadDeclareDocument(src.loadRef().beginParse());
+        }
+    }
+}
+
  type Document_init_args = {
     $$type: 'Document_init_args';
     parent: Address;
@@ -676,8 +770,8 @@ function initDocument_init_args(src: Document_init_args) {
 }
 
 async function Document_init(parent: Address, seqno: bigint, author: Address) {
-    const __code = Cell.fromBase64('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');
-    const __system = Cell.fromBase64('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');
+    const __code = Cell.fromBase64('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');
+    const __system = Cell.fromBase64('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');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -717,15 +811,18 @@ const Document_errors: { [key: number]: { message: string } } = {
     7765: { message: `Can't approve without a claim` },
     7782: { message: `Can't cancel without a claim` },
     8086: { message: `Not enough funds` },
+    10382: { message: `Commission percentage can't be less than 0` },
     14555: { message: `Exclusive rights transfer is not available` },
+    14578: { message: `Commission percentage can't be greater than 100` },
     19061: { message: `Only exclusive rights owner can get funds` },
     19102: { message: `Transfer is in progress` },
     19201: { message: `Can't view documents if they are not sent` },
     21953: { message: `Not enough funds.` },
     23073: { message: `Can't approve if documents are not viewed` },
     28490: { message: `Authorship can't be empty` },
+    29100: { message: `Only parent contract can set the commission percentage` },
     30316: { message: `Can't approve if documents are not sent` },
-    35980: { message: `Can't get funds during the transfer` },
+    30875: { message: `Only owner can set the commission percentage` },
     41504: { message: `Can't update without a claim` },
     44565: { message: `Only the exclusive rights have access` },
     46455: { message: `Document data can be declared only once` },
@@ -748,29 +845,34 @@ const Document_types: ABIType[] = [
     {"name":"Deploy","header":2490013878,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"DeployOk","header":2952335191,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"DocumentData","header":null,"fields":[{"name":"authorship","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"rootHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"data","type":{"kind":"simple","type":"string","optional":false}},{"name":"tags","type":{"kind":"simple","type":"string","optional":false}}]},
-    {"name":"DeclareDocument","header":1278208621,"fields":[{"name":"document","type":{"kind":"simple","type":"DocumentData","optional":false}}]},
-    {"name":"GetFunds","header":170958879,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"SetCost","header":2434905007,"fields":[{"name":"cost","type":{"kind":"simple","type":"uint","optional":true,"format":"coins"}}]},
     {"name":"ExclusiveRightsClaim","header":null,"fields":[{"name":"author","type":{"kind":"simple","type":"address","optional":false}},{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"sentDocuments","type":{"kind":"simple","type":"bool","optional":false}},{"name":"viewedDocuments","type":{"kind":"simple","type":"bool","optional":false}}]},
+    {"name":"DeclareDocumentWithComission","header":3418026123,"fields":[{"name":"document","type":{"kind":"simple","type":"DocumentData","optional":false}},{"name":"commissionPercentage","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
+    {"name":"DocumentData","header":null,"fields":[{"name":"authorship","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"rootHash","type":{"kind":"simple","type":"string","optional":false}},{"name":"data","type":{"kind":"simple","type":"string","optional":false}},{"name":"tags","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"GetFunds","header":170958879,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+    {"name":"SetCommissionPercentage","header":3849317432,"fields":[{"name":"commissionPercentage","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"documentAddress","type":{"kind":"simple","type":"address","optional":true}}]},
+    {"name":"DeclareDocument","header":1278208621,"fields":[{"name":"document","type":{"kind":"simple","type":"DocumentData","optional":false}}]},
 ]
 
 const Document_getters: ABIGetter[] = [
+    {"name":"currentCommissionPercentage","arguments":[],"returnType":{"kind":"simple","type":"int","optional":false,"format":257}},
     {"name":"currentCost","arguments":[],"returnType":{"kind":"simple","type":"int","optional":true,"format":257}},
     {"name":"currentClaim","arguments":[],"returnType":{"kind":"simple","type":"ExclusiveRightsClaim","optional":true}},
     {"name":"author","arguments":[],"returnType":{"kind":"simple","type":"address","optional":false}},
     {"name":"exclusiveRightsOwner","arguments":[],"returnType":{"kind":"simple","type":"address","optional":false}},
     {"name":"documentData","arguments":[],"returnType":{"kind":"simple","type":"DocumentData","optional":true}},
+    {"name":"calculatedCommission","arguments":[],"returnType":{"kind":"simple","type":"int","optional":false,"format":257}},
 ]
 
 const Document_receivers: ABIReceiver[] = [
-    {"receiver":"internal","message":{"kind":"typed","type":"DeclareDocument"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"DeclareDocumentWithComission"}},
     {"receiver":"internal","message":{"kind":"typed","type":"SetCost"}},
     {"receiver":"internal","message":{"kind":"text","text":"claim-rights-transfer"}},
     {"receiver":"internal","message":{"kind":"text","text":"sent-documents"}},
     {"receiver":"internal","message":{"kind":"text","text":"viewed-documents"}},
     {"receiver":"internal","message":{"kind":"text","text":"approve"}},
     {"receiver":"internal","message":{"kind":"text","text":"cancel"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"SetCommissionPercentage"}},
     {"receiver":"internal","message":{"kind":"typed","type":"GetFunds"}},
 ]
 
@@ -804,11 +906,11 @@ export class Document implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: DeclareDocument | SetCost | 'claim-rights-transfer' | 'sent-documents' | 'viewed-documents' | 'approve' | 'cancel' | GetFunds) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: DeclareDocumentWithComission | SetCost | 'claim-rights-transfer' | 'sent-documents' | 'viewed-documents' | 'approve' | 'cancel' | SetCommissionPercentage | GetFunds) {
         
         let body: Cell | null = null;
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'DeclareDocument') {
-            body = beginCell().store(storeDeclareDocument(message)).endCell();
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'DeclareDocumentWithComission') {
+            body = beginCell().store(storeDeclareDocumentWithComission(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'SetCost') {
             body = beginCell().store(storeSetCost(message)).endCell();
@@ -828,6 +930,9 @@ export class Document implements Contract {
         if (message === 'cancel') {
             body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
         }
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'SetCommissionPercentage') {
+            body = beginCell().store(storeSetCommissionPercentage(message)).endCell();
+        }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'GetFunds') {
             body = beginCell().store(storeGetFunds(message)).endCell();
         }
@@ -835,6 +940,13 @@ export class Document implements Contract {
         
         await provider.internal(via, { ...args, body: body });
         
+    }
+    
+    async getCurrentCommissionPercentage(provider: ContractProvider) {
+        let builder = new TupleBuilder();
+        let source = (await provider.get('currentCommissionPercentage', builder.build())).stack;
+        let result = source.readBigNumber();
+        return result;
     }
     
     async getCurrentCost(provider: ContractProvider) {
@@ -871,6 +983,13 @@ export class Document implements Contract {
         let source = (await provider.get('documentData', builder.build())).stack;
         const result_p = source.readTupleOpt();
         const result = result_p ? loadTupleDocumentData(result_p) : null;
+        return result;
+    }
+    
+    async getCalculatedCommission(provider: ContractProvider) {
+        let builder = new TupleBuilder();
+        let source = (await provider.get('calculatedCommission', builder.build())).stack;
+        let result = source.readBigNumber();
         return result;
     }
     

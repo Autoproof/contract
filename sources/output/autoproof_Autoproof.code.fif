@@ -1,7 +1,9 @@
 PROGRAM{
   DECLPROC __tact_verify_address
   DECLPROC __tact_load_address
+  DECLPROC __tact_load_address_opt
   DECLPROC __tact_store_address
+  DECLPROC __tact_store_address_opt
   DECLPROC __tact_create_address
   DECLPROC __tact_compute_contract_address
   DECLPROC __tact_my_balance
@@ -18,10 +20,13 @@ PROGRAM{
   DECLPROC $DeployOk$_store_cell
   DECLPROC $DocumentData$_store
   DECLPROC $DocumentData$_load
-  DECLPROC $DeclareDocument$_store
-  DECLPROC $DeclareDocument$_store_cell
-  DECLPROC $DeclareDocument$_load
+  DECLPROC $DeclareDocumentWithComission$_store
+  DECLPROC $DeclareDocumentWithComission$_store_cell
   DECLPROC $GetFunds$_load
+  DECLPROC $SetCommissionPercentage$_store
+  DECLPROC $SetCommissionPercentage$_store_cell
+  DECLPROC $SetCommissionPercentage$_load
+  DECLPROC $DeclareDocument$_load
   DECLPROC $Autoproof$_store
   DECLPROC $Autoproof$_load
   DECLPROC $StateInit$_not_null
@@ -32,21 +37,25 @@ PROGRAM{
   DECLPROC $Autoproof$_contract_store
   DECLPROC $global_contractAddress
   DECLPROC $global_send
-  DECLPROC $Autoproof$_fun_documentsNumber
   DECLPROC $Document$_init_child
+  DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
+  DECLPROC $Autoproof$_fun_documentsNumber
+  DECLPROC $Autoproof$_fun_currentCommissionPercentage
   DECLPROC $Autoproof$_fun_documentAddress
   DECLPROC $Autoproof$_fun_validateDeclaration
-  DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
   DECLPROC $Autoproof$_fun_forward
   DECLPROC $Autoproof$_fun_notify
   DECLPROC $Autoproof$_fun_owner
   DECLPROC $SendParameters$_constructor_to_body_value_code_data
+  DECLPROC $DeclareDocumentWithComission$_constructor_document_commissionPercentage
   DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $Autoproof$_internal_binary_DeclareDocument
+  DECLPROC $Autoproof$_internal_binary_SetCommissionPercentage
   DECLPROC $Autoproof$_internal_binary_GetFunds
   DECLPROC $Autoproof$_internal_binary_Deploy
   130065 DECLMETHOD %documentsNumber
+  113694 DECLMETHOD %currentCommissionPercentage
   76627 DECLMETHOD %documentAddress
   83229 DECLMETHOD %owner
   113617 DECLMETHOD supported_interfaces
@@ -79,9 +88,35 @@ PROGRAM{
     SWAP
     __tact_verify_address INLINECALLDICT
   }>
+  __tact_load_address_opt PROCINLINE:<{
+    DUP
+    2 PLDU
+    0 NEQINT
+    IF:<{
+      LDMSGADDR
+      SWAP
+      __tact_verify_address INLINECALLDICT
+    }>ELSE<{
+      2 PUSHINT
+      SDSKIPFIRST
+      PUSHNULL
+    }>
+  }>
   __tact_store_address PROCINLINE:<{
     __tact_verify_address INLINECALLDICT
     STSLICER
+  }>
+  __tact_store_address_opt PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      0 PUSHINT
+      SWAP
+      2 STU
+    }>ELSE<{
+      __tact_store_address INLINECALLDICT
+    }>
   }>
   __tact_create_address PROCINLINE:<{
     NEWC
@@ -242,26 +277,19 @@ PROGRAM{
     s2 s4 XCHG
     s2 s3 XCHG
   }>
-  $DeclareDocument$_store PROCINLINE:<{
-    1278208621 PUSHINT
-    s0 s6 XCHG2
+  $DeclareDocumentWithComission$_store PROCINLINE:<{
+    3418026123 PUSHINT
+    s0 s7 XCHG2
     32 STU
-    s0 s5 XCHG
-    $DocumentData$_store INLINECALLDICT
-  }>
-  $DeclareDocument$_store_cell PROCINLINE:<{
-    NEWC
     5 -ROLL
-    $DeclareDocument$_store INLINECALLDICT
-    ENDC
+    $DocumentData$_store INLINECALLDICT
+    256 STU
   }>
-  $DeclareDocument$_load PROCINLINE:<{
-    32 LDU
-    SWAP
-    1278208621 PUSHINT
-    EQUAL
-    129 THROWIFNOT
-    $DocumentData$_load INLINECALLDICT
+  $DeclareDocumentWithComission$_store_cell PROCINLINE:<{
+    NEWC
+    6 -ROLL
+    $DeclareDocumentWithComission$_store INLINECALLDICT
+    ENDC
   }>
   $GetFunds$_load PROCINLINE:<{
     32 LDU
@@ -272,16 +300,51 @@ PROGRAM{
     LDGRAMS
     SWAP
   }>
-  $Autoproof$_store PROCINLINE:<{
+  $SetCommissionPercentage$_store PROCINLINE:<{
+    3849317432 PUSHINT
+    s0 s3 XCHG2
+    32 STU
+    256 STU
+    SWAP
+    __tact_store_address_opt INLINECALLDICT
+  }>
+  $SetCommissionPercentage$_store_cell PROCINLINE:<{
+    NEWC
     -ROT
+    $SetCommissionPercentage$_store INLINECALLDICT
+    ENDC
+  }>
+  $SetCommissionPercentage$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    3849317432 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    256 LDU
+    __tact_load_address_opt INLINECALLDICT
+    s1 s2 XCHG
+  }>
+  $DeclareDocument$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    1278208621 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    $DocumentData$_load INLINECALLDICT
+  }>
+  $Autoproof$_store PROCINLINE:<{
+    2SWAP
     __tact_store_address INLINECALLDICT
+    s1 s2 XCHG
+    256 STU
     256 STU
   }>
   $Autoproof$_load PROCINLINE:<{
     __tact_load_address INLINECALLDICT
     SWAP
     256 LDU
-    -ROT
+    256 LDU
+    3 -ROLL
   }>
   $StateInit$_not_null PROCINLINE:<{
     DUP
@@ -304,8 +367,9 @@ PROGRAM{
   }>
   $Autoproof$_contract_init PROCREF:<{
     0 PUSHINT
+    10 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    SWAP
+    -ROT
   }>
   $Autoproof$_contract_load PROCREF:<{
     c4 PUSH
@@ -317,7 +381,7 @@ PROGRAM{
     SWAP
     IFJMP:<{
       $Autoproof$_load INLINECALLDICT
-      1 2 BLKDROP2
+      1 3 BLKDROP2
     }>
     DROP
     MYADDR
@@ -335,7 +399,7 @@ PROGRAM{
     TRUE
     SWAP
     1 STI
-    -ROT
+    3 -ROLL
     $Autoproof$_store INLINECALLDICT
     ENDC
     c4 POP
@@ -447,9 +511,6 @@ PROGRAM{
     SWAP
     SENDRAWMSG
   }>
-  $Autoproof$_fun_documentsNumber PROCREF:<{
-    DUP
-  }>
   $Document$_init_child PROCREF:<{
     s0 s3 XCHG
     CTOS
@@ -477,6 +538,14 @@ PROGRAM{
     s0 s4 XCHG
     $Document$init$_store INLINECALLDICT
     ENDC
+  }>
+  $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
+  }>
+  $Autoproof$_fun_documentsNumber PROCREF:<{
+    OVER
+  }>
+  $Autoproof$_fun_currentCommissionPercentage PROCREF:<{
+    DUP
   }>
   $Autoproof$_fun_documentAddress PROCREF:<{
     __tact_context_sys GETGLOB
@@ -514,8 +583,6 @@ PROGRAM{
     __tact_slice_neq INLINECALLDICT
     THROWANYIFNOT
   }>
-  $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
-  }>
   $Autoproof$_fun_forward PROCREF:<{
     PUSHNULL
     PUSHNULL
@@ -546,7 +613,7 @@ PROGRAM{
     $Autoproof$_fun_forward INLINECALLDICT
   }>
   $Autoproof$_fun_owner PROCREF:<{
-    OVER
+    s2 PUSH
   }>
   $SendParameters$_constructor_to_body_value_code_data PROCINLINE:<{
     TRUE
@@ -554,6 +621,8 @@ PROGRAM{
     s0 s4 XCHG
     0 PUSHINT
     s1 s3 s3 XCHG3
+  }>
+  $DeclareDocumentWithComission$_constructor_document_commissionPercentage PROCINLINE:<{
   }>
   $SendParameters$_constructor_to_value_mode_body PROCINLINE:<{
     TRUE
@@ -566,9 +635,11 @@ PROGRAM{
   $Autoproof$_internal_binary_DeclareDocument PROCINLINE:<{
     s4 s3 s2 PUSH3
     s4 s3 PUSH2
+    s7 s12 XCHG
     s6 s11 XCHG
     s5 s10 XCHG
     $Autoproof$_fun_validateDeclaration INLINECALLDICT
+    SWAP
     INC
     __tact_context_sys GETGLOB
     MYADDR
@@ -579,21 +650,63 @@ PROGRAM{
     $global_contractAddress INLINECALLDICT
     s4 s7 XCHG
     s3 s6 XCHG
-    s5 s9 s8 XCHG3
-    $DeclareDocument$_store_cell INLINECALLDICT
+    s10 s9 s8 XCHG3
+    s7 PUSH
+    $DeclareDocumentWithComission$_constructor_document_commissionPercentage INLINECALLDICT
+    $DeclareDocumentWithComission$_store_cell INLINECALLDICT
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
     s4 s5 XCHG
-    s0 s0 s3 XCHG3
-    s0 s6 XCHG
+    s0 s3 s6 XCHG3
+    s1 s7 XCHG
     $SendParameters$_constructor_to_body_value_code_data INLINECALLDICT
     $global_send INLINECALLDICT
-    SWAP
+    s1 s2 XCHG
+  }>
+  $Autoproof$_internal_binary_SetCommissionPercentage PROCINLINE:<{
+    30875 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    s6 PUSH
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    10382 PUSHINT
+    s2 PUSH
+    -1 GTINT
+    THROWANYIFNOT
+    14578 PUSHINT
+    s2 PUSH
+    101 LESSINT
+    THROWANYIFNOT
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      NIP
+      __tact_context_get_sender INLINECALLDICT
+      __tact_context_get INLINECALLDICT
+      $Context$_get_value INLINECALLDICT
+      2 PUSHINT
+      B{b5ee9c7241010101002a00005000000000546865204175746f70726f6f6620636f6d6d697373696f6e207761732075706461746564378c7770} B>boc PUSHREF
+      $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+      $global_send INLINECALLDICT
+    }>ELSE<{
+      DUP
+      __tact_not_null INLINECALLDICT
+      __tact_context_get INLINECALLDICT
+      $Context$_get_value INLINECALLDICT
+      s0 s3 XCHG
+      2 PUSHINT
+      s0 s3 XCHG
+      $SetCommissionPercentage$_store_cell INLINECALLDICT
+      s3 s3 s0 XCHG3
+      $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+      $global_send INLINECALLDICT
+    }>
   }>
   $Autoproof$_internal_binary_GetFunds PROCINLINE:<{
     61678 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s4 PUSH
+    s5 PUSH
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
     8086 PUSHINT
@@ -616,19 +729,24 @@ PROGRAM{
   %documentsNumber PROC:<{
     $Autoproof$_contract_load INLINECALLDICT
     $Autoproof$_fun_documentsNumber INLINECALLDICT
-    2 1 BLKDROP2
+    3 1 BLKDROP2
+  }>
+  %currentCommissionPercentage PROC:<{
+    $Autoproof$_contract_load INLINECALLDICT
+    $Autoproof$_fun_currentCommissionPercentage INLINECALLDICT
+    3 1 BLKDROP2
   }>
   %documentAddress PROC:<{
     __tact_verify_address INLINECALLDICT
     $Autoproof$_contract_load INLINECALLDICT
-    2SWAP
+    2 3 BLKSWAP
     $Autoproof$_fun_documentAddress INLINECALLDICT
-    2 1 BLKDROP2
+    3 1 BLKDROP2
   }>
   %owner PROC:<{
     $Autoproof$_contract_load INLINECALLDICT
     $Autoproof$_fun_owner INLINECALLDICT
-    2 1 BLKDROP2
+    3 1 BLKDROP2
   }>
   supported_interfaces PROC:<{
     123515602279859691144772641439386770278 PUSHINT
@@ -638,7 +756,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d5958487a636857666a554d61686f4c317558356e43446d36536e3966594247516a3959654d51464371627669} PUSHSLICE
+    x{697066733a2f2f516d4e6f386a6d6e39506f39384e6f4b526f554a3441325633324463325938786377443375715143753532764239} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -669,6 +787,16 @@ PROGRAM{
       $DeclareDocument$_load INLINECALLDICT
       1 5 BLKDROP2
       $Autoproof$_internal_binary_DeclareDocument INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    3849317432 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $SetCommissionPercentage$_load INLINECALLDICT
+      1 2 BLKDROP2
+      $Autoproof$_internal_binary_SetCommissionPercentage INLINECALLDICT
       TRUE
     }>
     DUP
@@ -711,7 +839,7 @@ PROGRAM{
     s0 s2 XCHG
     __tact_context_sender SETGLOB
     $Autoproof$_contract_load INLINECALLDICT
-    2SWAP
+    2 3 BLKSWAP
     $Autoproof$_contract_router_internal INLINECALLDICT
     130 THROWIFNOT
     $Autoproof$_contract_store INLINECALLDICT
