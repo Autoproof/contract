@@ -22,16 +22,15 @@ contract Document {
     seqno: Int as uint256;
     commissions: Commissions;
 
-    // document data
     author: Address;
     exclusiveRightsOwner: Address;
-    document: DocumentData;
     royaltyWalletAddress: Address?;
 
-    // transfership data
     cost: Int? as coins;
     currentClaim: ExclusiveRightsClaim?;
     assignmentHash: String?;
+
+    document: DocumentData;
 
     // author is owner when created
     init(parent: Address, seqno: Int, author: Address, document: DocumentData, commissions: Commissions, royaltyWalletAddress: Address?) {

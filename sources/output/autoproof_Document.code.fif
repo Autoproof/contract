@@ -317,45 +317,42 @@ PROGRAM{
     NEWC
     s0 s6 XCHG2
     __tact_store_address INLINECALLDICT
-    s0 s5 XCHG
-    s0 s6 XCHG
-    $DocumentData$_store INLINECALLDICT
-    ROT
+    s0 s4 XCHG2
     __tact_store_address_opt INLINECALLDICT
-    s3 PUSH
+    s2 PUSH
     ISNULL
     NOT
     IF:<{
       TRUE
       SWAP
       1 STI
-      s0 s3 XCHG2
+      ROT
       STGRAMS
     }>ELSE<{
-      s3 POP
+      s2 POP
       FALSE
-      s0 s3 XCHG2
+      ROT
       1 STI
     }>
     NEWC
-    s5 PUSH
+    s2 PUSH
     ISNULL
     NOT
     IF:<{
       TRUE
       SWAP
       1 STI
-      s0 s5 XCHG
+      s0 s2 XCHG
       $ExclusiveRightsClaim$_not_null INLINECALLDICT
-      s4 s8 XCHG
+      s4 s5 XCHG
       $ExclusiveRightsClaim$_store INLINECALLDICT
     }>ELSE<{
-      s5 POP
+      s2 POP
       FALSE
-      s0 s5 XCHG2
+      ROT
       1 STI
     }>
-    s3 PUSH
+    s2 PUSH
     ISNULL
     NOT
     IF:<{
@@ -363,22 +360,30 @@ PROGRAM{
       SWAP
       1 STI
       NEWC
-      s0 s4 XCHG2
+      s0 s3 XCHG2
       STSLICER
       ENDC
-      s0 s3 XCHG2
+      ROT
       STREF
     }>ELSE<{
-      s3 POP
+      s2 POP
       FALSE
-      s0 s3 XCHG2
+      ROT
       1 STI
     }>
+    NEWC
+    s0 s5 XCHG
+    s7 s1 s3 XCHG3
+    s9 s8 XCHG2
+    $DocumentData$_store INLINECALLDICT
     ENDC
-    s0 s3 XCHG2
+    s0 s4 XCHG2
     STREF
     ENDC
-    ROT
+    SWAP
+    STREF
+    ENDC
+    SWAP
     STREF
     ENDC
     SWAP
@@ -403,8 +408,6 @@ PROGRAM{
     CTOS
     __tact_load_address INLINECALLDICT
     SWAP
-    $DocumentData$_load INLINECALLDICT
-    s0 s5 XCHG
     __tact_load_address_opt INLINECALLDICT
     SWAP
     1 LDI
@@ -431,19 +434,21 @@ PROGRAM{
     SWAP
     IF:<{
       LDREF
-      DROP
+      SWAP
       CTOS
     }>ELSE<{
-      DROP
       PUSHNULL
     }>
+    SWAP
+    LDREF
+    DROP
+    CTOS
+    $DocumentData$_load INLINECALLDICT
+    s5 POP
     s13 s15 XCHG
     s13 s14 XCHG
     s11 s12 XCHG
-    s7 s8 XCHG
-    s6 s7 XCHG
-    s5 s6 XCHG
-    s4 s5 XCHG
+    4 ROLL
   }>
   $StateInit$_not_null PROCINLINE:<{
     DUP
@@ -523,14 +528,18 @@ PROGRAM{
     s1 s2 XCHG
   }>
   $Document$_contract_init PROCREF:<{
-    s8 PUSH
-    s3 s9 XCHG
-    s8 s1 s7 XCHG3
-    s3 s6 XCHG
-    s5 s4 s4 XCHG3
     PUSHNULL
     PUSHNULL
     PUSHNULL
+    s11 PUSH
+    s6 s12 XCHG
+    s5 s11 XCHG
+    s0 s10 XCHG
+    s6 s9 XCHG
+    s4 s8 XCHG
+    s3 s7 XCHG
+    s6 s5 s3 XCHG3
+    s1 s4 XCHG
   }>
   $Document$_contract_load PROCREF:<{
     c4 PUSH
@@ -701,10 +710,10 @@ PROGRAM{
     s11 PUSH
   }>
   $Document$_fun_currentCost PROCREF:<{
-    s2 PUSH
+    s7 PUSH
   }>
   $Document$_fun_currentClaim PROCREF:<{
-    OVER
+    s6 PUSH
   }>
   $Document$_fun_author PROCREF:<{
     s10 PUSH
@@ -713,14 +722,14 @@ PROGRAM{
     s9 PUSH
   }>
   $Document$_fun_documentData PROCREF:<{
-    s8 s7 s6 PUSH3
-    s8 s7 PUSH2
+    s4 s3 s2 PUSH3
+    s4 s3 PUSH2
   }>
   $Document$_fun_assignmentHash PROCREF:<{
-    DUP
+    s5 PUSH
   }>
   $Document$_fun_transfershipCommission PROCREF:<{
-    s2 PUSH
+    s7 PUSH
     ISNULL
     NOT
     IFJMP:<{
@@ -729,7 +738,7 @@ PROGRAM{
       s14 s13 s12 PUSH3
       s14 s13 s12 PUSH3
       s14 s13 s12 PUSH3
-      17 s() PUSH
+      22 s() PUSH
       __tact_not_null INLINECALLDICT
       1000 PUSHINT
       DIV
@@ -769,7 +778,7 @@ PROGRAM{
     0 PUSHINT
   }>
   $Document$_fun_royaltyCommission PROCREF:<{
-    s2 PUSH
+    s7 PUSH
     ISNULL
     NOT
     IFJMP:<{
@@ -778,7 +787,7 @@ PROGRAM{
       s14 s13 s12 PUSH3
       s14 s13 s12 PUSH3
       s14 s13 s12 PUSH3
-      17 s() PUSH
+      22 s() PUSH
       __tact_not_null INLINECALLDICT
       1000 PUSHINT
       DIV
@@ -890,14 +899,14 @@ PROGRAM{
     PUSHNULL
   }>
   $Document$_internal_binary_SetCost PROCINLINE:<{
-    s3 POP
+    s8 POP
     5688 PUSHINT
     __tact_context_get_sender INLINECALLDICT
     s11 PUSH
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
     19102 PUSHINT
-    s2 PUSH
+    s7 PUSH
     ISNULL
     THROWANYIFNOT
     B{b5ee9c7241010101001500002600000000436f7374206973207570646174656423247e70} B>boc PUSHREF
@@ -905,14 +914,14 @@ PROGRAM{
   }>
   $Document$_internal_text_8b659ceff9a6a3c20aa31a7bb878a3a04fb8b758f0079c869f0f4fb7d071b14e PROCINLINE:<{
     14555 PUSHINT
-    s3 PUSH
+    s8 PUSH
     ISNULL
     NOT
     THROWANYIFNOT
     21953 PUSHINT
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
-    s4 PUSH
+    s9 PUSH
     __tact_not_null INLINECALLDICT
     s14 17 s() XCHG
     s13 16 s() XCHG
@@ -937,9 +946,9 @@ PROGRAM{
     s1 16 s() XCHG
     THROWANYIFNOT
     19102 PUSHINT
-    s0 s14 XCHG
+    s0 s4 XCHG
     ISNULL
-    s1 s14 XCHG
+    s1 s4 XCHG
     THROWANYIFNOT
     __tact_context_get_sender INLINECALLDICT
     __tact_context_get INLINECALLDICT
@@ -956,13 +965,11 @@ PROGRAM{
     s6 s9 XCHG
     s5 s8 XCHG
     s4 s7 XCHG
-    s3 s6 XCHG
-    s5 s0 s4 XCHG3
-    s0 s3 XCHG
+    s5 s4 s6 XCHG3
   }>
   $Document$_internal_text_b9f1ba120cb2ba414dc6e46ab801c29fa13c4d7f1e91726f63f55ec0b168b103 PROCINLINE:<{
     41504 PUSHINT
-    s2 PUSH
+    s7 PUSH
     ISNULL
     NOT
     THROWANYIFNOT
@@ -971,78 +978,78 @@ PROGRAM{
     s11 PUSH
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    OVER
+    s6 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_author INLINECALLDICT
-    s0 s2 XCHG
+    s0 s7 XCHG
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_amount INLINECALLDICT
-    s1 s2 XCHG
+    s1 s7 XCHG
     TRUE
     FALSE
     $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments INLINECALLDICT
     $ExclusiveRightsClaim$_as_optional INLINECALLDICT
     B{b5ee9c7241010101002200004000000000446f63756d656e747320617265206d61726b65642061732073656e74b6ac2d98} B>boc PUSHREF
-    s1 s2 XCHG
+    s1 s7 XCHG
     $Document$_fun_reply INLINECALLDICT
   }>
   $Document$_internal_text_65571b87ca1035c906804ffbc83341f4b4fd3a4aed474c05f6fa70d45ab5e549 PROCINLINE:<{
     41504 PUSHINT
-    s2 PUSH
+    s7 PUSH
     ISNULL
     NOT
     THROWANYIFNOT
     61716 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s3 PUSH
+    s8 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_author INLINECALLDICT
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
     19201 PUSHINT
-    s2 PUSH
+    s7 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_sentDocuments INLINECALLDICT
     THROWANYIFNOT
-    OVER
+    s6 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_author INLINECALLDICT
-    s0 s2 XCHG
+    s0 s7 XCHG
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_amount INLINECALLDICT
-    s1 s2 XCHG
+    s1 s7 XCHG
     TRUE
     TRUE
     $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments INLINECALLDICT
     $ExclusiveRightsClaim$_as_optional INLINECALLDICT
     B{b5ee9c7241010101002400004400000000446f63756d656e747320617265206d61726b6564206173207669657765644fd9bbba} B>boc PUSHREF
-    s1 s2 XCHG
+    s1 s7 XCHG
     $Document$_fun_reply INLINECALLDICT
   }>
   $Document$_internal_binary_ClaimApproval PROCINLINE:<{
     7765 PUSHINT
-    s3 PUSH
+    s8 PUSH
     ISNULL
     NOT
     THROWANYIFNOT
     30316 PUSHINT
-    s3 PUSH
+    s8 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_sentDocuments INLINECALLDICT
     THROWANYIFNOT
     23073 PUSHINT
-    s3 PUSH
+    s8 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_viewedDocuments INLINECALLDICT
     THROWANYIFNOT
     3861 PUSHINT
-    s3 PUSH
+    s8 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_author INLINECALLDICT
     __tact_context_get_sender INLINECALLDICT
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    s2 PUSH
+    s7 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_amount INLINECALLDICT
     2 PUSHINT
@@ -1051,11 +1058,11 @@ PROGRAM{
     3 -ROLL
     $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
     $global_send INLINECALLDICT
-    s4 PUSH
+    s9 PUSH
     ISNULL
     NOT
     IF:<{
-      s4 PUSH
+      s9 PUSH
       __tact_not_null INLINECALLDICT
       s14 16 s() XCHG
       5 12 REVERSE
@@ -1079,25 +1086,29 @@ PROGRAM{
       $global_send INLINECALLDICT
       2 14 BLKSWAP
     }>
-    s4 PUSH
+    s9 PUSH
     ISNULL
     IF:<{
       15 -ROLL
       $Document$_fun_summedCommission INLINECALLDICT
-      s10 POP
-      3 BLKDROP
+      s6 POP
+      s6 POP
+      s6 POP
+      s7 POP
     }>ELSE<{
       15 -ROLL
       $Document$_fun_transfershipCommission INLINECALLDICT
-      s10 POP
-      3 BLKDROP
+      s6 POP
+      s6 POP
+      s6 POP
+      s7 POP
     }>
     FALSE
     2 PUSHINT
     B{b5ee9c724101010100220000400000000053656e6420636f6d6d697373696f6e20746f204175746f70726f6f663d436200} B>boc PUSHREF
     s14 PUSH
     s0 s4 XCHG
-    s0 s10 XCHG
+    s0 s6 XCHG
     3 -ROLL
     $SendParameters$_constructor_to_value_bounce_mode_body INLINECALLDICT
     $global_send INLINECALLDICT
@@ -1112,16 +1123,14 @@ PROGRAM{
     s10 s11 XCHG
     s3 s10 XCHG
     s8 s9 XCHG
-    s7 s8 XCHG
-    s6 s7 XCHG
-    s5 s6 XCHG
-    s4 s5 XCHG
+    s8 s7 s0 XCHG3
+    4 3 REVERSE
     s1 s3 s0 XCHG3
     $Document$_fun_reply INLINECALLDICT
   }>
   $Document$_internal_text_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4 PROCINLINE:<{
     7782 PUSHINT
-    s2 PUSH
+    s7 PUSH
     ISNULL
     NOT
     THROWANYIFNOT
@@ -1137,7 +1146,7 @@ PROGRAM{
       IF:<{
         TRUE
       }>ELSE<{
-        s2 PUSH
+        s7 PUSH
         $ExclusiveRightsClaim$_not_null INLINECALLDICT
         $ExclusiveRightsClaim$_get_author INLINECALLDICT
         __tact_context_get_sender INLINECALLDICT
@@ -1145,18 +1154,18 @@ PROGRAM{
       }>
       THROWANYIFNOT
       53932 PUSHINT
-      s2 PUSH
+      s7 PUSH
       $ExclusiveRightsClaim$_not_null INLINECALLDICT
       $ExclusiveRightsClaim$_get_sentDocuments INLINECALLDICT
       0 EQINT
       IF:<{
         TRUE
       }>ELSE<{
-        s2 PUSH
+        s7 PUSH
         $ExclusiveRightsClaim$_not_null INLINECALLDICT
         $ExclusiveRightsClaim$_get_sentDocuments INLINECALLDICT
         IF:<{
-          s2 PUSH
+          s7 PUSH
           $ExclusiveRightsClaim$_not_null INLINECALLDICT
           $ExclusiveRightsClaim$_get_viewedDocuments INLINECALLDICT
         }>ELSE<{
@@ -1165,10 +1174,10 @@ PROGRAM{
       }>
       THROWANYIFNOT
     }>
-    OVER
+    s6 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_author INLINECALLDICT
-    s2 PUSH
+    s7 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_amount INLINECALLDICT
     s14 16 s() XCHG
@@ -1185,9 +1194,9 @@ PROGRAM{
     s0 16 s() XCHG
     s15 s2 XCHG2
     $Document$_fun_summedCommission INLINECALLDICT
-    s2 POP
-    s0 16 s() XCHG
-    SWAP
+    s7 POP
+    s1 16 s() XCHG
+    s0 s6 XCHG
     ADD
     2 PUSHINT
     B{b5ee9c7241010101002100003e0000000052657475726e2066756e647320746f2074686520636c61696d6572d1b329c2} B>boc PUSHREF
@@ -1204,7 +1213,7 @@ PROGRAM{
     s8 s10 XCHG
     s7 s9 XCHG
     s6 s8 XCHG
-    s5 s7 XCHG
+    s1 s7 XCHG
     s4 s6 XCHG
     s3 s5 XCHG
     s1 s4 s0 XCHG3
@@ -1236,12 +1245,12 @@ PROGRAM{
     s12 PUSH
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
-    s2 PUSH
+    s7 PUSH
     ISNULL
     IF:<{
       0 PUSHINT
     }>ELSE<{
-      s2 PUSH
+      s7 PUSH
       $ExclusiveRightsClaim$_not_null INLINECALLDICT
       $ExclusiveRightsClaim$_get_amount INLINECALLDICT
     }>
