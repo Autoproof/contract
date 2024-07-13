@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 3477 bytes
+BOC Size: 3467 bytes
 
 # Types
 Total Types: 18
@@ -140,6 +140,7 @@ Total Get Methods: 12
 19061: Only exclusive rights owner can get funds
 19102: Transfer is in progress
 19201: Can't view documents if they are not sent
+19858: Only owner can set the commissions
 21449: Royalty commission percentage can't be less than 0
 21953: Not enough funds.
 23073: Can't approve if documents are not viewed
@@ -147,7 +148,6 @@ Total Get Methods: 12
 24203: Transfership commission percentage can't be greater than 100
 28490: Authorship can't be empty
 30316: Can't approve if documents are not sent
-30875: Only owner can set the commission percentage
 34015: Only owner can cancel a document contract
 40368: Contract stopped
 41504: Can't update without a claim

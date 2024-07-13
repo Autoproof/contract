@@ -294,42 +294,42 @@ tuple $Commissions$_to_opt_external(tuple v) inline {
 ;; Type: Document
 ;;
 
-builder $Document$_store(builder build_0, (slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) v) inline {
-    var (v'parent, v'seqno, v'commissions, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, v'document, v'assignmentHash, v'royaltyWalletAddress) = v;
+builder $Document$_store(builder build_0, (slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) v) inline {
+    var (v'parent, v'seqno, v'commissions, v'author, v'exclusiveRightsOwner, v'document, v'royaltyWalletAddress, v'cost, v'currentClaim, v'assignmentHash) = v;
     build_0 = __tact_store_address(build_0, v'parent);
     build_0 = build_0.store_uint(v'seqno, 256);
     var build_1 = begin_cell();
     build_1 = ~ null?(v'commissions) ? build_1.store_int(true, 1).$Commissions$_store($Commissions$_not_null(v'commissions)) : build_1.store_int(false, 1);
-    build_1 = ~ null?(v'cost) ? build_1.store_int(true, 1).store_coins(v'cost) : build_1.store_int(false, 1);
+    build_1 = __tact_store_address(build_1, v'author);
     var build_2 = begin_cell();
-    build_2 = ~ null?(v'currentClaim) ? build_2.store_int(true, 1).$ExclusiveRightsClaim$_store($ExclusiveRightsClaim$_not_null(v'currentClaim)) : build_2.store_int(false, 1);
-    build_2 = __tact_store_address(build_2, v'author);
     build_2 = __tact_store_address(build_2, v'exclusiveRightsOwner);
     build_2 = ~ null?(v'document) ? build_2.store_int(true, 1).$DocumentData$_store($DocumentData$_not_null(v'document)) : build_2.store_int(false, 1);
+    build_2 = __tact_store_address_opt(build_2, v'royaltyWalletAddress);
+    build_2 = ~ null?(v'cost) ? build_2.store_int(true, 1).store_coins(v'cost) : build_2.store_int(false, 1);
     var build_3 = begin_cell();
+    build_3 = ~ null?(v'currentClaim) ? build_3.store_int(true, 1).$ExclusiveRightsClaim$_store($ExclusiveRightsClaim$_not_null(v'currentClaim)) : build_3.store_int(false, 1);
     build_3 = ~ null?(v'assignmentHash) ? build_3.store_int(true, 1).store_ref(begin_cell().store_slice(v'assignmentHash).end_cell()) : build_3.store_int(false, 1);
-    build_3 = __tact_store_address_opt(build_3, v'royaltyWalletAddress);
     build_2 = store_ref(build_2, build_3.end_cell());
     build_1 = store_ref(build_1, build_2.end_cell());
     build_0 = store_ref(build_0, build_1.end_cell());
     return build_0;
 }
 
-(slice, ((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice))) $Document$_load(slice sc_0) inline {
+(slice, ((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice))) $Document$_load(slice sc_0) inline {
     var v'parent = sc_0~__tact_load_address();
     var v'seqno = sc_0~load_uint(256);
     slice sc_1 = sc_0~load_ref().begin_parse();
     var v'commissions = sc_1~load_int(1) ? $Commissions$_as_optional(sc_1~$Commissions$_load()) : null();
-    var v'cost = sc_1~load_int(1) ? sc_1~load_coins() : null();
+    var v'author = sc_1~__tact_load_address();
     slice sc_2 = sc_1~load_ref().begin_parse();
-    var v'currentClaim = sc_2~load_int(1) ? $ExclusiveRightsClaim$_as_optional(sc_2~$ExclusiveRightsClaim$_load()) : null();
-    var v'author = sc_2~__tact_load_address();
     var v'exclusiveRightsOwner = sc_2~__tact_load_address();
     var v'document = sc_2~load_int(1) ? $DocumentData$_as_optional(sc_2~$DocumentData$_load()) : null();
+    var v'royaltyWalletAddress = sc_2~__tact_load_address_opt();
+    var v'cost = sc_2~load_int(1) ? sc_2~load_coins() : null();
     slice sc_3 = sc_2~load_ref().begin_parse();
+    var v'currentClaim = sc_3~load_int(1) ? $ExclusiveRightsClaim$_as_optional(sc_3~$ExclusiveRightsClaim$_load()) : null();
     var v'assignmentHash = sc_3~load_int(1) ? sc_3~load_ref().begin_parse() : null();
-    var v'royaltyWalletAddress = sc_3~__tact_load_address_opt();
-    return (sc_0, (v'parent, v'seqno, v'commissions, v'cost, v'currentClaim, v'author, v'exclusiveRightsOwner, v'document, v'assignmentHash, v'royaltyWalletAddress));
+    return (sc_0, (v'parent, v'seqno, v'commissions, v'author, v'exclusiveRightsOwner, v'document, v'royaltyWalletAddress, v'cost, v'currentClaim, v'assignmentHash));
 }
 
 (slice, ((slice, int, slice))) $Document$init$_load(slice sc_0) inline {
@@ -339,7 +339,7 @@ builder $Document$_store(builder build_0, (slice, int, tuple, int, tuple, slice,
     return (sc_0, (v'parent, v'seqno, v'author));
 }
 
-(slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $Document$_contract_load() impure inline_ref {
+(slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) $Document$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -354,7 +354,7 @@ builder $Document$_store(builder build_0, (slice, int, tuple, int, tuple, slice,
     }
 }
 
-() $Document$_contract_store((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) v) impure inline {
+() $Document$_contract_store((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);

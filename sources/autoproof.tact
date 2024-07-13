@@ -83,7 +83,7 @@ contract Autoproof with Deployable, Resumable {
     }
 
     receive(msg: SetCommissions) {
-        require(self.owner == sender(), "Only owner can set the commission percentage");
+        require(self.owner == sender(), "Only owner can set the commissions");
 
         require(msg.commissions.transfershipCommissionPercentage >= 0, "Transfership commission percentage can't be less than 0");
         require(msg.commissions.transfershipCommissionPercentage <= 100, "Transfership commission percentage can't be greater than 100");
@@ -97,7 +97,7 @@ contract Autoproof with Deployable, Resumable {
                 to: sender(),
                 value: context().value,
                 mode: SendIgnoreErrors,
-                body: "The Autoproof commission was updated".asComment(),
+                body: "The Autoproof commissions were updated".asComment(),
             });
         } else {
             send(SendParameters{

@@ -118,8 +118,8 @@ forall X0, X1, X2, X3, X4 -> (X0, X1, X2, X3, X4) __tact_tuple_destroy_5(tuple v
     send_raw_message($c, $params'mode);
 }
 
-((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), ()) $Document$_fun_forward((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice), ()) $Document$_fun_forward((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash)) = $self;
     var ($init) = $init;
     cell $code = null();
     cell $data = null();
@@ -135,15 +135,15 @@ forall X0, X1, X2, X3, X4 -> (X0, X1, X2, X3, X4) __tact_tuple_destroy_5(tuple v
         if (($balanceBeforeMessage < 0)) {
             raw_reserve(0, 0);
             $global_send($SendParameters$_constructor_bounce_to_value_mode_body_code_data($bounce, $to, 0, 130, $body, $code, $data));
-            return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
+            return (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash), ());
         }
     }
     $global_send($SendParameters$_constructor_bounce_to_value_mode_body_code_data($bounce, $to, 0, 66, $body, $code, $data));
-    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
+    return (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash), ());
 }
 
-((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), ()) $Document$_fun_reply((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, cell $body) impure inline {
-    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
-    ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_forward(__tact_context_get_sender(), $body, true, null());
-    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
+((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice), ()) $Document$_fun_reply((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) $self, cell $body) impure inline {
+    var (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash)) = $self;
+    ($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash)~$Document$_fun_forward(__tact_context_get_sender(), $body, true, null());
+    return (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash), ());
 }
