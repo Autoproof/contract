@@ -125,11 +125,13 @@ Total Get Methods: 7
 29100: Only parent contract can set the commission percentage
 30316: Can't approve if documents are not sent
 30875: Only owner can set the commission percentage
+40368: Contract stopped
 41504: Can't update without a claim
 44565: Only the exclusive rights have access
 46455: Document data can be declared only once
 48674: Only Autoproof is allowed to set the document data
 50544: Only exclusive rights owner or author of the claim can cancel
+53296: Contract not stopped
 53932: Can't cancel if documents were sent but not viewed
 59821: Description hash can't be empty
 61064: Data can't be empty

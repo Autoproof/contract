@@ -202,22 +202,24 @@ builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline {
 ;; Type: Autoproof
 ;;
 
-builder $Autoproof$_store(builder build_0, (slice, int, int) v) inline {
-    var (v'owner, v'documentsNumber, v'commissionPercentage) = v;
+builder $Autoproof$_store(builder build_0, (slice, int, int, int) v) inline {
+    var (v'owner, v'stopped, v'documentsNumber, v'commissionPercentage) = v;
     build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = build_0.store_int(v'stopped, 1);
     build_0 = build_0.store_uint(v'documentsNumber, 256);
     build_0 = build_0.store_uint(v'commissionPercentage, 256);
     return build_0;
 }
 
-(slice, ((slice, int, int))) $Autoproof$_load(slice sc_0) inline {
+(slice, ((slice, int, int, int))) $Autoproof$_load(slice sc_0) inline {
     var v'owner = sc_0~__tact_load_address();
+    var v'stopped = sc_0~load_int(1);
     var v'documentsNumber = sc_0~load_uint(256);
     var v'commissionPercentage = sc_0~load_uint(256);
-    return (sc_0, (v'owner, v'documentsNumber, v'commissionPercentage));
+    return (sc_0, (v'owner, v'stopped, v'documentsNumber, v'commissionPercentage));
 }
 
-(slice, int, int) $Autoproof$_contract_load() impure inline_ref {
+(slice, int, int, int) $Autoproof$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -230,7 +232,7 @@ builder $Autoproof$_store(builder build_0, (slice, int, int) v) inline {
     }
 }
 
-() $Autoproof$_contract_store((slice, int, int) v) impure inline {
+() $Autoproof$_contract_store((slice, int, int, int) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);

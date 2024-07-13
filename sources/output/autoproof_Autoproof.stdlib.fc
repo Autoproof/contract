@@ -148,8 +148,8 @@ slice $global_contractAddress((cell, cell) $s) impure inline {
     send_raw_message($c, $params'mode);
 }
 
-((slice, int, int), ()) $Autoproof$_fun_forward((slice, int, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref {
-    var (($self'owner, $self'documentsNumber, $self'commissionPercentage)) = $self;
+((slice, int, int, int), ()) $Autoproof$_fun_forward((slice, int, int, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref {
+    var (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage)) = $self;
     var ($init) = $init;
     cell $code = null();
     cell $data = null();
@@ -165,15 +165,21 @@ slice $global_contractAddress((cell, cell) $s) impure inline {
         if (($balanceBeforeMessage < 0)) {
             raw_reserve(0, 0);
             $global_send($SendParameters$_constructor_bounce_to_value_mode_body_code_data($bounce, $to, 0, 130, $body, $code, $data));
-            return (($self'owner, $self'documentsNumber, $self'commissionPercentage), ());
+            return (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage), ());
         }
     }
     $global_send($SendParameters$_constructor_bounce_to_value_mode_body_code_data($bounce, $to, 0, 66, $body, $code, $data));
-    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), ());
+    return (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage), ());
 }
 
-((slice, int, int), ()) $Autoproof$_fun_notify((slice, int, int) $self, cell $body) impure inline {
-    var (($self'owner, $self'documentsNumber, $self'commissionPercentage)) = $self;
-    ($self'owner, $self'documentsNumber, $self'commissionPercentage)~$Autoproof$_fun_forward(__tact_context_get_sender(), $body, false, null());
-    return (($self'owner, $self'documentsNumber, $self'commissionPercentage), ());
+((slice, int, int, int), ()) $Autoproof$_fun_reply((slice, int, int, int) $self, cell $body) impure inline {
+    var (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage)) = $self;
+    ($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage)~$Autoproof$_fun_forward(__tact_context_get_sender(), $body, true, null());
+    return (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage), ());
+}
+
+((slice, int, int, int), ()) $Autoproof$_fun_notify((slice, int, int, int) $self, cell $body) impure inline {
+    var (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage)) = $self;
+    ($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage)~$Autoproof$_fun_forward(__tact_context_get_sender(), $body, false, null());
+    return (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage), ());
 }

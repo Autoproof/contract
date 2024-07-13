@@ -1,3 +1,4 @@
+import "@stdlib/stoppable";
 import "@stdlib/ownable";
 import "@stdlib/deploy";
 import "./document.tact";
@@ -9,13 +10,19 @@ message DeclareDocument {
     document: DocumentData;
 }
 
-contract Autoproof with Deployable, Ownable {
+contract Autoproof with Deployable, Resumable {
     owner: Address;
+    stopped: Bool; // we want to be able to stop the contract for upgrades
     documentsNumber: Int as uint256 = 0;
     commissionPercentage: Int as uint256 = 10; // 10% by default
 
     init() {
         self.owner = sender();
+        self.stopped = false;
+    }
+
+    get fun isStopped(): Bool {
+        return self.stopped;
     }
 
     get fun documentsNumber(): Int {
@@ -31,6 +38,8 @@ contract Autoproof with Deployable, Ownable {
     }
 
     receive(msg: DeclareDocument) {
+        self.requireNotStopped();
+
         self.validateDeclaration(msg.document);
         self.documentsNumber = self.documentsNumber + 1;
 
