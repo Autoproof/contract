@@ -66,20 +66,20 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ;; $DocumentData$_load
 (slice, ((slice, slice, slice, slice, slice))) $DocumentData$_load(slice sc_0) inline;
 
+;; $DeclareDocumentWithRoyaltyAddress$_store
+builder $DeclareDocumentWithRoyaltyAddress$_store(builder build_0, ((slice, slice, slice, slice, slice), slice) v) inline;
+
+;; $DeclareDocumentWithRoyaltyAddress$_store_cell
+cell $DeclareDocumentWithRoyaltyAddress$_store_cell(((slice, slice, slice, slice, slice), slice) v) inline;
+
+;; $GetFunds$_load
+(slice, ((int))) $GetFunds$_load(slice sc_0) inline;
+
 ;; $Commissions$_store
 builder $Commissions$_store(builder build_0, (int, int) v) inline;
 
 ;; $Commissions$_load
 (slice, ((int, int))) $Commissions$_load(slice sc_0) inline;
-
-;; $DeclareDocumentWithComission$_store
-builder $DeclareDocumentWithComission$_store(builder build_0, ((slice, slice, slice, slice, slice), (int, int), slice) v) inline;
-
-;; $DeclareDocumentWithComission$_store_cell
-cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, slice), (int, int), slice) v) inline;
-
-;; $GetFunds$_load
-(slice, ((int))) $GetFunds$_load(slice sc_0) inline;
 
 ;; $SetCommissions$_store
 builder $SetCommissions$_store(builder build_0, ((int, int), slice) v) inline;
@@ -210,8 +210,11 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $SendParameters$_constructor_to_body_value_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice to, cell body, int value, cell code, cell data) inline;
 
-;; $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress
-(((slice, slice, slice, slice, slice), (int, int), slice)) $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress((slice, slice, slice, slice, slice) document, (int, int) commissions, slice royaltyWalletAddress) inline;
+;; $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress
+(((slice, slice, slice, slice, slice), slice)) $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress((slice, slice, slice, slice, slice) document, slice royaltyWalletAddress) inline;
+
+;; $SetCommissions$_constructor_commissions_documentAddress
+(((int, int), slice)) $SetCommissions$_constructor_commissions_documentAddress((int, int) commissions, slice documentAddress) inline;
 
 ;; $SendParameters$_constructor_to_value_mode_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;

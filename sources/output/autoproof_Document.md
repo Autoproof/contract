@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 3478 bytes
+BOC Size: 3465 bytes
 
 # Types
 Total Types: 19
@@ -45,9 +45,9 @@ Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,
 TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
 Signature: `SetCost{cost:Maybe coins}`
 
-## DeclareDocumentWithComission
-TLB: `declare_document_with_comission#967defee document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} royaltyWalletAddress:Maybe address = DeclareDocumentWithComission`
-Signature: `DeclareDocumentWithComission{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256},royaltyWalletAddress:Maybe address}`
+## DeclareDocumentWithRoyaltyAddress
+TLB: `declare_document_with_royalty_address#0a9c8392 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocumentWithRoyaltyAddress`
+Signature: `DeclareDocumentWithRoyaltyAddress{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},royaltyWalletAddress:Maybe address}`
 
 ## ClaimApproval
 TLB: `claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval`

@@ -182,6 +182,43 @@ tuple $DocumentData$_to_opt_external(tuple v) inline {
 }
 
 ;;
+;; Type: DeclareDocumentWithRoyaltyAddress
+;; Header: 0x0a9c8392
+;; TLB: declare_document_with_royalty_address#0a9c8392 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocumentWithRoyaltyAddress
+;;
+
+(slice, (((slice, slice, slice, slice, slice), slice))) $DeclareDocumentWithRoyaltyAddress$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 178029458);
+    var v'document = sc_0~$DocumentData$_load();
+    var v'royaltyWalletAddress = sc_0~__tact_load_address_opt();
+    return (sc_0, (v'document, v'royaltyWalletAddress));
+}
+
+;;
+;; Type: ClaimApproval
+;; Header: 0x2e30fb06
+;; TLB: claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval
+;;
+
+(slice, ((slice))) $ClaimApproval$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 774961926);
+    var v'assignmentHash = sc_0~load_ref().begin_parse();
+    return (sc_0, (v'assignmentHash));
+}
+
+;;
+;; Type: GetFunds
+;; Header: 0x0a30a01f
+;; TLB: get_funds#0a30a01f amount:coins = GetFunds
+;;
+
+(slice, ((int))) $GetFunds$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 170958879);
+    var v'amount = sc_0~load_coins();
+    return (sc_0, (v'amount));
+}
+
+;;
 ;; Type: Commissions
 ;; TLB: _ transfershipCommissionPercentage:uint256 royaltyCommissionPercentage:uint256 = Commissions
 ;;
@@ -237,44 +274,6 @@ tuple $Commissions$_to_opt_external(tuple v) inline {
     } else {
         return (loaded);
     }
-}
-
-;;
-;; Type: DeclareDocumentWithComission
-;; Header: 0x967defee
-;; TLB: declare_document_with_comission#967defee document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} royaltyWalletAddress:Maybe address = DeclareDocumentWithComission
-;;
-
-(slice, (((slice, slice, slice, slice, slice), (int, int), slice))) $DeclareDocumentWithComission$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 2524835822);
-    var v'document = sc_0~$DocumentData$_load();
-    var v'commissions = sc_0~$Commissions$_load();
-    var v'royaltyWalletAddress = sc_0~__tact_load_address_opt();
-    return (sc_0, (v'document, v'commissions, v'royaltyWalletAddress));
-}
-
-;;
-;; Type: ClaimApproval
-;; Header: 0x2e30fb06
-;; TLB: claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval
-;;
-
-(slice, ((slice))) $ClaimApproval$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 774961926);
-    var v'assignmentHash = sc_0~load_ref().begin_parse();
-    return (sc_0, (v'assignmentHash));
-}
-
-;;
-;; Type: GetFunds
-;; Header: 0x0a30a01f
-;; TLB: get_funds#0a30a01f amount:coins = GetFunds
-;;
-
-(slice, ((int))) $GetFunds$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 170958879);
-    var v'amount = sc_0~load_coins();
-    return (sc_0, (v'amount));
 }
 
 ;;

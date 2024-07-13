@@ -51,20 +51,20 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ;; $DocumentData$_load
 (slice, ((slice, slice, slice, slice, slice))) $DocumentData$_load(slice sc_0) inline;
 
-;; $Commissions$_store
-builder $Commissions$_store(builder build_0, (int, int) v) inline;
-
-;; $Commissions$_load
-(slice, ((int, int))) $Commissions$_load(slice sc_0) inline;
-
-;; $DeclareDocumentWithComission$_load
-(slice, (((slice, slice, slice, slice, slice), (int, int), slice))) $DeclareDocumentWithComission$_load(slice sc_0) inline;
+;; $DeclareDocumentWithRoyaltyAddress$_load
+(slice, (((slice, slice, slice, slice, slice), slice))) $DeclareDocumentWithRoyaltyAddress$_load(slice sc_0) inline;
 
 ;; $ClaimApproval$_load
 (slice, ((slice))) $ClaimApproval$_load(slice sc_0) inline;
 
 ;; $GetFunds$_load
 (slice, ((int))) $GetFunds$_load(slice sc_0) inline;
+
+;; $Commissions$_store
+builder $Commissions$_store(builder build_0, (int, int) v) inline;
+
+;; $Commissions$_load
+(slice, ((int, int))) $Commissions$_load(slice sc_0) inline;
 
 ;; $SetCommissions$_load
 (slice, (((int, int), slice))) $SetCommissions$_load(slice sc_0) inline;

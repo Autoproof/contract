@@ -108,13 +108,12 @@
 ;; Receivers of a Contract Document
 ;;
 
-(((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice)), ()) $Document$_internal_binary_DeclareDocumentWithComission((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) $self, ((slice, slice, slice, slice, slice), (int, int), slice) $msg) impure inline {
+(((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice)), ()) $Document$_internal_binary_DeclareDocumentWithRoyaltyAddress((slice, int, tuple, slice, slice, tuple, slice, int, tuple, slice) $self, ((slice, slice, slice, slice, slice), slice) $msg) impure inline {
     var ($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash) = $self;
-    var (($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), ($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage), $msg'royaltyWalletAddress) = $msg;
+    var (($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $msg'royaltyWalletAddress) = $msg;
     throw_unless(48674, ( __tact_slice_eq_bits($self'parent, __tact_context_get_sender()) ));
     throw_unless(46455, null?($self'document));
     $self'document = $DocumentData$_as_optional(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags));
-    $self'commissions = $Commissions$_as_optional(($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage));
     $self'royaltyWalletAddress = $msg'royaltyWalletAddress;
     return (($self'parent, $self'seqno, $self'commissions, $self'author, $self'exclusiveRightsOwner, $self'document, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash), ());
 }
@@ -297,7 +296,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmWRjyJjudihs2NtrAW4re4SYjyBVo11TGN9C1U2MMwG6b";
+    return "ipfs://QmYuicdRx54Fr188WkXEtMzdU6JTaMUmTnGqvDJgjMgwrj";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -321,10 +320,10 @@ _ lazy_deployment_completed() method_id {
     }
     
     
-    ;; Receive DeclareDocumentWithComission message
-    if (op == 2524835822) {
-        var msg = in_msg~$DeclareDocumentWithComission$_load();
-        self~$Document$_internal_binary_DeclareDocumentWithComission(msg);
+    ;; Receive DeclareDocumentWithRoyaltyAddress message
+    if (op == 178029458) {
+        var msg = in_msg~$DeclareDocumentWithRoyaltyAddress$_load();
+        self~$Document$_internal_binary_DeclareDocumentWithRoyaltyAddress(msg);
         return (self, true);
     }
     

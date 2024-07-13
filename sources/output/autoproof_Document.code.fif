@@ -15,11 +15,11 @@ PROGRAM{
   DECLPROC $SetCost$_load
   DECLPROC $DocumentData$_store
   DECLPROC $DocumentData$_load
-  DECLPROC $Commissions$_store
-  DECLPROC $Commissions$_load
-  DECLPROC $DeclareDocumentWithComission$_load
+  DECLPROC $DeclareDocumentWithRoyaltyAddress$_load
   DECLPROC $ClaimApproval$_load
   DECLPROC $GetFunds$_load
+  DECLPROC $Commissions$_store
+  DECLPROC $Commissions$_load
   DECLPROC $SetCommissions$_load
   DECLPROC $Commissions$_not_null
   DECLPROC $DocumentData$_not_null
@@ -70,7 +70,7 @@ PROGRAM{
   DECLPROC $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments
   DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $SendParameters$_constructor_to_value_bounce_mode_body
-  DECLPROC $Document$_internal_binary_DeclareDocumentWithComission
+  DECLPROC $Document$_internal_binary_DeclareDocumentWithRoyaltyAddress
   DECLPROC $Document$_internal_binary_SetCost
   DECLPROC $Document$_internal_text_8b659ceff9a6a3c20aa31a7bb878a3a04fb8b758f0079c869f0f4fb7d071b14e
   DECLPROC $Document$_internal_text_b9f1ba120cb2ba414dc6e46ab801c29fa13c4d7f1e91726f63f55ec0b168b103
@@ -270,29 +270,16 @@ PROGRAM{
     s2 s4 XCHG
     s2 s3 XCHG
   }>
-  $Commissions$_store PROCINLINE:<{
-    s0 s2 XCHG
-    256 STU
-    256 STU
-  }>
-  $Commissions$_load PROCINLINE:<{
-    256 LDU
-    256 LDU
-    -ROT
-  }>
-  $DeclareDocumentWithComission$_load PROCINLINE:<{
+  $DeclareDocumentWithRoyaltyAddress$_load PROCINLINE:<{
     32 LDU
     SWAP
-    2524835822 PUSHINT
+    178029458 PUSHINT
     EQUAL
     129 THROWIFNOT
     $DocumentData$_load INLINECALLDICT
     s0 s5 XCHG
-    $Commissions$_load INLINECALLDICT
-    s0 s2 XCHG
     __tact_load_address_opt INLINECALLDICT
-    s1 s8 XCHG
-    s1 s3 XCHG
+    s1 s6 XCHG
   }>
   $ClaimApproval$_load PROCINLINE:<{
     32 LDU
@@ -312,6 +299,16 @@ PROGRAM{
     129 THROWIFNOT
     LDGRAMS
     SWAP
+  }>
+  $Commissions$_store PROCINLINE:<{
+    s0 s2 XCHG
+    256 STU
+    256 STU
+  }>
+  $Commissions$_load PROCINLINE:<{
+    256 LDU
+    256 LDU
+    -ROT
   }>
   $SetCommissions$_load PROCINLINE:<{
     32 LDU
@@ -980,24 +977,22 @@ PROGRAM{
     PUSHNULL
     PUSHNULL
   }>
-  $Document$_internal_binary_DeclareDocumentWithComission PROCINLINE:<{
-    s11 POP
-    s14 POP
+  $Document$_internal_binary_DeclareDocumentWithRoyaltyAddress PROCINLINE:<{
+    s9 POP
     48674 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    17 s() PUSH
+    16 s() PUSH
     SWAP
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
     46455 PUSHINT
-    s0 s11 XCHG
+    s0 s10 XCHG
     ISNULL
-    s1 s11 XCHG
+    s1 s10 XCHG
     THROWANYIFNOT
+    4 ROLL
+    s0 s8 XCHG
     $DocumentData$_as_optional INLINECALLDICT
-    s5 s8 XCHG2
-    $Commissions$_as_optional INLINECALLDICT
-    s0 s7 XCHG
     s0 s4 XCHG
   }>
   $Document$_internal_binary_SetCost PROCINLINE:<{
@@ -1395,7 +1390,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d57526a794a6a7564696873324e747241573472653453596a7942566f313154474e39433155324d4d77473662} PUSHSLICE
+    x{697066733a2f2f516d5975696364527835344672313838576b5845744d7a6455364a54614d556d546e477176444a676a4d6777726a} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -1421,13 +1416,13 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    2524835822 PUSHINT
+    178029458 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
-      $DeclareDocumentWithComission$_load INLINECALLDICT
-      1 8 BLKDROP2
-      $Document$_internal_binary_DeclareDocumentWithComission INLINECALLDICT
+      $DeclareDocumentWithRoyaltyAddress$_load INLINECALLDICT
+      1 6 BLKDROP2
+      $Document$_internal_binary_DeclareDocumentWithRoyaltyAddress INLINECALLDICT
       TRUE
     }>
     DUP

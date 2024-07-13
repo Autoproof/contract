@@ -103,6 +103,40 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ((slice, slice, slice, slice, slice)) $DocumentData$_tensor_cast((slice, slice, slice, slice, slice) v) asm "NOP";
 
 ;;
+;; Type: DeclareDocumentWithRoyaltyAddress
+;; Header: 0x0a9c8392
+;; TLB: declare_document_with_royalty_address#0a9c8392 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocumentWithRoyaltyAddress
+;;
+
+builder $DeclareDocumentWithRoyaltyAddress$_store(builder build_0, ((slice, slice, slice, slice, slice), slice) v) inline {
+    var ((v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags), v'royaltyWalletAddress) = v;
+    build_0 = store_uint(build_0, 178029458, 32);
+    build_0 = $DocumentData$_store(build_0, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags));
+    build_0 = __tact_store_address_opt(build_0, v'royaltyWalletAddress);
+    return build_0;
+}
+
+cell $DeclareDocumentWithRoyaltyAddress$_store_cell(((slice, slice, slice, slice, slice), slice) v) inline {
+    return $DeclareDocumentWithRoyaltyAddress$_store(begin_cell(), v).end_cell();
+}
+
+(((slice, slice, slice, slice, slice), slice)) $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress((slice, slice, slice, slice, slice) document, slice royaltyWalletAddress) inline {
+    return (document, royaltyWalletAddress);
+}
+
+;;
+;; Type: GetFunds
+;; Header: 0x0a30a01f
+;; TLB: get_funds#0a30a01f amount:coins = GetFunds
+;;
+
+(slice, ((int))) $GetFunds$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 170958879);
+    var v'amount = sc_0~load_coins();
+    return (sc_0, (v'amount));
+}
+
+;;
 ;; Type: Commissions
 ;; TLB: _ transfershipCommissionPercentage:uint256 royaltyCommissionPercentage:uint256 = Commissions
 ;;
@@ -155,41 +189,6 @@ tuple $Commissions$_to_opt_external(tuple v) inline {
 }
 
 ;;
-;; Type: DeclareDocumentWithComission
-;; Header: 0x967defee
-;; TLB: declare_document_with_comission#967defee document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} royaltyWalletAddress:Maybe address = DeclareDocumentWithComission
-;;
-
-builder $DeclareDocumentWithComission$_store(builder build_0, ((slice, slice, slice, slice, slice), (int, int), slice) v) inline {
-    var ((v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags), (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage), v'royaltyWalletAddress) = v;
-    build_0 = store_uint(build_0, 2524835822, 32);
-    build_0 = $DocumentData$_store(build_0, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags));
-    build_0 = $Commissions$_store(build_0, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage));
-    build_0 = __tact_store_address_opt(build_0, v'royaltyWalletAddress);
-    return build_0;
-}
-
-cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, slice), (int, int), slice) v) inline {
-    return $DeclareDocumentWithComission$_store(begin_cell(), v).end_cell();
-}
-
-(((slice, slice, slice, slice, slice), (int, int), slice)) $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress((slice, slice, slice, slice, slice) document, (int, int) commissions, slice royaltyWalletAddress) inline {
-    return (document, commissions, royaltyWalletAddress);
-}
-
-;;
-;; Type: GetFunds
-;; Header: 0x0a30a01f
-;; TLB: get_funds#0a30a01f amount:coins = GetFunds
-;;
-
-(slice, ((int))) $GetFunds$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 170958879);
-    var v'amount = sc_0~load_coins();
-    return (sc_0, (v'amount));
-}
-
-;;
 ;; Type: SetCommissions
 ;; Header: 0x4b486165
 ;; TLB: set_commissions#4b486165 commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} documentAddress:Maybe address = SetCommissions
@@ -212,6 +211,10 @@ cell $SetCommissions$_store_cell(((int, int), slice) v) inline {
     var v'commissions = sc_0~$Commissions$_load();
     var v'documentAddress = sc_0~__tact_load_address_opt();
     return (sc_0, (v'commissions, v'documentAddress));
+}
+
+(((int, int), slice)) $SetCommissions$_constructor_commissions_documentAddress((int, int) commissions, slice documentAddress) inline {
+    return (commissions, documentAddress);
 }
 
 ;;

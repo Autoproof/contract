@@ -78,14 +78,23 @@ contract Autoproof with Deployable, Resumable {
             send(SendParameters{
                 to: contractAddress(init),
                 body:
-                    DeclareDocumentWithComission{
+                    DeclareDocumentWithRoyaltyAddress{
                         document: msg.document,
-                        commissions: self.commissions,
                         royaltyWalletAddress: msg.royaltyWalletAddress
                     }.toCell(),
                 value: context().value,
                 code: init.code,
                 data: init.data
+            });
+
+            send(SendParameters{
+                to: contractAddress(init),
+                body:
+                    SetCommissions{
+                        commissions: self.commissions,
+                        documentAddress: null
+                    }.toCell(),
+                value: context().value
             });
         }
     }

@@ -105,7 +105,8 @@
         $global_send($SendParameters$_constructor_to_body_value(__tact_not_null($self'nextAutoproofAddress), $DeclareDocument$_store_cell((($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $msg'royaltyWalletAddress)), $Context$_get_value(__tact_context_get())));
     } else {
         var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender());
-        $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), $DeclareDocumentWithComission$_store_cell($DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $msg'royaltyWalletAddress)), $Context$_get_value(__tact_context_get()), $init'code, $init'data));
+        $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), $DeclareDocumentWithRoyaltyAddress$_store_cell($DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $msg'royaltyWalletAddress)), $Context$_get_value(__tact_context_get()), $init'code, $init'data));
+        $global_send($SendParameters$_constructor_to_body_value($global_contractAddress(($init'code, $init'data)), $SetCommissions$_store_cell($SetCommissions$_constructor_commissions_documentAddress(($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), null())), $Context$_get_value(__tact_context_get())));
     }
     return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress), ());
 }
@@ -236,7 +237,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://Qme7Sgr8iELWweCKwDrbm4zLXN7eUfW9U9oJhnCJaQ1PLw";
+    return "ipfs://QmakVNHD6aJ6GvyWE4h9RPvFkVE7aTg6Cggrdn9zQA2zY3";
 }
 
 _ lazy_deployment_completed() method_id {

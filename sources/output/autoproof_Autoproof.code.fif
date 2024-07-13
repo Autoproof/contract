@@ -20,11 +20,11 @@ PROGRAM{
   DECLPROC $DeployOk$_store_cell
   DECLPROC $DocumentData$_store
   DECLPROC $DocumentData$_load
+  DECLPROC $DeclareDocumentWithRoyaltyAddress$_store
+  DECLPROC $DeclareDocumentWithRoyaltyAddress$_store_cell
+  DECLPROC $GetFunds$_load
   DECLPROC $Commissions$_store
   DECLPROC $Commissions$_load
-  DECLPROC $DeclareDocumentWithComission$_store
-  DECLPROC $DeclareDocumentWithComission$_store_cell
-  DECLPROC $GetFunds$_load
   DECLPROC $SetCommissions$_store
   DECLPROC $SetCommissions$_store_cell
   DECLPROC $SetCommissions$_load
@@ -68,7 +68,8 @@ PROGRAM{
   DECLPROC $Autoproof$_fun_owner
   DECLPROC $SendParameters$_constructor_to_body_value
   DECLPROC $SendParameters$_constructor_to_body_value_code_data
-  DECLPROC $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress
+  DECLPROC $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress
+  DECLPROC $SetCommissions$_constructor_commissions_documentAddress
   DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $Autoproof$_internal_binary_DeclareDocument
@@ -305,34 +306,19 @@ PROGRAM{
     s2 s4 XCHG
     s2 s3 XCHG
   }>
-  $Commissions$_store PROCINLINE:<{
-    s0 s2 XCHG
-    256 STU
-    256 STU
-  }>
-  $Commissions$_load PROCINLINE:<{
-    256 LDU
-    256 LDU
-    -ROT
-  }>
-  $DeclareDocumentWithComission$_store PROCINLINE:<{
-    2524835822 PUSHINT
-    s0 s9 XCHG2
+  $DeclareDocumentWithRoyaltyAddress$_store PROCINLINE:<{
+    178029458 PUSHINT
+    s0 s7 XCHG2
     32 STU
-    s0 s5 XCHG
-    s4 s7 XCHG
-    s3 s6 XCHG
-    s0 s7 s6 XCHG3
+    5 -ROLL
     $DocumentData$_store INLINECALLDICT
-    s0 s2 XCHG
-    $Commissions$_store INLINECALLDICT
     SWAP
     __tact_store_address_opt INLINECALLDICT
   }>
-  $DeclareDocumentWithComission$_store_cell PROCINLINE:<{
+  $DeclareDocumentWithRoyaltyAddress$_store_cell PROCINLINE:<{
     NEWC
-    8 -ROLL
-    $DeclareDocumentWithComission$_store INLINECALLDICT
+    6 -ROLL
+    $DeclareDocumentWithRoyaltyAddress$_store INLINECALLDICT
     ENDC
   }>
   $GetFunds$_load PROCINLINE:<{
@@ -343,6 +329,16 @@ PROGRAM{
     129 THROWIFNOT
     LDGRAMS
     SWAP
+  }>
+  $Commissions$_store PROCINLINE:<{
+    s0 s2 XCHG
+    256 STU
+    256 STU
+  }>
+  $Commissions$_load PROCINLINE:<{
+    256 LDU
+    256 LDU
+    -ROT
   }>
   $SetCommissions$_store PROCINLINE:<{
     1263034725 PUSHINT
@@ -823,7 +819,9 @@ PROGRAM{
     0 PUSHINT
     s1 s3 s3 XCHG3
   }>
-  $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress PROCINLINE:<{
+  $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress PROCINLINE:<{
+  }>
+  $SetCommissions$_constructor_commissions_documentAddress PROCINLINE:<{
   }>
   $SendParameters$_constructor_to_value_mode_body PROCINLINE:<{
     TRUE
@@ -868,19 +866,26 @@ PROGRAM{
       s5 s14 XCHG
       s4 s13 XCHG
       s3 s12 XCHG
-      s11 s10 s0 XCHG3
-      s14 s13 s9 PU2XC
-      $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress INLINECALLDICT
-      $DeclareDocumentWithComission$_store_cell INLINECALLDICT
+      s11 s10 s9 XCHG3
+      $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress INLINECALLDICT
+      $DeclareDocumentWithRoyaltyAddress$_store_cell INLINECALLDICT
       __tact_context_get INLINECALLDICT
       $Context$_get_value INLINECALLDICT
-      s4 s5 XCHG
-      s0 s3 s6 XCHG3
-      s1 s7 XCHG
+      s7 s6 PUSH2
+      s4 s7 XCHG
       $SendParameters$_constructor_to_body_value_code_data INLINECALLDICT
       $global_send INLINECALLDICT
-      s5 s4 s0 XCHG3
-      s1 s3 s0 XCHG3
+      s4 s3 XCHG2
+      $global_contractAddress INLINECALLDICT
+      s6 s5 PUSH2
+      PUSHNULL
+      $SetCommissions$_constructor_commissions_documentAddress INLINECALLDICT
+      $SetCommissions$_store_cell INLINECALLDICT
+      __tact_context_get INLINECALLDICT
+      $Context$_get_value INLINECALLDICT
+      $SendParameters$_constructor_to_body_value INLINECALLDICT
+      $global_send INLINECALLDICT
+      4 2 BLKSWAP
     }>
     s0 s5 XCHG
     s3 s3 s4 XCHG3
@@ -1031,7 +1036,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d65375367723869454c577765434b774472626d347a4c584e37655566573955396f4a686e434a615131504c77} PUSHSLICE
+    x{697066733a2f2f516d616b564e484436614a364776795745346839525076466b5645376154673643676772646e397a5141327a5933} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

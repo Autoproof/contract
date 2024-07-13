@@ -13,9 +13,8 @@ message SetCost {
     cost: Int? as coins;
 }
 
-message DeclareDocumentWithComission {
+message DeclareDocumentWithRoyaltyAddress {
     document: DocumentData;
-    commissions: Commissions;
     royaltyWalletAddress: Address?;
 }
 
@@ -113,11 +112,10 @@ contract Document {
         }
     }
 
-    receive(msg: DeclareDocumentWithComission) {
+    receive(msg: DeclareDocumentWithRoyaltyAddress) {
         require(sender() == self.parent, "Only Autoproof is allowed to set the document data");
         require(self.document == null, "Document data can be declared only once");
         self.document = msg.document;
-        self.commissions = msg.commissions;
         self.royaltyWalletAddress = msg.royaltyWalletAddress;
     }
 
