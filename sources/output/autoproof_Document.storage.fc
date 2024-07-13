@@ -37,18 +37,6 @@ _ $Context$_get_value((int, slice, int, slice) v) inline {
 }
 
 ;;
-;; Type: SetCost
-;; Header: 0x9121b3af
-;; TLB: set_cost#9121b3af cost:Maybe coins = SetCost
-;;
-
-(slice, ((int))) $SetCost$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 2434905007);
-    var v'cost = sc_0~load_int(1) ? sc_0~load_coins() : null();
-    return (sc_0, (v'cost));
-}
-
-;;
 ;; Type: ExclusiveRightsClaim
 ;; TLB: _ author:address amount:coins sentDocuments:bool viewedDocuments:bool = ExclusiveRightsClaim
 ;;
@@ -122,6 +110,18 @@ tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline {
 
 ((slice, int, int, int)) $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments(slice author, int amount, int sentDocuments, int viewedDocuments) inline {
     return (author, amount, sentDocuments, viewedDocuments);
+}
+
+;;
+;; Type: SetCost
+;; Header: 0x9121b3af
+;; TLB: set_cost#9121b3af cost:Maybe coins = SetCost
+;;
+
+(slice, ((int))) $SetCost$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2434905007);
+    var v'cost = sc_0~load_int(1) ? sc_0~load_coins() : null();
+    return (sc_0, (v'cost));
 }
 
 ;;

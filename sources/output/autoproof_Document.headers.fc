@@ -36,14 +36,14 @@ builder __tact_store_bool(builder b, int v) inline;
 ;; __tact_slice_eq_bits
 int __tact_slice_eq_bits(slice a, slice b) inline;
 
-;; $SetCost$_load
-(slice, ((int))) $SetCost$_load(slice sc_0) inline;
-
 ;; $ExclusiveRightsClaim$_store
 builder $ExclusiveRightsClaim$_store(builder build_0, (slice, int, int, int) v) inline;
 
 ;; $ExclusiveRightsClaim$_load
 (slice, ((slice, int, int, int))) $ExclusiveRightsClaim$_load(slice sc_0) inline;
+
+;; $SetCost$_load
+(slice, ((int))) $SetCost$_load(slice sc_0) inline;
 
 ;; $DocumentData$_store
 builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice) v) inline;

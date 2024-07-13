@@ -15,11 +15,20 @@ message CancelDocumentClaim {
     documentAddress: Address;
 }
 
+message SetTheNextAutoproof {
+    contractAddress: Address?;
+}
+
 contract Autoproof with Deployable, Resumable {
     owner: Address;
     stopped: Bool; // we want to be able to stop the contract for upgrades
     documentsNumber: Int as uint256 = 0;
     commissions: Commissions;
+
+    // In case we are upgrading the contract.
+    // we set the next's version contract address
+    // to redirect the transactions there.
+    nextAutoproofAddress: Address?;
 
     init() {
         self.owner = sender();
@@ -56,19 +65,29 @@ contract Autoproof with Deployable, Resumable {
         self.validateDeclaration(msg.document);
         self.documentsNumber = self.documentsNumber + 1;
 
-        let init: StateInit = initOf Document(myAddress(), self.documentsNumber, sender());
-        send(SendParameters{
-            to: contractAddress(init),
-            body:
-                DeclareDocumentWithComission{
-                    document: msg.document,
-                    commissions: self.commissions,
-                    royaltyWalletAddress: msg.royaltyWalletAddress
-                }.toCell(),
-            value: context().value,
-            code: init.code,
-            data: init.data
-        });
+        // If there is a next autoproof address
+        // we redirect the transactions there
+        if (self.nextAutoproofAddress != null)  {
+            send(SendParameters{
+                to: self.nextAutoproofAddress!!,
+                body: msg.toCell(),
+                value: context().value,
+            });
+        } else {
+            let init: StateInit = initOf Document(myAddress(), self.documentsNumber, sender());
+            send(SendParameters{
+                to: contractAddress(init),
+                body:
+                    DeclareDocumentWithComission{
+                        document: msg.document,
+                        commissions: self.commissions,
+                        royaltyWalletAddress: msg.royaltyWalletAddress
+                    }.toCell(),
+                value: context().value,
+                code: init.code,
+                data: init.data
+            });
+        }
     }
 
     receive(msg: CancelDocumentClaim) {
@@ -116,6 +135,13 @@ contract Autoproof with Deployable, Resumable {
             mode: SendIgnoreErrors,
             body: "Send funds to the owner".asComment(),
         });
+    }
+
+    receive(msg: SetTheNextAutoproof) {
+        require(self.owner == sender(), "Only owner can set the next autoproof address");
+
+        self.nextAutoproofAddress = msg.contractAddress;
+        self.reply("The next Autoproof contract address was updated".asComment());
     }
 
     // internals

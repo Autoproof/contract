@@ -2,15 +2,15 @@ import "@stdlib/ownable";
 import "@stdlib/deploy";
 import "./common.tact";
 
-message SetCost {
-    cost: Int? as coins;
-}
-
 struct ExclusiveRightsClaim {
     author: Address;
     amount: Int as coins;
     sentDocuments: Bool;
     viewedDocuments: Bool;
+}
+
+message SetCost {
+    cost: Int? as coins;
 }
 
 message DeclareDocumentWithComission {

@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Autoproof
-BOC Size: 2290 bytes
+BOC Size: 2687 bytes
 
 # Types
-Total Types: 18
+Total Types: 19
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -37,13 +37,13 @@ Signature: `DeployOk{queryId:uint64}`
 TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
-## SetCost
-TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
-Signature: `SetCost{cost:Maybe coins}`
-
 ## ExclusiveRightsClaim
 TLB: `_ author:address amount:coins sentDocuments:bool viewedDocuments:bool = ExclusiveRightsClaim`
 Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,viewedDocuments:bool}`
+
+## SetCost
+TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
+Signature: `SetCost{cost:Maybe coins}`
 
 ## DeclareDocumentWithComission
 TLB: `declare_document_with_comission#967defee document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} royaltyWalletAddress:Maybe address = DeclareDocumentWithComission`
@@ -76,6 +76,10 @@ Signature: `DeclareDocument{document:DocumentData{authorship:^string,description
 ## CancelDocumentClaim
 TLB: `cancel_document_claim#24a3641f documentAddress:address = CancelDocumentClaim`
 Signature: `CancelDocumentClaim{documentAddress:address}`
+
+## SetTheNextAutoproof
+TLB: `set_the_next_autoproof#579c57d5 contractAddress:Maybe address = SetTheNextAutoproof`
+Signature: `SetTheNextAutoproof{contractAddress:Maybe address}`
 
 # Get Methods
 Total Get Methods: 7
@@ -139,6 +143,7 @@ Argument: author
 23942: Transfership commission percentage can't be less than 0
 28490: Authorship can't be empty
 30316: Can't approve if documents are not sent
+31093: Only owner can set the next autoproof address
 31610: Transfership commission percentage can't be greater than 1000
 34015: Only owner can cancel a document contract
 40368: Contract stopped

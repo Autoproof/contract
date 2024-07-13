@@ -28,6 +28,10 @@ _ $Context$_get_value((int, slice, int, slice) v) inline {
     return (bounce, to, value, mode, body, code, data);
 }
 
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value(slice to, cell body, int value) inline {
+    return (true, to, value, 0, body, null(), null());
+}
+
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice to, cell body, int value, cell code, cell data) inline {
     return (true, to, value, 0, body, code, data);
 }
@@ -216,6 +220,18 @@ cell $SetCommissions$_store_cell(((int, int), slice) v) inline {
 ;; TLB: declare_document#6f05cf40 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocument
 ;;
 
+builder $DeclareDocument$_store(builder build_0, ((slice, slice, slice, slice, slice), slice) v) inline {
+    var ((v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags), v'royaltyWalletAddress) = v;
+    build_0 = store_uint(build_0, 1862651712, 32);
+    build_0 = $DocumentData$_store(build_0, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags));
+    build_0 = __tact_store_address_opt(build_0, v'royaltyWalletAddress);
+    return build_0;
+}
+
+cell $DeclareDocument$_store_cell(((slice, slice, slice, slice, slice), slice) v) inline {
+    return $DeclareDocument$_store(begin_cell(), v).end_cell();
+}
+
 (slice, (((slice, slice, slice, slice, slice), slice))) $DeclareDocument$_load(slice sc_0) inline {
     throw_unless(129, sc_0~load_uint(32) == 1862651712);
     var v'document = sc_0~$DocumentData$_load();
@@ -233,6 +249,18 @@ cell $SetCommissions$_store_cell(((int, int), slice) v) inline {
     throw_unless(129, sc_0~load_uint(32) == 614687775);
     var v'documentAddress = sc_0~__tact_load_address();
     return (sc_0, (v'documentAddress));
+}
+
+;;
+;; Type: SetTheNextAutoproof
+;; Header: 0x579c57d5
+;; TLB: set_the_next_autoproof#579c57d5 contractAddress:Maybe address = SetTheNextAutoproof
+;;
+
+(slice, ((slice))) $SetTheNextAutoproof$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 1469863893);
+    var v'contractAddress = sc_0~__tact_load_address_opt();
+    return (sc_0, (v'contractAddress));
 }
 
 ;;
@@ -268,27 +296,29 @@ builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline {
 ;; Type: Autoproof
 ;;
 
-builder $Autoproof$_store(builder build_0, (slice, int, int, (int, int)) v) inline {
-    var (v'owner, v'stopped, v'documentsNumber, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage)) = v;
+builder $Autoproof$_store(builder build_0, (slice, int, int, (int, int), slice) v) inline {
+    var (v'owner, v'stopped, v'documentsNumber, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage), v'nextAutoproofAddress) = v;
     build_0 = __tact_store_address(build_0, v'owner);
     build_0 = build_0.store_int(v'stopped, 1);
     build_0 = build_0.store_uint(v'documentsNumber, 256);
     var build_1 = begin_cell();
     build_1 = $Commissions$_store(build_1, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage));
+    build_1 = __tact_store_address_opt(build_1, v'nextAutoproofAddress);
     build_0 = store_ref(build_0, build_1.end_cell());
     return build_0;
 }
 
-(slice, ((slice, int, int, (int, int)))) $Autoproof$_load(slice sc_0) inline {
+(slice, ((slice, int, int, (int, int), slice))) $Autoproof$_load(slice sc_0) inline {
     var v'owner = sc_0~__tact_load_address();
     var v'stopped = sc_0~load_int(1);
     var v'documentsNumber = sc_0~load_uint(256);
     slice sc_1 = sc_0~load_ref().begin_parse();
     var v'commissions = sc_1~$Commissions$_load();
-    return (sc_0, (v'owner, v'stopped, v'documentsNumber, v'commissions));
+    var v'nextAutoproofAddress = sc_1~__tact_load_address_opt();
+    return (sc_0, (v'owner, v'stopped, v'documentsNumber, v'commissions, v'nextAutoproofAddress));
 }
 
-(slice, int, int, (int, int)) $Autoproof$_contract_load() impure inline_ref {
+(slice, int, int, (int, int), slice) $Autoproof$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -301,7 +331,7 @@ builder $Autoproof$_store(builder build_0, (slice, int, int, (int, int)) v) inli
     }
 }
 
-() $Autoproof$_contract_store((slice, int, int, (int, int)) v) impure inline {
+() $Autoproof$_contract_store((slice, int, int, (int, int), slice) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);

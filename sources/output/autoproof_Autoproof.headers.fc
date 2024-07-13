@@ -90,17 +90,26 @@ cell $SetCommissions$_store_cell(((int, int), slice) v) inline;
 ;; $SetCommissions$_load
 (slice, (((int, int), slice))) $SetCommissions$_load(slice sc_0) inline;
 
+;; $DeclareDocument$_store
+builder $DeclareDocument$_store(builder build_0, ((slice, slice, slice, slice, slice), slice) v) inline;
+
+;; $DeclareDocument$_store_cell
+cell $DeclareDocument$_store_cell(((slice, slice, slice, slice, slice), slice) v) inline;
+
 ;; $DeclareDocument$_load
 (slice, (((slice, slice, slice, slice, slice), slice))) $DeclareDocument$_load(slice sc_0) inline;
 
 ;; $CancelDocumentClaim$_load
 (slice, ((slice))) $CancelDocumentClaim$_load(slice sc_0) inline;
 
+;; $SetTheNextAutoproof$_load
+(slice, ((slice))) $SetTheNextAutoproof$_load(slice sc_0) inline;
+
 ;; $Autoproof$_store
-builder $Autoproof$_store(builder build_0, (slice, int, int, (int, int)) v) inline;
+builder $Autoproof$_store(builder build_0, (slice, int, int, (int, int), slice) v) inline;
 
 ;; $Autoproof$_load
-(slice, ((slice, int, int, (int, int)))) $Autoproof$_load(slice sc_0) inline;
+(slice, ((slice, int, int, (int, int), slice))) $Autoproof$_load(slice sc_0) inline;
 
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
@@ -130,13 +139,13 @@ builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline;
 ((int, int)) $Commissions$_constructor_transfershipCommissionPercentage_royaltyCommissionPercentage(int transfershipCommissionPercentage, int royaltyCommissionPercentage) inline;
 
 ;; $Autoproof$_contract_init
-(slice, int, int, (int, int)) $Autoproof$_contract_init() impure inline_ref;
+(slice, int, int, (int, int), slice) $Autoproof$_contract_init() impure inline_ref;
 
 ;; $Autoproof$_contract_load
-(slice, int, int, (int, int)) $Autoproof$_contract_load() impure inline_ref;
+(slice, int, int, (int, int), slice) $Autoproof$_contract_load() impure inline_ref;
 
 ;; $Autoproof$_contract_store
-() $Autoproof$_contract_store((slice, int, int, (int, int)) v) impure inline;
+() $Autoproof$_contract_store((slice, int, int, (int, int), slice) v) impure inline;
 
 ;; $global_contractAddress
 slice $global_contractAddress((cell, cell) $s) impure inline;
@@ -154,46 +163,49 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
 
 ;; $Autoproof$_fun_documentsNumber
-((slice, int, int, (int, int)), int) $Autoproof$_fun_documentsNumber((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), int) $Autoproof$_fun_documentsNumber((slice, int, int, (int, int), slice) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_currentCommissions
-((slice, int, int, (int, int)), tuple) $Autoproof$_fun_currentCommissions((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), tuple) $Autoproof$_fun_currentCommissions((slice, int, int, (int, int), slice) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_currentTransfershipCommissionPercentage
-((slice, int, int, (int, int)), int) $Autoproof$_fun_currentTransfershipCommissionPercentage((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), int) $Autoproof$_fun_currentTransfershipCommissionPercentage((slice, int, int, (int, int), slice) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_currentRoyaltyCommissionPercentage
-((slice, int, int, (int, int)), int) $Autoproof$_fun_currentRoyaltyCommissionPercentage((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), int) $Autoproof$_fun_currentRoyaltyCommissionPercentage((slice, int, int, (int, int), slice) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_documentAddress
-((slice, int, int, (int, int)), slice) $Autoproof$_fun_documentAddress((slice, int, int, (int, int)) $self, int $seqno, slice $author) impure inline_ref;
+((slice, int, int, (int, int), slice), slice) $Autoproof$_fun_documentAddress((slice, int, int, (int, int), slice) $self, int $seqno, slice $author) impure inline_ref;
 
 ;; $Autoproof$_fun_validateDeclaration
-((slice, int, int, (int, int)), ()) $Autoproof$_fun_validateDeclaration((slice, int, int, (int, int)) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref;
+((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_validateDeclaration((slice, int, int, (int, int), slice) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref;
 
 ;; $Autoproof$_fun_forward
-((slice, int, int, (int, int)), ()) $Autoproof$_fun_forward((slice, int, int, (int, int)) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_forward((slice, int, int, (int, int), slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 
 ;; $Autoproof$_fun_reply
-((slice, int, int, (int, int)), ()) $Autoproof$_fun_reply((slice, int, int, (int, int)) $self, cell $body) impure inline;
+((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_reply((slice, int, int, (int, int), slice) $self, cell $body) impure inline;
 
 ;; $Autoproof$_fun_notify
-((slice, int, int, (int, int)), ()) $Autoproof$_fun_notify((slice, int, int, (int, int)) $self, cell $body) impure inline;
+((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_notify((slice, int, int, (int, int), slice) $self, cell $body) impure inline;
 
 ;; $Autoproof$_fun_requireNotStopped
-((slice, int, int, (int, int)), ()) $Autoproof$_fun_requireNotStopped((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_requireNotStopped((slice, int, int, (int, int), slice) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_requireStopped
-((slice, int, int, (int, int)), ()) $Autoproof$_fun_requireStopped((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_requireStopped((slice, int, int, (int, int), slice) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_stopped
-((slice, int, int, (int, int)), int) $Autoproof$_fun_stopped((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), int) $Autoproof$_fun_stopped((slice, int, int, (int, int), slice) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_requireOwner
-((slice, int, int, (int, int)), ()) $Autoproof$_fun_requireOwner((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_requireOwner((slice, int, int, (int, int), slice) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_owner
-((slice, int, int, (int, int)), slice) $Autoproof$_fun_owner((slice, int, int, (int, int)) $self) impure inline_ref;
+((slice, int, int, (int, int), slice), slice) $Autoproof$_fun_owner((slice, int, int, (int, int), slice) $self) impure inline_ref;
+
+;; $SendParameters$_constructor_to_body_value
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value(slice to, cell body, int value) inline;
 
 ;; $SendParameters$_constructor_to_body_value_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice to, cell body, int value, cell code, cell data) inline;

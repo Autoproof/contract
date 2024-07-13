@@ -10,9 +10,9 @@ PROGRAM{
   DECLPROC __tact_context_get_sender
   DECLPROC __tact_store_bool
   DECLPROC __tact_slice_eq_bits
-  DECLPROC $SetCost$_load
   DECLPROC $ExclusiveRightsClaim$_store
   DECLPROC $ExclusiveRightsClaim$_load
+  DECLPROC $SetCost$_load
   DECLPROC $DocumentData$_store
   DECLPROC $DocumentData$_load
   DECLPROC $Commissions$_store
@@ -174,22 +174,6 @@ PROGRAM{
   __tact_slice_eq_bits PROCINLINE:<{
     SDEQ
   }>
-  $SetCost$_load PROCINLINE:<{
-    32 LDU
-    SWAP
-    2434905007 PUSHINT
-    EQUAL
-    129 THROWIFNOT
-    1 LDI
-    SWAP
-    IF:<{
-      LDGRAMS
-    }>ELSE<{
-      PUSHNULL
-      SWAP
-    }>
-    SWAP
-  }>
   $ExclusiveRightsClaim$_store PROCINLINE:<{
     s4 s3 XCHG2
     __tact_store_address INLINECALLDICT
@@ -206,6 +190,22 @@ PROGRAM{
     1 LDI
     1 LDI
     4 -ROLL
+  }>
+  $SetCost$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    2434905007 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    1 LDI
+    SWAP
+    IF:<{
+      LDGRAMS
+    }>ELSE<{
+      PUSHNULL
+      SWAP
+    }>
+    SWAP
   }>
   $DocumentData$_store PROCINLINE:<{
     NEWC
@@ -1395,7 +1395,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d557846337665564d583444434e674556427466536e7133464e43596a51583975703255765958677051314e6b} PUSHSLICE
+    x{697066733a2f2f516d57526a794a6a7564696873324e747241573472653453596a7942566f313154474e39433155324d4d77473662} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
