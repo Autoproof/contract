@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Autoproof
-BOC Size: 2822 bytes
+BOC Size: 2594 bytes
 
 # Types
-Total Types: 19
+Total Types: 18
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -45,10 +45,6 @@ Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,
 TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
 Signature: `SetCost{cost:Maybe coins}`
 
-## DeclareDocumentWithRoyaltyAddress
-TLB: `declare_document_with_royalty_address#0a9c8392 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocumentWithRoyaltyAddress`
-Signature: `DeclareDocumentWithRoyaltyAddress{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},royaltyWalletAddress:Maybe address}`
-
 ## ClaimApproval
 TLB: `claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval`
 Signature: `ClaimApproval{assignmentHash:^string}`
@@ -82,7 +78,7 @@ TLB: `set_the_next_autoproof#579c57d5 contractAddress:Maybe address = SetTheNext
 Signature: `SetTheNextAutoproof{contractAddress:Maybe address}`
 
 # Get Methods
-Total Get Methods: 7
+Total Get Methods: 6
 
 ## documentsNumber
 
@@ -91,10 +87,6 @@ Total Get Methods: 7
 ## currentTransfershipCommissionPercentage
 
 ## currentRoyaltyCommissionPercentage
-
-## documentAddress
-Argument: seqno
-Argument: author
 
 ## stopped
 
@@ -149,8 +141,6 @@ Argument: author
 40368: Contract stopped
 41504: Can't update without a claim
 44565: Only the exclusive rights have access
-46455: Document data can be declared only once
-48674: Only Autoproof is allowed to set the document data
 48939: Only parent contract can set the commissions
 50544: Only exclusive rights owner or author of the claim can cancel
 53296: Contract not stopped

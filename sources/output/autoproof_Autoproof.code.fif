@@ -20,8 +20,6 @@ PROGRAM{
   DECLPROC $DeployOk$_store_cell
   DECLPROC $DocumentData$_store
   DECLPROC $DocumentData$_load
-  DECLPROC $DeclareDocumentWithRoyaltyAddress$_store
-  DECLPROC $DeclareDocumentWithRoyaltyAddress$_store_cell
   DECLPROC $GetFunds$_load
   DECLPROC $Commissions$_store
   DECLPROC $Commissions$_load
@@ -56,7 +54,6 @@ PROGRAM{
   DECLPROC $Autoproof$_fun_currentCommissions
   DECLPROC $Autoproof$_fun_currentTransfershipCommissionPercentage
   DECLPROC $Autoproof$_fun_currentRoyaltyCommissionPercentage
-  DECLPROC $Autoproof$_fun_documentAddress
   DECLPROC $Autoproof$_fun_validateDeclaration
   DECLPROC $Autoproof$_fun_forward
   DECLPROC $Autoproof$_fun_reply
@@ -68,8 +65,6 @@ PROGRAM{
   DECLPROC $Autoproof$_fun_owner
   DECLPROC $SendParameters$_constructor_to_body_value
   DECLPROC $SendParameters$_constructor_to_body_value_code_data
-  DECLPROC $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress
-  DECLPROC $SetCommissions$_constructor_commissions_documentAddress
   DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $Autoproof$_internal_binary_DeclareDocument
@@ -84,7 +79,6 @@ PROGRAM{
   104324 DECLMETHOD %currentCommissions
   72344 DECLMETHOD %currentTransfershipCommissionPercentage
   66726 DECLMETHOD %currentRoyaltyCommissionPercentage
-  76627 DECLMETHOD %documentAddress
   74107 DECLMETHOD %stopped
   83229 DECLMETHOD %owner
   113617 DECLMETHOD supported_interfaces
@@ -306,21 +300,6 @@ PROGRAM{
     s2 s4 XCHG
     s2 s3 XCHG
   }>
-  $DeclareDocumentWithRoyaltyAddress$_store PROCINLINE:<{
-    178029458 PUSHINT
-    s0 s7 XCHG2
-    32 STU
-    5 -ROLL
-    $DocumentData$_store INLINECALLDICT
-    SWAP
-    __tact_store_address_opt INLINECALLDICT
-  }>
-  $DeclareDocumentWithRoyaltyAddress$_store_cell PROCINLINE:<{
-    NEWC
-    6 -ROLL
-    $DeclareDocumentWithRoyaltyAddress$_store INLINECALLDICT
-    ENDC
-  }>
   $GetFunds$_load PROCINLINE:<{
     32 LDU
     SWAP
@@ -484,13 +463,24 @@ PROGRAM{
     }>
   }>
   $Document$init$_store PROCINLINE:<{
-    2SWAP
+    s11 s10 XCHG2
     __tact_store_address INLINECALLDICT
-    s1 s2 XCHG
+    s1 s8 XCHG
     257 PUSHINT
     STIX
-    SWAP
+    s0 s6 XCHG2
     __tact_store_address INLINECALLDICT
+    NEWC
+    5 -ROLL
+    s0 s6 XCHG
+    $DocumentData$_store INLINECALLDICT
+    s0 s0 s4 XCHG3
+    $Commissions$_store INLINECALLDICT
+    SWAP
+    __tact_store_address_opt INLINECALLDICT
+    ENDC
+    SWAP
+    STREF
   }>
   $Commissions$_constructor_transfershipCommissionPercentage_royaltyCommissionPercentage PROCINLINE:<{
   }>
@@ -667,7 +657,7 @@ PROGRAM{
     THROWANYIFNOT
   }>
   $Document$_init_child PROCREF:<{
-    s0 s3 XCHG
+    s0 s11 XCHG
     CTOS
     LDDICT
     DROP
@@ -689,8 +679,8 @@ PROGRAM{
     FALSE
     SWAP
     1 STI
-    3 -ROLL
-    s0 s4 XCHG
+    11 -ROLL
+    s0 s12 XCHG
     $Document$init$_store INLINECALLDICT
     ENDC
   }>
@@ -708,13 +698,6 @@ PROGRAM{
   }>
   $Autoproof$_fun_currentRoyaltyCommissionPercentage PROCREF:<{
     OVER
-  }>
-  $Autoproof$_fun_documentAddress PROCREF:<{
-    __tact_context_sys GETGLOB
-    MYADDR
-    2SWAP
-    $Document$_init_child INLINECALLDICT
-    $global_contractAddress INLINECALLDICT
   }>
   $Autoproof$_fun_validateDeclaration PROCREF:<{
     28490 PUSHINT
@@ -819,10 +802,6 @@ PROGRAM{
     0 PUSHINT
     s1 s3 s3 XCHG3
   }>
-  $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress PROCINLINE:<{
-  }>
-  $SetCommissions$_constructor_commissions_documentAddress PROCINLINE:<{
-  }>
   $SendParameters$_constructor_to_value_mode_body PROCINLINE:<{
     TRUE
     4 -ROLL
@@ -859,33 +838,27 @@ PROGRAM{
       __tact_context_sys GETGLOB
       MYADDR
       __tact_context_get_sender INLINECALLDICT
-      s3 s(-1) PUXC
+      s8 s7 s0 XCHG3
+      s3 PUSH
+      s6 s7 XCHG2
+      s5 s15 XCHG
+      s4 s14 XCHG
+      s3 s13 XCHG
+      s12 s11 s0 XCHG3
+      s11 s(-1) PUXC
+      16 s() PUSH
+      s0 s12 XCHG2
       $Document$_init_child INLINECALLDICT
       2DUP
       $global_contractAddress INLINECALLDICT
-      s5 s14 XCHG
-      s4 s13 XCHG
-      s3 s12 XCHG
-      s11 s10 s9 XCHG3
-      $DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress INLINECALLDICT
-      $DeclareDocumentWithRoyaltyAddress$_store_cell INLINECALLDICT
+      B{b5ee9c72410101010022000040000000004465706c6f796564206120646f63756d656e7420636f6e7472616374da110623} B>boc PUSHREF
       __tact_context_get INLINECALLDICT
       $Context$_get_value INLINECALLDICT
-      s7 s6 PUSH2
-      s4 s7 XCHG
+      2 3 BLKSWAP
       $SendParameters$_constructor_to_body_value_code_data INLINECALLDICT
       $global_send INLINECALLDICT
-      s4 s3 XCHG2
-      $global_contractAddress INLINECALLDICT
-      s6 s5 PUSH2
-      PUSHNULL
-      $SetCommissions$_constructor_commissions_documentAddress INLINECALLDICT
-      $SetCommissions$_store_cell INLINECALLDICT
-      __tact_context_get INLINECALLDICT
-      $Context$_get_value INLINECALLDICT
-      $SendParameters$_constructor_to_body_value INLINECALLDICT
-      $global_send INLINECALLDICT
-      4 2 BLKSWAP
+      s5 s4 s4 XCHG3
+      s0 s3 XCHG
     }>
     s0 s5 XCHG
     s3 s3 s4 XCHG3
@@ -1009,13 +982,6 @@ PROGRAM{
     $Autoproof$_fun_currentRoyaltyCommissionPercentage INLINECALLDICT
     6 1 BLKDROP2
   }>
-  %documentAddress PROC:<{
-    __tact_verify_address INLINECALLDICT
-    $Autoproof$_contract_load INLINECALLDICT
-    2 6 BLKSWAP
-    $Autoproof$_fun_documentAddress INLINECALLDICT
-    6 1 BLKDROP2
-  }>
   %stopped PROC:<{
     $Autoproof$_contract_load INLINECALLDICT
     $Autoproof$_fun_stopped INLINECALLDICT
@@ -1036,7 +1002,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d616b564e484436614a364776795745346839525076466b5645376154673643676772646e397a5141327a5933} PUSHSLICE
+    x{697066733a2f2f516d59426874514d68797467506a5174624c544c4a53774d4573796161594739354c424e42766532623543423176} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

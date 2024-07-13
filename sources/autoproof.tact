@@ -55,10 +55,6 @@ contract Autoproof with Deployable, Resumable {
         return self.commissions.royaltyCommissionPercentage;
     }
 
-    get fun documentAddress(seqno: Int, author: Address): Address {
-        return contractAddress(initOf Document(myAddress(), seqno, author));
-    }
-
     receive(msg: DeclareDocument) {
         self.requireNotStopped();
 
@@ -74,27 +70,13 @@ contract Autoproof with Deployable, Resumable {
                 value: context().value,
             });
         } else {
-            let init: StateInit = initOf Document(myAddress(), self.documentsNumber, sender());
+            let init: StateInit = initOf Document(myAddress(), self.documentsNumber, sender(), msg.document, self.commissions, msg.royaltyWalletAddress);
             send(SendParameters{
                 to: contractAddress(init),
-                body:
-                    DeclareDocumentWithRoyaltyAddress{
-                        document: msg.document,
-                        royaltyWalletAddress: msg.royaltyWalletAddress
-                    }.toCell(),
+                body: "Deployed a document contract".asComment(),
                 value: context().value,
                 code: init.code,
                 data: init.data
-            });
-
-            send(SendParameters{
-                to: contractAddress(init),
-                body:
-                    SetCommissions{
-                        commissions: self.commissions,
-                        documentAddress: null
-                    }.toCell(),
-                value: context().value
             });
         }
     }

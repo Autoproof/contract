@@ -47,11 +47,6 @@
     return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress), $self'commissions'royaltyCommissionPercentage);
 }
 
-((slice, int, int, (int, int), slice), slice) $Autoproof$_fun_documentAddress((slice, int, int, (int, int), slice) $self, int $seqno, slice $author) impure inline_ref {
-    var (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress)) = $self;
-    return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress), $global_contractAddress($Document$_init_child(__tact_context_sys, my_address(), $seqno, $author)));
-}
-
 ((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_validateDeclaration((slice, int, int, (int, int), slice) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref {
     var (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress)) = $self;
     var (($document'authorship, $document'description, $document'rootHash, $document'data, $document'tags)) = $document;
@@ -104,9 +99,8 @@
     if ((~ null?($self'nextAutoproofAddress))) {
         $global_send($SendParameters$_constructor_to_body_value(__tact_not_null($self'nextAutoproofAddress), $DeclareDocument$_store_cell((($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $msg'royaltyWalletAddress)), $Context$_get_value(__tact_context_get())));
     } else {
-        var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender());
-        $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), $DeclareDocumentWithRoyaltyAddress$_store_cell($DeclareDocumentWithRoyaltyAddress$_constructor_document_royaltyWalletAddress(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $msg'royaltyWalletAddress)), $Context$_get_value(__tact_context_get()), $init'code, $init'data));
-        $global_send($SendParameters$_constructor_to_body_value($global_contractAddress(($init'code, $init'data)), $SetCommissions$_store_cell($SetCommissions$_constructor_commissions_documentAddress(($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), null())), $Context$_get_value(__tact_context_get())));
+        var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender(), ($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $msg'royaltyWalletAddress);
+        $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), __gen_cell_comment_b9536bb1add3345e01e0f9b78453670bf5bcdfe88fcc4d8f84f5b81161e9ab30(), $Context$_get_value(__tact_context_get()), $init'code, $init'data));
     }
     return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress), ());
 }
@@ -204,14 +198,6 @@ _ %currentRoyaltyCommissionPercentage() method_id(66726) {
     return res;
 }
 
-_ %documentAddress(int $$seqno, slice $$author) method_id(76627) {
-    int $seqno = $$seqno;
-    slice $author = __tact_verify_address($$author);
-    var self = $Autoproof$_contract_load();
-    var res = self~$Autoproof$_fun_documentAddress($seqno, $author);
-    return res;
-}
-
 _ %stopped() method_id(74107) {
     var self = $Autoproof$_contract_load();
     var res = self~$Autoproof$_fun_stopped();
@@ -237,7 +223,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmakVNHD6aJ6GvyWE4h9RPvFkVE7aTg6Cggrdn9zQA2zY3";
+    return "ipfs://QmYBhtQMhytgPjQtbLTLJSwMEsyaaYG95LBNBve2b5CB1v";
 }
 
 _ lazy_deployment_completed() method_id {

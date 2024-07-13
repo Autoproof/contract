@@ -13,11 +13,6 @@ message SetCost {
     cost: Int? as coins;
 }
 
-message DeclareDocumentWithRoyaltyAddress {
-    document: DocumentData;
-    royaltyWalletAddress: Address?;
-}
-
 message ClaimApproval {
     assignmentHash: String;
 }
@@ -25,12 +20,12 @@ message ClaimApproval {
 contract Document {
     parent: Address;
     seqno: Int as uint256;
-    commissions: Commissions?;
+    commissions: Commissions;
 
     // document data
     author: Address;
     exclusiveRightsOwner: Address;
-    document: DocumentData?;
+    document: DocumentData;
     royaltyWalletAddress: Address?;
 
     // transfership data
@@ -39,32 +34,28 @@ contract Document {
     assignmentHash: String?;
 
     // author is owner when created
-    init(parent: Address, seqno: Int, author: Address) {
+    init(parent: Address, seqno: Int, author: Address, document: DocumentData, commissions: Commissions, royaltyWalletAddress: Address?) {
         self.parent = parent;
         self.seqno = seqno;
 
         self.author = author;
         self.exclusiveRightsOwner = author;
+
+        self.document = document;
+        self.commissions = commissions;
+        self.royaltyWalletAddress = royaltyWalletAddress;
     }
 
-    get fun currentCommissions(): Commissions? {
+    get fun currentCommissions(): Commissions {
         return self.commissions;
     }
 
     get fun currentTransfershipCommissionPercentage(): Int {
-        if (self.commissions != null) {
-            return self.commissions!!.transfershipCommissionPercentage;
-        } else {
-            return 0;
-        }
+        return self.commissions.transfershipCommissionPercentage;
     }
 
     get fun currentRoyaltyCommissionPercentage(): Int {
-        if (self.commissions != null) {
-            return self.commissions!!.royaltyCommissionPercentage;
-        } else {
-            return 0;
-        }
+        return self.commissions.royaltyCommissionPercentage;
     }
 
     get fun currentCost(): Int? {
@@ -83,7 +74,7 @@ contract Document {
         return self.exclusiveRightsOwner;
     }
 
-    get fun documentData(): DocumentData? {
+    get fun documentData(): DocumentData {
         return self.document;
     }
 
@@ -110,13 +101,6 @@ contract Document {
         } else {
             return 0;
         }
-    }
-
-    receive(msg: DeclareDocumentWithRoyaltyAddress) {
-        require(sender() == self.parent, "Only Autoproof is allowed to set the document data");
-        require(self.document == null, "Document data can be declared only once");
-        self.document = msg.document;
-        self.royaltyWalletAddress = msg.royaltyWalletAddress;
     }
 
     receive(msg: SetCost) {
