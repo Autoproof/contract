@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 2848 bytes
+BOC Size: 2938 bytes
 
 # Types
-Total Types: 16
+Total Types: 17
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -49,6 +49,10 @@ Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,
 TLB: `declare_document_with_comission#cbbaf08b document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissionPercentage:uint256 = DeclareDocumentWithComission`
 Signature: `DeclareDocumentWithComission{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},commissionPercentage:uint256}`
 
+## ClaimApproval
+TLB: `claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval`
+Signature: `ClaimApproval{assignmentHash:^string}`
+
 ## DocumentData
 TLB: `_ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData`
 Signature: `DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
@@ -70,7 +74,7 @@ TLB: `cancel_document_claim#24a3641f documentAddress:address = CancelDocumentCla
 Signature: `CancelDocumentClaim{documentAddress:address}`
 
 # Get Methods
-Total Get Methods: 7
+Total Get Methods: 8
 
 ## currentCommissionPercentage
 
@@ -83,6 +87,8 @@ Total Get Methods: 7
 ## exclusiveRightsOwner
 
 ## documentData
+
+## assignmentHash
 
 ## calculatedCommission
 

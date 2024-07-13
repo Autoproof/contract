@@ -51,6 +51,9 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ;; $DeclareDocumentWithComission$_load
 (slice, (((slice, slice, slice, slice, slice), int))) $DeclareDocumentWithComission$_load(slice sc_0) inline;
 
+;; $ClaimApproval$_load
+(slice, ((slice))) $ClaimApproval$_load(slice sc_0) inline;
+
 ;; $GetFunds$_load
 (slice, ((int))) $GetFunds$_load(slice sc_0) inline;
 
@@ -64,7 +67,7 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ((slice, slice, slice, slice, slice)) $DocumentData$_not_null(tuple v) inline;
 
 ;; $Document$_store
-builder $Document$_store(builder build_0, (slice, int, int, int, tuple, slice, slice, tuple) v) inline;
+builder $Document$_store(builder build_0, (slice, int, int, int, tuple, slice, slice, tuple, slice) v) inline;
 
 ;; $ExclusiveRightsClaim$_as_optional
 tuple $ExclusiveRightsClaim$_as_optional((slice, int, int, int) v) inline;
@@ -73,7 +76,7 @@ tuple $ExclusiveRightsClaim$_as_optional((slice, int, int, int) v) inline;
 tuple $DocumentData$_as_optional((slice, slice, slice, slice, slice) v) inline;
 
 ;; $Document$_load
-(slice, ((slice, int, int, int, tuple, slice, slice, tuple))) $Document$_load(slice sc_0) inline;
+(slice, ((slice, int, int, int, tuple, slice, slice, tuple, slice))) $Document$_load(slice sc_0) inline;
 
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
@@ -115,46 +118,49 @@ tuple $DocumentData$_to_opt_external(tuple v) inline;
 (slice, ((slice, int, slice))) $Document$init$_load(slice sc_0) inline;
 
 ;; $Document$_contract_init
-(slice, int, int, int, tuple, slice, slice, tuple) $Document$_contract_init(slice $parent, int $seqno, slice $author) impure inline_ref;
+(slice, int, int, int, tuple, slice, slice, tuple, slice) $Document$_contract_init(slice $parent, int $seqno, slice $author) impure inline_ref;
 
 ;; $Document$_contract_load
-(slice, int, int, int, tuple, slice, slice, tuple) $Document$_contract_load() impure inline_ref;
+(slice, int, int, int, tuple, slice, slice, tuple, slice) $Document$_contract_load() impure inline_ref;
 
 ;; $Document$_contract_store
-() $Document$_contract_store((slice, int, int, int, tuple, slice, slice, tuple) v) impure inline;
+() $Document$_contract_store((slice, int, int, int, tuple, slice, slice, tuple, slice) v) impure inline;
 
 ;; $global_send
 () $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
 
 ;; $Document$_fun_currentCommissionPercentage
-((slice, int, int, int, tuple, slice, slice, tuple), int) $Document$_fun_currentCommissionPercentage((slice, int, int, int, tuple, slice, slice, tuple) $self) impure inline_ref;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), int) $Document$_fun_currentCommissionPercentage((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref;
 
 ;; $Document$_fun_currentCost
-((slice, int, int, int, tuple, slice, slice, tuple), int) $Document$_fun_currentCost((slice, int, int, int, tuple, slice, slice, tuple) $self) impure inline_ref;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), int) $Document$_fun_currentCost((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref;
 
 ;; $Document$_fun_currentClaim
-((slice, int, int, int, tuple, slice, slice, tuple), tuple) $Document$_fun_currentClaim((slice, int, int, int, tuple, slice, slice, tuple) $self) impure inline_ref;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), tuple) $Document$_fun_currentClaim((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref;
 
 ;; $Document$_fun_author
-((slice, int, int, int, tuple, slice, slice, tuple), slice) $Document$_fun_author((slice, int, int, int, tuple, slice, slice, tuple) $self) impure inline_ref;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), slice) $Document$_fun_author((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref;
 
 ;; $Document$_fun_exclusiveRightsOwner
-((slice, int, int, int, tuple, slice, slice, tuple), slice) $Document$_fun_exclusiveRightsOwner((slice, int, int, int, tuple, slice, slice, tuple) $self) impure inline_ref;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), slice) $Document$_fun_exclusiveRightsOwner((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref;
 
 ;; $Document$_fun_documentData
-((slice, int, int, int, tuple, slice, slice, tuple), tuple) $Document$_fun_documentData((slice, int, int, int, tuple, slice, slice, tuple) $self) impure inline_ref;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), tuple) $Document$_fun_documentData((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref;
+
+;; $Document$_fun_assignmentHash
+((slice, int, int, int, tuple, slice, slice, tuple, slice), slice) $Document$_fun_assignmentHash((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref;
 
 ;; $Document$_fun_calculatedCommission
-((slice, int, int, int, tuple, slice, slice, tuple), int) $Document$_fun_calculatedCommission((slice, int, int, int, tuple, slice, slice, tuple) $self) impure inline_ref;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), int) $Document$_fun_calculatedCommission((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref;
 
 ;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
 
 ;; $Document$_fun_forward
-((slice, int, int, int, tuple, slice, slice, tuple), ()) $Document$_fun_forward((slice, int, int, int, tuple, slice, slice, tuple) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), ()) $Document$_fun_forward((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 
 ;; $Document$_fun_reply
-((slice, int, int, int, tuple, slice, slice, tuple), ()) $Document$_fun_reply((slice, int, int, int, tuple, slice, slice, tuple) $self, cell $body) impure inline;
+((slice, int, int, int, tuple, slice, slice, tuple, slice), ()) $Document$_fun_reply((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, cell $body) impure inline;
 
 ;; $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments
 ((slice, int, int, int)) $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments(slice author, int amount, int sentDocuments, int viewedDocuments) inline;

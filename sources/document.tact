@@ -18,6 +18,10 @@ message DeclareDocumentWithComission {
     commissionPercentage: Int as uint256;
 }
 
+message ClaimApproval {
+    assignmentHash: String;
+}
+
 contract Document {
     parent: Address;
     seqno: Int as uint256;
@@ -31,6 +35,7 @@ contract Document {
     exclusiveRightsOwner: Address;
 
     document: DocumentData?;
+    assignmentHash: String?;
 
     // author is owner when created
     init(parent: Address, seqno: Int, author: Address) {
@@ -67,6 +72,10 @@ contract Document {
 
     get fun documentData(): DocumentData? {
         return self.document;
+    }
+
+    get fun assignmentHash(): String? {
+        return self.assignmentHash;
     }
 
     get fun calculatedCommission(): Int {
@@ -130,7 +139,7 @@ contract Document {
         self.reply("Documents are marked as viewed".asComment());
     }
 
-    receive("approve") {
+    receive(msg: ClaimApproval) {
         require(self.currentClaim != null, "Can't approve without a claim");
         require(self.currentClaim!!.sentDocuments, "Can't approve if documents are not sent");
         require(self.currentClaim!!.viewedDocuments, "Can't approve if documents are not viewed");
@@ -155,6 +164,7 @@ contract Document {
 
         // change the exclusive rights owner
         self.exclusiveRightsOwner = sender();
+        self.assignmentHash = msg.assignmentHash;
         self.cost = null;
         self.currentClaim = null;
         self.reply("Claim is approved".asComment());
