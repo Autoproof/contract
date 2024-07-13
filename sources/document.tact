@@ -15,7 +15,8 @@ struct ExclusiveRightsClaim {
 
 message DeclareDocumentWithComission {
     document: DocumentData;
-    commissionPercentage: Int as uint256;
+    commissions: Commissions;
+    royaltyWalletAddress: Address?;
 }
 
 message ClaimApproval {
@@ -25,16 +26,17 @@ message ClaimApproval {
 contract Document {
     parent: Address;
     seqno: Int as uint256;
-    commissionPercentage: Int? as uint256;
+    commissions: Commissions?;
+
+    // document data
+    author: Address;
+    exclusiveRightsOwner: Address;
+    document: DocumentData?;
+    royaltyWalletAddress: Address?;
 
     // transfership data
     cost: Int? as coins;
     currentClaim: ExclusiveRightsClaim?;
-
-    author: Address;
-    exclusiveRightsOwner: Address;
-
-    document: DocumentData?;
     assignmentHash: String?;
 
     // author is owner when created
@@ -46,9 +48,21 @@ contract Document {
         self.exclusiveRightsOwner = author;
     }
 
-    get fun currentCommissionPercentage(): Int {
-        if (self.commissionPercentage != null) {
-            return self.commissionPercentage!!;
+    get fun currentCommissions(): Commissions? {
+        return self.commissions;
+    }
+
+    get fun currentTransfershipCommissionPercentage(): Int {
+        if (self.commissions != null) {
+            return self.commissions!!.transfershipCommissionPercentage;
+        } else {
+            return 0;
+        }
+    }
+
+    get fun currentRoyaltyCommissionPercentage(): Int {
+        if (self.commissions != null) {
+            return self.commissions!!.royaltyCommissionPercentage;
         } else {
             return 0;
         }
@@ -78,17 +92,33 @@ contract Document {
         return self.assignmentHash;
     }
 
-    get fun calculatedCommission(): Int {
+    // Returns a summed commision for the transfership (includes royalty)
+    get fun summedCommission(): Int {
+        return self.transfershipCommission() + self.royaltyCommission();
+    }
+
+    get fun transfershipCommission(): Int {
         if (self.cost != null) {
-            return self.cost!! / 100 * self.currentCommissionPercentage();
+            return self.cost!! / 1000 * self.currentTransfershipCommissionPercentage();
         } else {
             return 0;
         }
     }
+
+    get fun royaltyCommission(): Int {
+        if (self.cost != null) {
+            return self.cost!! / 1000 * self.currentRoyaltyCommissionPercentage();
+        } else {
+            return 0;
+        }
+    }
+
     receive(msg: DeclareDocumentWithComission) {
         require(sender() == self.parent, "Only Autoproof is allowed to set the document data");
         require(self.document == null, "Document data can be declared only once");
         self.document = msg.document;
+        self.commissions = msg.commissions;
+        self.royaltyWalletAddress = msg.royaltyWalletAddress;
     }
 
     receive(msg: SetCost) {
@@ -100,7 +130,7 @@ contract Document {
 
     receive("claim-rights-transfer") {
         require(self.cost != null, "Exclusive rights transfer is not available");
-        require(context().value > (self.cost!! + self.calculatedCommission()), "Not enough funds.");
+        require(context().value > (self.cost!! + self.summedCommission()), "Not enough funds.");
         require(self.currentClaim == null, "Transfer is in progress");
 
         // set the new claim
@@ -153,10 +183,25 @@ contract Document {
             body: "Send funds to the exclusive rights owner".asComment(),
         });
 
-        // send commission to the parent contract
+        if (self.royaltyWalletAddress != null) {
+            // send royalty commission to the royalty wallet
+            send(SendParameters{
+                to: self.royaltyWalletAddress!!,
+                value: self.royaltyCommission(),
+                bounce: false,
+                mode: SendIgnoreErrors,
+                body: "Send royalty commission".asComment(),
+            });
+        }
+
+        // if there is no roylty wallet address
+        // the autoproof commission = transfership + royalty
+        let autoproofCommission: Int = self.royaltyWalletAddress == null ? self.summedCommission() : self.transfershipCommission();
+
+        // send autoproof commission
         send(SendParameters{
             to: self.parent,
-            value: self.calculatedCommission(),
+            value: autoproofCommission,
             bounce: false,
             mode: SendIgnoreErrors,
             body: "Send commission to Autoproof".asComment(),
@@ -184,7 +229,7 @@ contract Document {
 
         send(SendParameters{
                 to: self.currentClaim!!.author,
-                value: self.currentClaim!!.amount + self.calculatedCommission(),
+                value: self.currentClaim!!.amount + self.summedCommission(),
                 mode: SendIgnoreErrors,
                 body: "Return funds to the claimer".asComment(),
         });
@@ -193,18 +238,21 @@ contract Document {
         self.reply("Claim is canceled".asComment());
     }
 
-    receive(msg: SetCommissionPercentage) {
-        require(self.parent == sender(), "Only parent contract can set the commission percentage");
-        require(msg.commissionPercentage >= 0, "Commission percentage can't be less than 0");
-        require(msg.commissionPercentage <= 100, "Commission percentage can't be greater than 100");
+    receive(msg: SetCommissions) {
+        require(self.parent == sender(), "Only parent contract can set the commissions");
 
-        self.commissionPercentage = msg.commissionPercentage;
+        require(msg.commissions.transfershipCommissionPercentage >= 0, "Transfership commission percentage can't be less than 0");
+        require(msg.commissions.transfershipCommissionPercentage <= 100, "Transfership commission percentage can't be greater than 100");
+        require(msg.commissions.royaltyCommissionPercentage >= 0, "Royalty commission percentage can't be less than 0");
+        require(msg.commissions.royaltyCommissionPercentage <= 100, "Royalty commission percentage can't be greater than 100");
+
+        self.commissions = msg.commissions;
 
         send(SendParameters{
             to: sender(),
             value: context().value,
             mode: SendIgnoreErrors,
-            body: "The document's commission was updated".asComment(),
+            body: "The document's commissions were updated".asComment(),
         });
     }
 

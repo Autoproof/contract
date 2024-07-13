@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Autoproof
-BOC Size: 2050 bytes
+BOC Size: 2276 bytes
 
 # Types
-Total Types: 17
+Total Types: 18
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -46,8 +46,8 @@ TLB: `_ author:address amount:coins sentDocuments:bool viewedDocuments:bool = Ex
 Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,viewedDocuments:bool}`
 
 ## DeclareDocumentWithComission
-TLB: `declare_document_with_comission#cbbaf08b document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissionPercentage:uint256 = DeclareDocumentWithComission`
-Signature: `DeclareDocumentWithComission{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},commissionPercentage:uint256}`
+TLB: `declare_document_with_comission#967defee document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} royaltyWalletAddress:Maybe address = DeclareDocumentWithComission`
+Signature: `DeclareDocumentWithComission{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256},royaltyWalletAddress:Maybe address}`
 
 ## ClaimApproval
 TLB: `claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval`
@@ -57,28 +57,36 @@ Signature: `ClaimApproval{assignmentHash:^string}`
 TLB: `_ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData`
 Signature: `DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
 
+## Commissions
+TLB: `_ transfershipCommissionPercentage:uint256 royaltyCommissionPercentage:uint256 = Commissions`
+Signature: `Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256}`
+
 ## GetFunds
 TLB: `get_funds#0a30a01f amount:coins = GetFunds`
 Signature: `GetFunds{amount:coins}`
 
-## SetCommissionPercentage
-TLB: `set_commission_percentage#e56fec38 commissionPercentage:uint256 documentAddress:Maybe address = SetCommissionPercentage`
-Signature: `SetCommissionPercentage{commissionPercentage:uint256,documentAddress:Maybe address}`
+## SetCommissions
+TLB: `set_commissions#4b486165 commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} documentAddress:Maybe address = SetCommissions`
+Signature: `SetCommissions{commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256},documentAddress:Maybe address}`
 
 ## DeclareDocument
-TLB: `declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument`
-Signature: `DeclareDocument{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}}`
+TLB: `declare_document#6f05cf40 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocument`
+Signature: `DeclareDocument{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},royaltyWalletAddress:Maybe address}`
 
 ## CancelDocumentClaim
 TLB: `cancel_document_claim#24a3641f documentAddress:address = CancelDocumentClaim`
 Signature: `CancelDocumentClaim{documentAddress:address}`
 
 # Get Methods
-Total Get Methods: 5
+Total Get Methods: 7
 
 ## documentsNumber
 
-## currentCommissionPercentage
+## currentCommissions
+
+## currentTransfershipCommissionPercentage
+
+## currentRoyaltyCommissionPercentage
 
 ## documentAddress
 Argument: seqno
@@ -113,22 +121,23 @@ Argument: author
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
+2128: Royalty commission percentage can't be greater than 100
 3545: Tags can't be empty
 3861: Only author of the claim can approve
 5688: Only exclusive rights owner can set the cost
 7765: Can't approve without a claim
 7782: Can't cancel without a claim
 8086: Not enough funds
-10382: Commission percentage can't be less than 0
 14555: Exclusive rights transfer is not available
-14578: Commission percentage can't be greater than 100
 19061: Only exclusive rights owner can get funds
 19102: Transfer is in progress
 19201: Can't view documents if they are not sent
+21449: Royalty commission percentage can't be less than 0
 21953: Not enough funds.
 23073: Can't approve if documents are not viewed
+23942: Transfership commission percentage can't be less than 0
+24203: Transfership commission percentage can't be greater than 100
 28490: Authorship can't be empty
-29100: Only parent contract can set the commission percentage
 30316: Can't approve if documents are not sent
 30875: Only owner can set the commission percentage
 34015: Only owner can cancel a document contract
@@ -137,6 +146,7 @@ Argument: author
 44565: Only the exclusive rights have access
 46455: Document data can be declared only once
 48674: Only Autoproof is allowed to set the document data
+48939: Only parent contract can set the commissions
 50544: Only exclusive rights owner or author of the claim can cancel
 53296: Contract not stopped
 53932: Can't cancel if documents were sent but not viewed

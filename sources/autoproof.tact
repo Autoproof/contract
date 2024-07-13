@@ -8,6 +8,7 @@ import "./common.tact";
 
 message DeclareDocument {
     document: DocumentData;
+    royaltyWalletAddress: Address?;
 }
 
 message CancelDocumentClaim {
@@ -18,19 +19,31 @@ contract Autoproof with Deployable, Resumable {
     owner: Address;
     stopped: Bool; // we want to be able to stop the contract for upgrades
     documentsNumber: Int as uint256 = 0;
-    commissionPercentage: Int as uint256 = 10; // 10% by default
+    commissions: Commissions;
 
     init() {
         self.owner = sender();
         self.stopped = false;
+        self.commissions = Commissions {
+            transfershipCommissionPercentage: 95, // 9.5% by default
+            royaltyCommissionPercentage: 5 // 0.5% by default
+        };
     }
 
     get fun documentsNumber(): Int {
         return self.documentsNumber;
     }
 
-    get fun currentCommissionPercentage(): Int {
-        return self.commissionPercentage;
+    get fun currentCommissions(): Commissions? {
+        return self.commissions;
+    }
+
+    get fun currentTransfershipCommissionPercentage(): Int {
+        return self.commissions.transfershipCommissionPercentage;
+    }
+
+    get fun currentRoyaltyCommissionPercentage(): Int {
+        return self.commissions.royaltyCommissionPercentage;
     }
 
     get fun documentAddress(seqno: Int, author: Address): Address {
@@ -49,7 +62,8 @@ contract Autoproof with Deployable, Resumable {
             body:
                 DeclareDocumentWithComission{
                     document: msg.document,
-                    commissionPercentage: self.commissionPercentage
+                    commissions: self.commissions,
+                    royaltyWalletAddress: msg.royaltyWalletAddress
                 }.toCell(),
             value: context().value,
             code: init.code,
@@ -68,13 +82,16 @@ contract Autoproof with Deployable, Resumable {
         });
     }
 
-    receive(msg: SetCommissionPercentage) {
+    receive(msg: SetCommissions) {
         require(self.owner == sender(), "Only owner can set the commission percentage");
-        require(msg.commissionPercentage >= 0, "Commission percentage can't be less than 0");
-        require(msg.commissionPercentage <= 100, "Commission percentage can't be greater than 100");
+
+        require(msg.commissions.transfershipCommissionPercentage >= 0, "Transfership commission percentage can't be less than 0");
+        require(msg.commissions.transfershipCommissionPercentage <= 100, "Transfership commission percentage can't be greater than 100");
+        require(msg.commissions.royaltyCommissionPercentage >= 0, "Royalty commission percentage can't be less than 0");
+        require(msg.commissions.royaltyCommissionPercentage <= 100, "Royalty commission percentage can't be greater than 100");
 
         if (msg.documentAddress == null) {
-            self.commissionPercentage = msg.commissionPercentage;
+            self.commissions = msg.commissions;
 
             send(SendParameters{
                 to: sender(),
@@ -87,7 +104,7 @@ contract Autoproof with Deployable, Resumable {
                 to: msg.documentAddress!!,
                 value: context().value,
                 mode: SendIgnoreErrors,
-                body:msg.toCell()
+                body: msg.toCell()
             });
         }
     }

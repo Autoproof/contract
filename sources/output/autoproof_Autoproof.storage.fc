@@ -99,25 +99,78 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ((slice, slice, slice, slice, slice)) $DocumentData$_tensor_cast((slice, slice, slice, slice, slice) v) asm "NOP";
 
 ;;
-;; Type: DeclareDocumentWithComission
-;; Header: 0xcbbaf08b
-;; TLB: declare_document_with_comission#cbbaf08b document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissionPercentage:uint256 = DeclareDocumentWithComission
+;; Type: Commissions
+;; TLB: _ transfershipCommissionPercentage:uint256 royaltyCommissionPercentage:uint256 = Commissions
 ;;
 
-builder $DeclareDocumentWithComission$_store(builder build_0, ((slice, slice, slice, slice, slice), int) v) inline {
-    var ((v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags), v'commissionPercentage) = v;
-    build_0 = store_uint(build_0, 3418026123, 32);
-    build_0 = $DocumentData$_store(build_0, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags));
-    build_0 = build_0.store_uint(v'commissionPercentage, 256);
+builder $Commissions$_store(builder build_0, (int, int) v) inline {
+    var (v'transfershipCommissionPercentage, v'royaltyCommissionPercentage) = v;
+    build_0 = build_0.store_uint(v'transfershipCommissionPercentage, 256);
+    build_0 = build_0.store_uint(v'royaltyCommissionPercentage, 256);
     return build_0;
 }
 
-cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, slice), int) v) inline {
+(slice, ((int, int))) $Commissions$_load(slice sc_0) inline {
+    var v'transfershipCommissionPercentage = sc_0~load_uint(256);
+    var v'royaltyCommissionPercentage = sc_0~load_uint(256);
+    return (sc_0, (v'transfershipCommissionPercentage, v'royaltyCommissionPercentage));
+}
+
+((int, int)) $Commissions$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (int vvv'transfershipCommissionPercentage, int vvv'royaltyCommissionPercentage) = __tact_tuple_destroy_2(v);
+    return (vvv'transfershipCommissionPercentage, vvv'royaltyCommissionPercentage);
+}
+
+tuple $Commissions$_as_optional((int, int) v) inline {
+    var (v'transfershipCommissionPercentage, v'royaltyCommissionPercentage) = v;
+    return __tact_tuple_create_2(v'transfershipCommissionPercentage, v'royaltyCommissionPercentage);
+}
+
+tuple $Commissions$_to_tuple(((int, int)) v) inline {
+    var (v'transfershipCommissionPercentage, v'royaltyCommissionPercentage) = v;
+    return __tact_tuple_create_2(v'transfershipCommissionPercentage, v'royaltyCommissionPercentage);
+}
+
+tuple $Commissions$_to_opt_tuple(tuple v) inline {
+    if (null?(v)) { return null(); } 
+    return $Commissions$_to_tuple($Commissions$_not_null(v)); 
+}
+
+tuple $Commissions$_to_opt_external(tuple v) inline {
+    var loaded = $Commissions$_to_opt_tuple(v);
+    if (null?(loaded)) {
+        return null();
+    } else {
+        return (loaded);
+    }
+}
+
+((int, int)) $Commissions$_constructor_transfershipCommissionPercentage_royaltyCommissionPercentage(int transfershipCommissionPercentage, int royaltyCommissionPercentage) inline {
+    return (transfershipCommissionPercentage, royaltyCommissionPercentage);
+}
+
+;;
+;; Type: DeclareDocumentWithComission
+;; Header: 0x967defee
+;; TLB: declare_document_with_comission#967defee document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} royaltyWalletAddress:Maybe address = DeclareDocumentWithComission
+;;
+
+builder $DeclareDocumentWithComission$_store(builder build_0, ((slice, slice, slice, slice, slice), (int, int), slice) v) inline {
+    var ((v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags), (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage), v'royaltyWalletAddress) = v;
+    build_0 = store_uint(build_0, 2524835822, 32);
+    build_0 = $DocumentData$_store(build_0, (v'document'authorship, v'document'description, v'document'rootHash, v'document'data, v'document'tags));
+    build_0 = $Commissions$_store(build_0, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage));
+    build_0 = __tact_store_address_opt(build_0, v'royaltyWalletAddress);
+    return build_0;
+}
+
+cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, slice), (int, int), slice) v) inline {
     return $DeclareDocumentWithComission$_store(begin_cell(), v).end_cell();
 }
 
-(((slice, slice, slice, slice, slice), int)) $DeclareDocumentWithComission$_constructor_document_commissionPercentage((slice, slice, slice, slice, slice) document, int commissionPercentage) inline {
-    return (document, commissionPercentage);
+(((slice, slice, slice, slice, slice), (int, int), slice)) $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress((slice, slice, slice, slice, slice) document, (int, int) commissions, slice royaltyWalletAddress) inline {
+    return (document, commissions, royaltyWalletAddress);
 }
 
 ;;
@@ -133,40 +186,41 @@ cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, sli
 }
 
 ;;
-;; Type: SetCommissionPercentage
-;; Header: 0xe56fec38
-;; TLB: set_commission_percentage#e56fec38 commissionPercentage:uint256 documentAddress:Maybe address = SetCommissionPercentage
+;; Type: SetCommissions
+;; Header: 0x4b486165
+;; TLB: set_commissions#4b486165 commissions:Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256} documentAddress:Maybe address = SetCommissions
 ;;
 
-builder $SetCommissionPercentage$_store(builder build_0, (int, slice) v) inline {
-    var (v'commissionPercentage, v'documentAddress) = v;
-    build_0 = store_uint(build_0, 3849317432, 32);
-    build_0 = build_0.store_uint(v'commissionPercentage, 256);
+builder $SetCommissions$_store(builder build_0, ((int, int), slice) v) inline {
+    var ((v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage), v'documentAddress) = v;
+    build_0 = store_uint(build_0, 1263034725, 32);
+    build_0 = $Commissions$_store(build_0, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage));
     build_0 = __tact_store_address_opt(build_0, v'documentAddress);
     return build_0;
 }
 
-cell $SetCommissionPercentage$_store_cell((int, slice) v) inline {
-    return $SetCommissionPercentage$_store(begin_cell(), v).end_cell();
+cell $SetCommissions$_store_cell(((int, int), slice) v) inline {
+    return $SetCommissions$_store(begin_cell(), v).end_cell();
 }
 
-(slice, ((int, slice))) $SetCommissionPercentage$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 3849317432);
-    var v'commissionPercentage = sc_0~load_uint(256);
+(slice, (((int, int), slice))) $SetCommissions$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 1263034725);
+    var v'commissions = sc_0~$Commissions$_load();
     var v'documentAddress = sc_0~__tact_load_address_opt();
-    return (sc_0, (v'commissionPercentage, v'documentAddress));
+    return (sc_0, (v'commissions, v'documentAddress));
 }
 
 ;;
 ;; Type: DeclareDocument
-;; Header: 0x4c2fea6d
-;; TLB: declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument
+;; Header: 0x6f05cf40
+;; TLB: declare_document#6f05cf40 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocument
 ;;
 
-(slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 1278208621);
+(slice, (((slice, slice, slice, slice, slice), slice))) $DeclareDocument$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 1862651712);
     var v'document = sc_0~$DocumentData$_load();
-    return (sc_0, (v'document));
+    var v'royaltyWalletAddress = sc_0~__tact_load_address_opt();
+    return (sc_0, (v'document, v'royaltyWalletAddress));
 }
 
 ;;
@@ -214,24 +268,27 @@ builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline {
 ;; Type: Autoproof
 ;;
 
-builder $Autoproof$_store(builder build_0, (slice, int, int, int) v) inline {
-    var (v'owner, v'stopped, v'documentsNumber, v'commissionPercentage) = v;
+builder $Autoproof$_store(builder build_0, (slice, int, int, (int, int)) v) inline {
+    var (v'owner, v'stopped, v'documentsNumber, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage)) = v;
     build_0 = __tact_store_address(build_0, v'owner);
     build_0 = build_0.store_int(v'stopped, 1);
     build_0 = build_0.store_uint(v'documentsNumber, 256);
-    build_0 = build_0.store_uint(v'commissionPercentage, 256);
+    var build_1 = begin_cell();
+    build_1 = $Commissions$_store(build_1, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage));
+    build_0 = store_ref(build_0, build_1.end_cell());
     return build_0;
 }
 
-(slice, ((slice, int, int, int))) $Autoproof$_load(slice sc_0) inline {
+(slice, ((slice, int, int, (int, int)))) $Autoproof$_load(slice sc_0) inline {
     var v'owner = sc_0~__tact_load_address();
     var v'stopped = sc_0~load_int(1);
     var v'documentsNumber = sc_0~load_uint(256);
-    var v'commissionPercentage = sc_0~load_uint(256);
-    return (sc_0, (v'owner, v'stopped, v'documentsNumber, v'commissionPercentage));
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'commissions = sc_1~$Commissions$_load();
+    return (sc_0, (v'owner, v'stopped, v'documentsNumber, v'commissions));
 }
 
-(slice, int, int, int) $Autoproof$_contract_load() impure inline_ref {
+(slice, int, int, (int, int)) $Autoproof$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -244,7 +301,7 @@ builder $Autoproof$_store(builder build_0, (slice, int, int, int) v) inline {
     }
 }
 
-() $Autoproof$_contract_store((slice, int, int, int) v) impure inline {
+() $Autoproof$_contract_store((slice, int, int, (int, int)) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);

@@ -30,6 +30,15 @@ builder __tact_store_address(builder b, slice address) inline {
     return b.store_slice(__tact_verify_address(address));
 }
 
+builder __tact_store_address_opt(builder b, slice address) inline {
+    if (null?(address)) {
+        b = b.store_uint(0, 2);
+        return b;
+    } else {
+        return __tact_store_address(b, address);
+    }
+}
+
 int __tact_my_balance() inline {
     return pair_first(get_balance());
 }
@@ -53,6 +62,8 @@ builder __tact_store_bool(builder b, int v) inline {
 int __tact_slice_eq_bits(slice a, slice b) inline {
     return equal_slice_bits(a, b);
 }
+
+forall X0, X1 -> tuple __tact_tuple_create_2((X0, X1) v) asm "2 TUPLE";
 
 forall X0, X1 -> (X0, X1) __tact_tuple_destroy_2(tuple v) asm "2 UNTUPLE";
 
@@ -107,8 +118,8 @@ forall X0, X1, X2, X3, X4 -> (X0, X1, X2, X3, X4) __tact_tuple_destroy_5(tuple v
     send_raw_message($c, $params'mode);
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), ()) $Document$_fun_forward((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), ()) $Document$_fun_forward((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
     var ($init) = $init;
     cell $code = null();
     cell $data = null();
@@ -124,15 +135,15 @@ forall X0, X1, X2, X3, X4 -> (X0, X1, X2, X3, X4) __tact_tuple_destroy_5(tuple v
         if (($balanceBeforeMessage < 0)) {
             raw_reserve(0, 0);
             $global_send($SendParameters$_constructor_bounce_to_value_mode_body_code_data($bounce, $to, 0, 130, $body, $code, $data));
-            return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+            return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
         }
     }
     $global_send($SendParameters$_constructor_bounce_to_value_mode_body_code_data($bounce, $to, 0, 66, $body, $code, $data));
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), ()) $Document$_fun_reply((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, cell $body) impure inline {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
-    ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_forward(__tact_context_get_sender(), $body, true, null());
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), ()) $Document$_fun_reply((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, cell $body) impure inline {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_forward(__tact_context_get_sender(), $body, true, null());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }

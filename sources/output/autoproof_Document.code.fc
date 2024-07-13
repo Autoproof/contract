@@ -11,172 +11,220 @@
 ;; Contract Document functions
 ;;
 
-(slice, int, int, int, tuple, slice, slice, tuple, slice) $Document$_contract_init(slice $parent, int $seqno, slice $author) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = (null(), null(), null(), null(), null(), null(), null(), null(), null());
+(slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $Document$_contract_init(slice $parent, int $seqno, slice $author) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = (null(), null(), null(), null(), null(), null(), null(), null(), null(), null());
     $self'parent = $parent;
     $self'seqno = $seqno;
     $self'author = $author;
     $self'exclusiveRightsOwner = $author;
-    return ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash);
+    return ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress);
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), int) $Document$_fun_currentCommissionPercentage((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
-    if ((~ null?($self'commissionPercentage))) {
-        return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), __tact_not_null($self'commissionPercentage));
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), tuple) $Document$_fun_currentCommissions((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $self'commissions);
+}
+
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), int) $Document$_fun_currentTransfershipCommissionPercentage((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    if ((~ null?($self'commissions))) {
+        return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $Commissions$_get_transfershipCommissionPercentage($Commissions$_not_null($self'commissions)));
     } else {
-        return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), 0);
+        return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), 0);
     }
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), int) $Document$_fun_currentCost((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), $self'cost);
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), int) $Document$_fun_currentRoyaltyCommissionPercentage((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    if ((~ null?($self'commissions))) {
+        return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $Commissions$_get_royaltyCommissionPercentage($Commissions$_not_null($self'commissions)));
+    } else {
+        return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), 0);
+    }
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), tuple) $Document$_fun_currentClaim((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), $self'currentClaim);
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), int) $Document$_fun_currentCost((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $self'cost);
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), slice) $Document$_fun_author((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), $self'author);
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), tuple) $Document$_fun_currentClaim((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $self'currentClaim);
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), slice) $Document$_fun_exclusiveRightsOwner((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), $self'exclusiveRightsOwner);
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), slice) $Document$_fun_author((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $self'author);
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), tuple) $Document$_fun_documentData((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), $self'document);
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), slice) $Document$_fun_exclusiveRightsOwner((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $self'exclusiveRightsOwner);
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), slice) $Document$_fun_assignmentHash((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), $self'assignmentHash);
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), tuple) $Document$_fun_documentData((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $self'document);
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), int) $Document$_fun_calculatedCommission((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline_ref {
-    var (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)) = $self;
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), slice) $Document$_fun_assignmentHash((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), $self'assignmentHash);
+}
+
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), int) $Document$_fun_transfershipCommission((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
     if ((~ null?($self'cost))) {
-        return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ((__tact_not_null($self'cost) / 100) * ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_currentCommissionPercentage()));
+        return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ((__tact_not_null($self'cost) / 1000) * ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_currentTransfershipCommissionPercentage()));
     } else {
-        return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), 0);
+        return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), 0);
     }
+}
+
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), int) $Document$_fun_royaltyCommission((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    if ((~ null?($self'cost))) {
+        return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ((__tact_not_null($self'cost) / 1000) * ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_currentRoyaltyCommissionPercentage()));
+    } else {
+        return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), 0);
+    }
+}
+
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), int) $Document$_fun_summedCommission((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)) = $self;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_transfershipCommission() + ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_royaltyCommission()));
 }
 
 ;;
 ;; Receivers of a Contract Document
 ;;
 
-(((slice, int, int, int, tuple, slice, slice, tuple, slice)), ()) $Document$_internal_binary_DeclareDocumentWithComission((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, ((slice, slice, slice, slice, slice), int) $msg) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
-    var (($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $msg'commissionPercentage) = $msg;
+(((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice)), ()) $Document$_internal_binary_DeclareDocumentWithComission((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, ((slice, slice, slice, slice, slice), (int, int), slice) $msg) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
+    var (($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), ($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage), $msg'royaltyWalletAddress) = $msg;
     throw_unless(48674, ( __tact_slice_eq_bits($self'parent, __tact_context_get_sender()) ));
     throw_unless(46455, null?($self'document));
     $self'document = $DocumentData$_as_optional(($msg'document'authorship, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags));
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    $self'commissions = $Commissions$_as_optional(($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage));
+    $self'royaltyWalletAddress = $msg'royaltyWalletAddress;
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-(((slice, int, int, int, tuple, slice, slice, tuple, slice)), ()) $Document$_internal_binary_SetCost((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, (int) $msg) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
+(((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice)), ()) $Document$_internal_binary_SetCost((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, (int) $msg) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
     var ($msg'cost) = $msg;
     throw_unless(5688, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'exclusiveRightsOwner) ));
     throw_unless(19102, null?($self'currentClaim));
     $self'cost = $msg'cost;
-    ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_reply(__gen_cell_comment_a24d893b68056ad3627081dd73aacc5ab96ab402e7b838b57661cc9f23b84206());
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_reply(__gen_cell_comment_a24d893b68056ad3627081dd73aacc5ab96ab402e7b838b57661cc9f23b84206());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), ()) $Document$_internal_text_8b659ceff9a6a3c20aa31a7bb878a3a04fb8b758f0079c869f0f4fb7d071b14e((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), ()) $Document$_internal_text_8b659ceff9a6a3c20aa31a7bb878a3a04fb8b758f0079c869f0f4fb7d071b14e((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
     throw_unless(14555, (~ null?($self'cost)));
-    throw_unless(21953, ($Context$_get_value(__tact_context_get()) > (__tact_not_null($self'cost) + ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_calculatedCommission())));
+    throw_unless(21953, ($Context$_get_value(__tact_context_get()) > (__tact_not_null($self'cost) + ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_summedCommission())));
     throw_unless(19102, null?($self'currentClaim));
     $self'currentClaim = $ExclusiveRightsClaim$_as_optional($ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), false, false));
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), ()) $Document$_internal_text_b9f1ba120cb2ba414dc6e46ab801c29fa13c4d7f1e91726f63f55ec0b168b103((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), ()) $Document$_internal_text_b9f1ba120cb2ba414dc6e46ab801c29fa13c4d7f1e91726f63f55ec0b168b103((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
     throw_unless(41504, (~ null?($self'currentClaim)));
     throw_unless(44565, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'exclusiveRightsOwner) ));
     $self'currentClaim = $ExclusiveRightsClaim$_as_optional($ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)), true, false));
-    ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_reply(__gen_cell_comment_91db6867d6e167dc48da6f7979c03cd08953f1fd4fae52d5f0c7b5edda22884f());
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_reply(__gen_cell_comment_91db6867d6e167dc48da6f7979c03cd08953f1fd4fae52d5f0c7b5edda22884f());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), ()) $Document$_internal_text_65571b87ca1035c906804ffbc83341f4b4fd3a4aed474c05f6fa70d45ab5e549((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), ()) $Document$_internal_text_65571b87ca1035c906804ffbc83341f4b4fd3a4aed474c05f6fa70d45ab5e549((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
     throw_unless(41504, (~ null?($self'currentClaim)));
     throw_unless(61716, ( __tact_slice_eq_bits(__tact_context_get_sender(), $ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim))) ));
     throw_unless(19201, $ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)));
     $self'currentClaim = $ExclusiveRightsClaim$_as_optional($ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)), true, true));
-    ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_reply(__gen_cell_comment_d3526fc811cf6634c81b150ab6e3cf0448fc8e81e4d8304badf3a835cdc0423b());
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_reply(__gen_cell_comment_d3526fc811cf6634c81b150ab6e3cf0448fc8e81e4d8304badf3a835cdc0423b());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-(((slice, int, int, int, tuple, slice, slice, tuple, slice)), ()) $Document$_internal_binary_ClaimApproval((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, (slice) $msg) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
+(((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice)), ()) $Document$_internal_binary_ClaimApproval((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, (slice) $msg) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
     var ($msg'assignmentHash) = $msg;
     throw_unless(7765, (~ null?($self'currentClaim)));
     throw_unless(30316, $ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)));
     throw_unless(23073, $ExclusiveRightsClaim$_get_viewedDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)));
     throw_unless(3861, ( __tact_slice_eq_bits($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), __tact_context_get_sender()) ));
     $global_send($SendParameters$_constructor_to_value_mode_body($self'exclusiveRightsOwner, $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)), 2, __gen_cell_comment_b46e5aff89477cef681bdcd8d8b06e707cbcdaa00c24228e98bf3ad1fdf8d64c()));
-    $global_send($SendParameters$_constructor_to_value_bounce_mode_body($self'parent, ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_calculatedCommission(), false, 2, __gen_cell_comment_bd417ae69986f41c9e3c311f8930a86cc7b1c0a7266c3fc5854255da54b73d7e()));
+    if ((~ null?($self'royaltyWalletAddress))) {
+        $global_send($SendParameters$_constructor_to_value_bounce_mode_body(__tact_not_null($self'royaltyWalletAddress), ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_royaltyCommission(), false, 2, __gen_cell_comment_a1a55be61bff6dd5f0f64eec10bb1b13083eb1ad3bd72c53228ea826445f5c92()));
+    }
+    int $autoproofCommission = (null?($self'royaltyWalletAddress) ? ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_summedCommission() : ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_transfershipCommission());
+    $global_send($SendParameters$_constructor_to_value_bounce_mode_body($self'parent, $autoproofCommission, false, 2, __gen_cell_comment_bd417ae69986f41c9e3c311f8930a86cc7b1c0a7266c3fc5854255da54b73d7e()));
     $self'exclusiveRightsOwner = __tact_context_get_sender();
     $self'assignmentHash = $msg'assignmentHash;
     $self'cost = null();
     $self'currentClaim = null();
-    ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_reply(__gen_cell_comment_b568618b8739d2a97859562b568432367a049473a3531505c060c1948e91ba41());
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_reply(__gen_cell_comment_b568618b8739d2a97859562b568432367a049473a3531505c060c1948e91ba41());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), ()) $Document$_internal_text_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4((slice, int, int, int, tuple, slice, slice, tuple, slice) $self) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), ()) $Document$_internal_text_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
     throw_unless(7782, (~ null?($self'currentClaim)));
     if (( ~ __tact_slice_eq_bits($self'parent, __tact_context_get_sender()) )) {
         throw_unless(50544, ( (( __tact_slice_eq_bits($self'exclusiveRightsOwner, __tact_context_get_sender()) )) ? (true) : (( __tact_slice_eq_bits($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), __tact_context_get_sender()) )) ));
         throw_unless(53932, ( (($ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)) == false)) ? (true) : (( ($ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim))) ? ($ExclusiveRightsClaim$_get_viewedDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim))) : (false) )) ));
     }
-    $global_send($SendParameters$_constructor_to_value_mode_body($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), ($ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)) + ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_calculatedCommission()), 2, __gen_cell_comment_3ecc56424eae26fb2057e77fc13803917f73e6a91a7e5b542f0e2c56da70cd01()));
+    $global_send($SendParameters$_constructor_to_value_mode_body($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), ($ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)) + ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_summedCommission()), 2, __gen_cell_comment_3ecc56424eae26fb2057e77fc13803917f73e6a91a7e5b542f0e2c56da70cd01()));
     $self'currentClaim = null();
-    ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash)~$Document$_fun_reply(__gen_cell_comment_7bcf1cb8246d0fb1f98ccbb1b4e387d55fe728b52756389c67687a576907b365());
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress)~$Document$_fun_reply(__gen_cell_comment_7bcf1cb8246d0fb1f98ccbb1b4e387d55fe728b52756389c67687a576907b365());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-(((slice, int, int, int, tuple, slice, slice, tuple, slice)), ()) $Document$_internal_binary_SetCommissionPercentage((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, (int, slice) $msg) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
-    var ($msg'commissionPercentage, $msg'documentAddress) = $msg;
-    throw_unless(29100, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'parent) ));
-    throw_unless(10382, ($msg'commissionPercentage >= 0));
-    throw_unless(14578, ($msg'commissionPercentage <= 100));
-    $self'commissionPercentage = $msg'commissionPercentage;
-    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_1a0d5fbcd0b8d0c183b04f999c64911f1f68085cea899192653bfc4f82aa16d8()));
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+(((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice)), ()) $Document$_internal_binary_SetCommissions((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, ((int, int), slice) $msg) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
+    var (($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage), $msg'documentAddress) = $msg;
+    throw_unless(48939, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'parent) ));
+    throw_unless(23942, ($msg'commissions'transfershipCommissionPercentage >= 0));
+    throw_unless(24203, ($msg'commissions'transfershipCommissionPercentage <= 100));
+    throw_unless(21449, ($msg'commissions'royaltyCommissionPercentage >= 0));
+    throw_unless(2128, ($msg'commissions'royaltyCommissionPercentage <= 100));
+    $self'commissions = $Commissions$_as_optional(($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage));
+    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_6103e86002c4636a8d77df79a7d1a17097a99e41cecb074abce3ed0cb153ddd3()));
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
-(((slice, int, int, int, tuple, slice, slice, tuple, slice)), ()) $Document$_internal_binary_GetFunds((slice, int, int, int, tuple, slice, slice, tuple, slice) $self, (int) $msg) impure inline {
-    var ($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash) = $self;
+(((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice)), ()) $Document$_internal_binary_GetFunds((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) $self, (int) $msg) impure inline {
+    var ($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress) = $self;
     var ($msg'amount) = $msg;
     throw_unless(19061, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'exclusiveRightsOwner) ));
     int $currentClaimAmount = (null?($self'currentClaim) ? 0 : $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)));
     throw_unless(8086, ((__tact_my_balance() - $currentClaimAmount) > $msg'amount));
     $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $msg'amount, 2, __gen_cell_comment_3732868cf69df09fbb4e4fc919f0437763aa85503e8e4485543dc7ffa417f1d7()));
-    return (($self'parent, $self'seqno, $self'commissionPercentage, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash), ());
+    return (($self'parent, $self'seqno, $self'commissions, $self'cost, $self'currentClaim, $self'author, $self'exclusiveRightsOwner, $self'document, $self'assignmentHash, $self'royaltyWalletAddress), ());
 }
 
 ;;
 ;; Get methods of a Contract Document
 ;;
 
-_ %currentCommissionPercentage() method_id(113694) {
+_ %currentCommissions() method_id(104324) {
     var self = $Document$_contract_load();
-    var res = self~$Document$_fun_currentCommissionPercentage();
+    var res = self~$Document$_fun_currentCommissions();
+    return $Commissions$_to_opt_external(res);
+}
+
+_ %currentTransfershipCommissionPercentage() method_id(72344) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_currentTransfershipCommissionPercentage();
+    return res;
+}
+
+_ %currentRoyaltyCommissionPercentage() method_id(66726) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_currentRoyaltyCommissionPercentage();
     return res;
 }
 
@@ -216,9 +264,21 @@ _ %assignmentHash() method_id(67514) {
     return res;
 }
 
-_ %calculatedCommission() method_id(122557) {
+_ %summedCommission() method_id(108305) {
     var self = $Document$_contract_load();
-    var res = self~$Document$_fun_calculatedCommission();
+    var res = self~$Document$_fun_summedCommission();
+    return res;
+}
+
+_ %transfershipCommission() method_id(106294) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_transfershipCommission();
+    return res;
+}
+
+_ %royaltyCommission() method_id(117581) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_royaltyCommission();
     return res;
 }
 
@@ -232,7 +292,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmTctAt8uamugU9sipFtPh2XQ4ezqnGFUhwEJKucSMK4sr";
+    return "ipfs://QmTti8CnZL5r1YmHkuap1qWkC68yfGgGQa4Boh2dmwQfQ8";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -243,7 +303,7 @@ _ lazy_deployment_completed() method_id {
 ;; Routing of a Contract Document
 ;;
 
-((slice, int, int, int, tuple, slice, slice, tuple, slice), int) $Document$_contract_router_internal((slice, int, int, int, tuple, slice, slice, tuple, slice) self, int msg_bounced, slice in_msg) impure inline_ref {
+((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice), int) $Document$_contract_router_internal((slice, int, tuple, int, tuple, slice, slice, tuple, slice, slice) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
         return (self, true);
@@ -257,7 +317,7 @@ _ lazy_deployment_completed() method_id {
     
     
     ;; Receive DeclareDocumentWithComission message
-    if (op == 3418026123) {
+    if (op == 2524835822) {
         var msg = in_msg~$DeclareDocumentWithComission$_load();
         self~$Document$_internal_binary_DeclareDocumentWithComission(msg);
         return (self, true);
@@ -277,10 +337,10 @@ _ lazy_deployment_completed() method_id {
         return (self, true);
     }
     
-    ;; Receive SetCommissionPercentage message
-    if (op == 3849317432) {
-        var msg = in_msg~$SetCommissionPercentage$_load();
-        self~$Document$_internal_binary_SetCommissionPercentage(msg);
+    ;; Receive SetCommissions message
+    if (op == 1263034725) {
+        var msg = in_msg~$SetCommissions$_load();
+        self~$Document$_internal_binary_SetCommissions(msg);
         return (self, true);
     }
     

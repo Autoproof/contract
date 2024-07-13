@@ -66,35 +66,41 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 ;; $DocumentData$_load
 (slice, ((slice, slice, slice, slice, slice))) $DocumentData$_load(slice sc_0) inline;
 
+;; $Commissions$_store
+builder $Commissions$_store(builder build_0, (int, int) v) inline;
+
+;; $Commissions$_load
+(slice, ((int, int))) $Commissions$_load(slice sc_0) inline;
+
 ;; $DeclareDocumentWithComission$_store
-builder $DeclareDocumentWithComission$_store(builder build_0, ((slice, slice, slice, slice, slice), int) v) inline;
+builder $DeclareDocumentWithComission$_store(builder build_0, ((slice, slice, slice, slice, slice), (int, int), slice) v) inline;
 
 ;; $DeclareDocumentWithComission$_store_cell
-cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, slice), int) v) inline;
+cell $DeclareDocumentWithComission$_store_cell(((slice, slice, slice, slice, slice), (int, int), slice) v) inline;
 
 ;; $GetFunds$_load
 (slice, ((int))) $GetFunds$_load(slice sc_0) inline;
 
-;; $SetCommissionPercentage$_store
-builder $SetCommissionPercentage$_store(builder build_0, (int, slice) v) inline;
+;; $SetCommissions$_store
+builder $SetCommissions$_store(builder build_0, ((int, int), slice) v) inline;
 
-;; $SetCommissionPercentage$_store_cell
-cell $SetCommissionPercentage$_store_cell((int, slice) v) inline;
+;; $SetCommissions$_store_cell
+cell $SetCommissions$_store_cell(((int, int), slice) v) inline;
 
-;; $SetCommissionPercentage$_load
-(slice, ((int, slice))) $SetCommissionPercentage$_load(slice sc_0) inline;
+;; $SetCommissions$_load
+(slice, (((int, int), slice))) $SetCommissions$_load(slice sc_0) inline;
 
 ;; $DeclareDocument$_load
-(slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline;
+(slice, (((slice, slice, slice, slice, slice), slice))) $DeclareDocument$_load(slice sc_0) inline;
 
 ;; $CancelDocumentClaim$_load
 (slice, ((slice))) $CancelDocumentClaim$_load(slice sc_0) inline;
 
 ;; $Autoproof$_store
-builder $Autoproof$_store(builder build_0, (slice, int, int, int) v) inline;
+builder $Autoproof$_store(builder build_0, (slice, int, int, (int, int)) v) inline;
 
 ;; $Autoproof$_load
-(slice, ((slice, int, int, int))) $Autoproof$_load(slice sc_0) inline;
+(slice, ((slice, int, int, (int, int)))) $Autoproof$_load(slice sc_0) inline;
 
 ;; $StateInit$_not_null
 ((cell, cell)) $StateInit$_not_null(tuple v) inline;
@@ -102,17 +108,35 @@ builder $Autoproof$_store(builder build_0, (slice, int, int, int) v) inline;
 ;; $Context$_get_value
 _ $Context$_get_value((int, slice, int, slice) v) inline;
 
+;; $Commissions$_not_null
+((int, int)) $Commissions$_not_null(tuple v) inline;
+
+;; $Commissions$_as_optional
+tuple $Commissions$_as_optional((int, int) v) inline;
+
+;; $Commissions$_to_tuple
+tuple $Commissions$_to_tuple(((int, int)) v) inline;
+
+;; $Commissions$_to_opt_tuple
+tuple $Commissions$_to_opt_tuple(tuple v) inline;
+
+;; $Commissions$_to_opt_external
+tuple $Commissions$_to_opt_external(tuple v) inline;
+
 ;; $Document$init$_store
 builder $Document$init$_store(builder build_0, (slice, int, slice) v) inline;
 
+;; $Commissions$_constructor_transfershipCommissionPercentage_royaltyCommissionPercentage
+((int, int)) $Commissions$_constructor_transfershipCommissionPercentage_royaltyCommissionPercentage(int transfershipCommissionPercentage, int royaltyCommissionPercentage) inline;
+
 ;; $Autoproof$_contract_init
-(slice, int, int, int) $Autoproof$_contract_init() impure inline_ref;
+(slice, int, int, (int, int)) $Autoproof$_contract_init() impure inline_ref;
 
 ;; $Autoproof$_contract_load
-(slice, int, int, int) $Autoproof$_contract_load() impure inline_ref;
+(slice, int, int, (int, int)) $Autoproof$_contract_load() impure inline_ref;
 
 ;; $Autoproof$_contract_store
-() $Autoproof$_contract_store((slice, int, int, int) v) impure inline;
+() $Autoproof$_contract_store((slice, int, int, (int, int)) v) impure inline;
 
 ;; $global_contractAddress
 slice $global_contractAddress((cell, cell) $s) impure inline;
@@ -127,46 +151,52 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
 
 ;; $Autoproof$_fun_documentsNumber
-((slice, int, int, int), int) $Autoproof$_fun_documentsNumber((slice, int, int, int) $self) impure inline_ref;
+((slice, int, int, (int, int)), int) $Autoproof$_fun_documentsNumber((slice, int, int, (int, int)) $self) impure inline_ref;
 
-;; $Autoproof$_fun_currentCommissionPercentage
-((slice, int, int, int), int) $Autoproof$_fun_currentCommissionPercentage((slice, int, int, int) $self) impure inline_ref;
+;; $Autoproof$_fun_currentCommissions
+((slice, int, int, (int, int)), tuple) $Autoproof$_fun_currentCommissions((slice, int, int, (int, int)) $self) impure inline_ref;
+
+;; $Autoproof$_fun_currentTransfershipCommissionPercentage
+((slice, int, int, (int, int)), int) $Autoproof$_fun_currentTransfershipCommissionPercentage((slice, int, int, (int, int)) $self) impure inline_ref;
+
+;; $Autoproof$_fun_currentRoyaltyCommissionPercentage
+((slice, int, int, (int, int)), int) $Autoproof$_fun_currentRoyaltyCommissionPercentage((slice, int, int, (int, int)) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_documentAddress
-((slice, int, int, int), slice) $Autoproof$_fun_documentAddress((slice, int, int, int) $self, int $seqno, slice $author) impure inline_ref;
+((slice, int, int, (int, int)), slice) $Autoproof$_fun_documentAddress((slice, int, int, (int, int)) $self, int $seqno, slice $author) impure inline_ref;
 
 ;; $Autoproof$_fun_validateDeclaration
-((slice, int, int, int), ()) $Autoproof$_fun_validateDeclaration((slice, int, int, int) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref;
+((slice, int, int, (int, int)), ()) $Autoproof$_fun_validateDeclaration((slice, int, int, (int, int)) $self, (slice, slice, slice, slice, slice) $document) impure inline_ref;
 
 ;; $Autoproof$_fun_forward
-((slice, int, int, int), ()) $Autoproof$_fun_forward((slice, int, int, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+((slice, int, int, (int, int)), ()) $Autoproof$_fun_forward((slice, int, int, (int, int)) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
 
 ;; $Autoproof$_fun_reply
-((slice, int, int, int), ()) $Autoproof$_fun_reply((slice, int, int, int) $self, cell $body) impure inline;
+((slice, int, int, (int, int)), ()) $Autoproof$_fun_reply((slice, int, int, (int, int)) $self, cell $body) impure inline;
 
 ;; $Autoproof$_fun_notify
-((slice, int, int, int), ()) $Autoproof$_fun_notify((slice, int, int, int) $self, cell $body) impure inline;
+((slice, int, int, (int, int)), ()) $Autoproof$_fun_notify((slice, int, int, (int, int)) $self, cell $body) impure inline;
 
 ;; $Autoproof$_fun_requireNotStopped
-((slice, int, int, int), ()) $Autoproof$_fun_requireNotStopped((slice, int, int, int) $self) impure inline_ref;
+((slice, int, int, (int, int)), ()) $Autoproof$_fun_requireNotStopped((slice, int, int, (int, int)) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_requireStopped
-((slice, int, int, int), ()) $Autoproof$_fun_requireStopped((slice, int, int, int) $self) impure inline_ref;
+((slice, int, int, (int, int)), ()) $Autoproof$_fun_requireStopped((slice, int, int, (int, int)) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_stopped
-((slice, int, int, int), int) $Autoproof$_fun_stopped((slice, int, int, int) $self) impure inline_ref;
+((slice, int, int, (int, int)), int) $Autoproof$_fun_stopped((slice, int, int, (int, int)) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_requireOwner
-((slice, int, int, int), ()) $Autoproof$_fun_requireOwner((slice, int, int, int) $self) impure inline_ref;
+((slice, int, int, (int, int)), ()) $Autoproof$_fun_requireOwner((slice, int, int, (int, int)) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_owner
-((slice, int, int, int), slice) $Autoproof$_fun_owner((slice, int, int, int) $self) impure inline_ref;
+((slice, int, int, (int, int)), slice) $Autoproof$_fun_owner((slice, int, int, (int, int)) $self) impure inline_ref;
 
 ;; $SendParameters$_constructor_to_body_value_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice to, cell body, int value, cell code, cell data) inline;
 
-;; $DeclareDocumentWithComission$_constructor_document_commissionPercentage
-(((slice, slice, slice, slice, slice), int)) $DeclareDocumentWithComission$_constructor_document_commissionPercentage((slice, slice, slice, slice, slice) document, int commissionPercentage) inline;
+;; $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress
+(((slice, slice, slice, slice, slice), (int, int), slice)) $DeclareDocumentWithComission$_constructor_document_commissions_royaltyWalletAddress((slice, slice, slice, slice, slice) document, (int, int) commissions, slice royaltyWalletAddress) inline;
 
 ;; $SendParameters$_constructor_to_value_mode_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;
