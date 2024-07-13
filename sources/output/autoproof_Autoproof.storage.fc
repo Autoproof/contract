@@ -170,6 +170,18 @@ cell $SetCommissionPercentage$_store_cell((int, slice) v) inline {
 }
 
 ;;
+;; Type: CancelDocumentClaim
+;; Header: 0x24a3641f
+;; TLB: cancel_document_claim#24a3641f documentAddress:address = CancelDocumentClaim
+;;
+
+(slice, ((slice))) $CancelDocumentClaim$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 614687775);
+    var v'documentAddress = sc_0~__tact_load_address();
+    return (sc_0, (v'documentAddress));
+}
+
+;;
 ;; Type: Document
 ;;
 

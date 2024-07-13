@@ -10,6 +10,10 @@ message DeclareDocument {
     document: DocumentData;
 }
 
+message CancelDocumentClaim {
+    documentAddress: Address;
+}
+
 contract Autoproof with Deployable, Resumable {
     owner: Address;
     stopped: Bool; // we want to be able to stop the contract for upgrades
@@ -19,10 +23,6 @@ contract Autoproof with Deployable, Resumable {
     init() {
         self.owner = sender();
         self.stopped = false;
-    }
-
-    get fun isStopped(): Bool {
-        return self.stopped;
     }
 
     get fun documentsNumber(): Int {
@@ -54,6 +54,17 @@ contract Autoproof with Deployable, Resumable {
             value: context().value,
             code: init.code,
             data: init.data
+        });
+    }
+
+    receive(msg: CancelDocumentClaim) {
+        require(self.owner == sender(), "Only owner can cancel a document contract");
+
+        send(SendParameters{
+            to: msg.documentAddress,
+            value: context().value,
+            mode: SendIgnoreErrors,
+            body: "cancel".asComment(),
         });
     }
 

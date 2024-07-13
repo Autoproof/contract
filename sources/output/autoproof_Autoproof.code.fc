@@ -18,11 +18,6 @@
     return ($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage);
 }
 
-((slice, int, int, int), int) $Autoproof$_fun_isStopped((slice, int, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage)) = $self;
-    return (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage), $self'stopped);
-}
-
 ((slice, int, int, int), int) $Autoproof$_fun_documentsNumber((slice, int, int, int) $self) impure inline_ref {
     var (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage)) = $self;
     return (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage), $self'documentsNumber);
@@ -92,6 +87,14 @@
     return (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage), ());
 }
 
+(((slice, int, int, int)), ()) $Autoproof$_internal_binary_CancelDocumentClaim((slice, int, int, int) $self, (slice) $msg) impure inline {
+    var ($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage) = $self;
+    var ($msg'documentAddress) = $msg;
+    throw_unless(34015, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'owner) ));
+    $global_send($SendParameters$_constructor_to_value_mode_body($msg'documentAddress, $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4()));
+    return (($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage), ());
+}
+
 (((slice, int, int, int)), ()) $Autoproof$_internal_binary_SetCommissionPercentage((slice, int, int, int) $self, (int, slice) $msg) impure inline {
     var ($self'owner, $self'stopped, $self'documentsNumber, $self'commissionPercentage) = $self;
     var ($msg'commissionPercentage, $msg'documentAddress) = $msg;
@@ -145,12 +148,6 @@
 ;; Get methods of a Contract Autoproof
 ;;
 
-_ %isStopped() method_id(68877) {
-    var self = $Autoproof$_contract_load();
-    var res = self~$Autoproof$_fun_isStopped();
-    return res;
-}
-
 _ %documentsNumber() method_id(130065) {
     var self = $Autoproof$_contract_load();
     var res = self~$Autoproof$_fun_documentsNumber();
@@ -196,7 +193,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmdN24Kf9pz4b8mG9yHQHgYb9cqm5PyJcf4jRcGB7NJYFF";
+    return "ipfs://QmWEaVD35QXdrKNGZqottJT6F3aF5KSiH1WLWWbtpkGHsP";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -224,6 +221,13 @@ _ lazy_deployment_completed() method_id {
     if (op == 1278208621) {
         var msg = in_msg~$DeclareDocument$_load();
         self~$Autoproof$_internal_binary_DeclareDocument(msg);
+        return (self, true);
+    }
+    
+    ;; Receive CancelDocumentClaim message
+    if (op == 614687775) {
+        var msg = in_msg~$CancelDocumentClaim$_load();
+        self~$Autoproof$_internal_binary_CancelDocumentClaim(msg);
         return (self, true);
     }
     

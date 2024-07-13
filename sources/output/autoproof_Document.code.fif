@@ -925,40 +925,46 @@ PROGRAM{
     ISNULL
     NOT
     THROWANYIFNOT
-    50544 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s3 s(-1) PUXC
+    s8 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
+    NOT
     IF:<{
-      TRUE
-    }>ELSE<{
-      s4 PUSH
-      $ExclusiveRightsClaim$_not_null INLINECALLDICT
-      $ExclusiveRightsClaim$_get_author INLINECALLDICT
+      50544 PUSHINT
       __tact_context_get_sender INLINECALLDICT
+      s3 s(-1) PUXC
       __tact_slice_eq_bits INLINECALLDICT
-    }>
-    THROWANYIFNOT
-    53932 PUSHINT
-    s4 PUSH
-    $ExclusiveRightsClaim$_not_null INLINECALLDICT
-    $ExclusiveRightsClaim$_get_sentDocuments INLINECALLDICT
-    0 EQINT
-    IF:<{
-      TRUE
-    }>ELSE<{
+      IF:<{
+        TRUE
+      }>ELSE<{
+        s4 PUSH
+        $ExclusiveRightsClaim$_not_null INLINECALLDICT
+        $ExclusiveRightsClaim$_get_author INLINECALLDICT
+        __tact_context_get_sender INLINECALLDICT
+        __tact_slice_eq_bits INLINECALLDICT
+      }>
+      THROWANYIFNOT
+      53932 PUSHINT
       s4 PUSH
       $ExclusiveRightsClaim$_not_null INLINECALLDICT
       $ExclusiveRightsClaim$_get_sentDocuments INLINECALLDICT
+      0 EQINT
       IF:<{
+        TRUE
+      }>ELSE<{
         s4 PUSH
         $ExclusiveRightsClaim$_not_null INLINECALLDICT
-        $ExclusiveRightsClaim$_get_viewedDocuments INLINECALLDICT
-      }>ELSE<{
-        FALSE
+        $ExclusiveRightsClaim$_get_sentDocuments INLINECALLDICT
+        IF:<{
+          s4 PUSH
+          $ExclusiveRightsClaim$_not_null INLINECALLDICT
+          $ExclusiveRightsClaim$_get_viewedDocuments INLINECALLDICT
+        }>ELSE<{
+          FALSE
+        }>
       }>
+      THROWANYIFNOT
     }>
-    THROWANYIFNOT
     s3 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_author INLINECALLDICT
@@ -1082,7 +1088,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d65756e58367773444465634163504150715952706a6f5438353263665564345569434658745265666e75647a} PUSHSLICE
+    x{697066733a2f2f516d63545a51723975584443523962663637716e763456686245625a35656f6f34346a71386654787a6261554e37} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

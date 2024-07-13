@@ -27,6 +27,7 @@ PROGRAM{
   DECLPROC $SetCommissionPercentage$_store_cell
   DECLPROC $SetCommissionPercentage$_load
   DECLPROC $DeclareDocument$_load
+  DECLPROC $CancelDocumentClaim$_load
   DECLPROC $Autoproof$_store
   DECLPROC $Autoproof$_load
   DECLPROC $StateInit$_not_null
@@ -39,7 +40,6 @@ PROGRAM{
   DECLPROC $global_send
   DECLPROC $Document$_init_child
   DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
-  DECLPROC $Autoproof$_fun_isStopped
   DECLPROC $Autoproof$_fun_documentsNumber
   DECLPROC $Autoproof$_fun_currentCommissionPercentage
   DECLPROC $Autoproof$_fun_documentAddress
@@ -57,12 +57,12 @@ PROGRAM{
   DECLPROC $SendParameters$_constructor_to_value_mode_body
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $Autoproof$_internal_binary_DeclareDocument
+  DECLPROC $Autoproof$_internal_binary_CancelDocumentClaim
   DECLPROC $Autoproof$_internal_binary_SetCommissionPercentage
   DECLPROC $Autoproof$_internal_binary_GetFunds
   DECLPROC $Autoproof$_internal_binary_Deploy
   DECLPROC $Autoproof$_internal_text_6c8f44f45fedb4cdfed4de8db14aa5b13ad55d430f759d0669210b74c48fe3df
   DECLPROC $Autoproof$_internal_text_bcfaf776907c719cc8d379d8f194aaaa27e8ca2871cd591781721f215a454501
-  68877 DECLMETHOD %isStopped
   130065 DECLMETHOD %documentsNumber
   113694 DECLMETHOD %currentCommissionPercentage
   76627 DECLMETHOD %documentAddress
@@ -342,6 +342,14 @@ PROGRAM{
     129 THROWIFNOT
     $DocumentData$_load INLINECALLDICT
   }>
+  $CancelDocumentClaim$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    614687775 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    __tact_load_address INLINECALLDICT
+  }>
   $Autoproof$_store PROCINLINE:<{
     s4 s3 XCHG2
     __tact_store_address INLINECALLDICT
@@ -555,9 +563,6 @@ PROGRAM{
   }>
   $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
   }>
-  $Autoproof$_fun_isStopped PROCREF:<{
-    s2 PUSH
-  }>
   $Autoproof$_fun_documentsNumber PROCREF:<{
     OVER
   }>
@@ -707,6 +712,19 @@ PROGRAM{
     $global_send INLINECALLDICT
     s1 s3 s0 XCHG3
   }>
+  $Autoproof$_internal_binary_CancelDocumentClaim PROCINLINE:<{
+    34015 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    s6 PUSH
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    __tact_context_get INLINECALLDICT
+    $Context$_get_value INLINECALLDICT
+    2 PUSHINT
+    B{b5ee9c7241010101000c0000140000000063616e63656c79214bae} B>boc PUSHREF
+    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $global_send INLINECALLDICT
+  }>
   $Autoproof$_internal_binary_SetCommissionPercentage PROCINLINE:<{
     30875 PUSHINT
     __tact_context_get_sender INLINECALLDICT
@@ -788,11 +806,6 @@ PROGRAM{
     s1 s3 XCHG
     $Autoproof$_fun_reply INLINECALLDICT
   }>
-  %isStopped PROC:<{
-    $Autoproof$_contract_load INLINECALLDICT
-    $Autoproof$_fun_isStopped INLINECALLDICT
-    4 1 BLKDROP2
-  }>
   %documentsNumber PROC:<{
     $Autoproof$_contract_load INLINECALLDICT
     $Autoproof$_fun_documentsNumber INLINECALLDICT
@@ -830,7 +843,7 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d644e32344b6639707a3462386d4739794851486759623963716d3550794a6366346a52634742374e4a594646} PUSHSLICE
+    x{697066733a2f2f516d57456156443335515864724b4e475a716f74744a543646336146354b53694831574c57576274706b47487350} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -863,6 +876,16 @@ PROGRAM{
       $DeclareDocument$_load INLINECALLDICT
       1 5 BLKDROP2
       $Autoproof$_internal_binary_DeclareDocument INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    614687775 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $CancelDocumentClaim$_load INLINECALLDICT
+      NIP
+      $Autoproof$_internal_binary_CancelDocumentClaim INLINECALLDICT
       TRUE
     }>
     DUP

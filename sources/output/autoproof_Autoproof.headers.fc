@@ -87,6 +87,9 @@ cell $SetCommissionPercentage$_store_cell((int, slice) v) inline;
 ;; $DeclareDocument$_load
 (slice, (((slice, slice, slice, slice, slice)))) $DeclareDocument$_load(slice sc_0) inline;
 
+;; $CancelDocumentClaim$_load
+(slice, ((slice))) $CancelDocumentClaim$_load(slice sc_0) inline;
+
 ;; $Autoproof$_store
 builder $Autoproof$_store(builder build_0, (slice, int, int, int) v) inline;
 
@@ -122,9 +125,6 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 
 ;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
-
-;; $Autoproof$_fun_isStopped
-((slice, int, int, int), int) $Autoproof$_fun_isStopped((slice, int, int, int) $self) impure inline_ref;
 
 ;; $Autoproof$_fun_documentsNumber
 ((slice, int, int, int), int) $Autoproof$_fun_documentsNumber((slice, int, int, int) $self) impure inline_ref;

@@ -162,11 +162,15 @@ contract Document {
 
     receive("cancel") {
         require(self.currentClaim != null, "Can't cancel without a claim");
-        require((sender() == self.exclusiveRightsOwner) || (sender() == self.currentClaim!!.author),
-            "Only exclusive rights owner or author of the claim can cancel");
-        require(self.currentClaim!!.sentDocuments == false ||
-            (self.currentClaim!!.sentDocuments && self.currentClaim!!.viewedDocuments),
-            "Can't cancel if documents were sent but not viewed");
+
+        // Autoproof contract can cancel at any time as an arbiter to resolve the dispute
+        if (sender() != self.parent) {
+            require((sender() == self.exclusiveRightsOwner) || (sender() == self.currentClaim!!.author),
+                "Only exclusive rights owner or author of the claim can cancel");
+            require(self.currentClaim!!.sentDocuments == false ||
+                (self.currentClaim!!.sentDocuments && self.currentClaim!!.viewedDocuments),
+                "Can't cancel if documents were sent but not viewed");
+        }
 
         send(SendParameters{
                 to: self.currentClaim!!.author,

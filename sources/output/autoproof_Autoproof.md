@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Autoproof
-BOC Size: 1968 bytes
+BOC Size: 2050 bytes
 
 # Types
-Total Types: 15
+Total Types: 16
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -65,10 +65,12 @@ Signature: `SetCommissionPercentage{commissionPercentage:uint256,documentAddress
 TLB: `declare_document#4c2fea6d document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} = DeclareDocument`
 Signature: `DeclareDocument{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}}`
 
-# Get Methods
-Total Get Methods: 6
+## CancelDocumentClaim
+TLB: `cancel_document_claim#24a3641f documentAddress:address = CancelDocumentClaim`
+Signature: `CancelDocumentClaim{documentAddress:address}`
 
-## isStopped
+# Get Methods
+Total Get Methods: 5
 
 ## documentsNumber
 
@@ -125,6 +127,7 @@ Argument: author
 29100: Only parent contract can set the commission percentage
 30316: Can't approve if documents are not sent
 30875: Only owner can set the commission percentage
+34015: Only owner can cancel a document contract
 40368: Contract stopped
 41504: Can't update without a claim
 44565: Only the exclusive rights have access
