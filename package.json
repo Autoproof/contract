@@ -16,7 +16,6 @@
     "send-cancel-tx": "ts-node ./sources/send-cancel-tx.ts",
     "send-get-funds-autoproof-tx": "ts-node ./sources/send-get-funds-autoproof-tx.ts",
     "send-get-funds-document-tx": "ts-node ./sources/send-get-funds-document-tx.ts",
-
     "get-txs": "ts-node ./sources/get-txs.ts"
   },
   "dependencies": {
@@ -24,7 +23,6 @@
     "@tact-lang/compiler": "~1.4.0",
     "@tact-lang/coverage": "^0.0.8",
     "@tact-lang/deployer": "^0.2.0",
-    "@tact-lang/emulator": "^4.3.0",
     "@tact-lang/ton-abi": "^0.0.3",
     "@tact-lang/ton-jest": "^0.0.4",
     "@ton/core": "~0.56.3",
