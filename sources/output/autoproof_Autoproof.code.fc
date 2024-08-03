@@ -109,7 +109,7 @@
     var ($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress) = $self;
     var ($msg'documentAddress) = $msg;
     throw_unless(34015, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'owner) ));
-    $global_send($SendParameters$_constructor_to_value_mode_body($msg'documentAddress, $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4()));
+    $global_send($SendParameters$_constructor_to_value_body($msg'documentAddress, $Context$_get_value(__tact_context_get()), __gen_cell_comment_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4()));
     return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress), ());
 }
 
@@ -120,9 +120,9 @@
     $global_validateCommissions(($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage));
     if (null?($msg'documentAddress)) {
         ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage) = ($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage);
-        $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_88a22c484945bcc67e1de2ed597a76395f34f778369d67d8f1c4308791da4606()));
+        $global_send($SendParameters$_constructor_to_value_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), __gen_cell_comment_88a22c484945bcc67e1de2ed597a76395f34f778369d67d8f1c4308791da4606()));
     } else {
-        $global_send($SendParameters$_constructor_to_value_mode_body(__tact_not_null($msg'documentAddress), $Context$_get_value(__tact_context_get()), 2, $SetCommissions$_store_cell((($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage), $msg'documentAddress))));
+        $global_send($SendParameters$_constructor_to_value_body(__tact_not_null($msg'documentAddress), $Context$_get_value(__tact_context_get()), $SetCommissions$_store_cell((($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage), $msg'documentAddress))));
     }
     return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress), ());
 }
@@ -132,7 +132,7 @@
     var ($msg'amount) = $msg;
     throw_unless(61678, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'owner) ));
     throw_unless(8086, (__tact_my_balance() > $msg'amount));
-    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $msg'amount, 2, __gen_cell_comment_a2bc8cfe94b4563ee077edfc741ef4054b338e6882d5bef111b1f185b4af9367()));
+    $global_send($SendParameters$_constructor_to_value_body(__tact_context_get_sender(), $msg'amount, __gen_cell_comment_a2bc8cfe94b4563ee077edfc741ef4054b338e6882d5bef111b1f185b4af9367()));
     return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress), ());
 }
 
@@ -208,22 +208,6 @@ _ %owner() method_id(83229) {
     var self = $Autoproof$_contract_load();
     var res = self~$Autoproof$_fun_owner();
     return res;
-}
-
-_ supported_interfaces() method_id {
-    return (
-        "org.ton.introspection.v0"H >> 128,
-        "org.ton.abi.ipfs.v0"H >> 128,
-        "org.ton.deploy.lazy.v0"H >> 128,
-        "org.ton.chain.workchain.v0"H >> 128,
-        "org.ton.resumable"H >> 128,
-        "org.ton.stoppable"H >> 128,
-        "org.ton.ownable"H >> 128
-    );
-}
-
-_ get_abi_ipfs() method_id {
-    return "ipfs://QmYBhtQMhytgPjQtbLTLJSwMEsyaaYG95LBNBve2b5CB1v";
 }
 
 _ lazy_deployment_completed() method_id {

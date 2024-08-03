@@ -3,7 +3,7 @@ global slice __tact_context_sender;
 global cell __tact_context_sys;
 global int __tact_randomized;
 
-slice __tact_verify_address(slice address) inline {
+slice __tact_verify_address(slice address) impure inline {
     throw_unless(136, address.slice_bits() == 267);
     var h = address.preload_uint(11);
     throw_if(137, h == 1279);
@@ -43,7 +43,7 @@ int __tact_my_balance() inline {
     return pair_first(get_balance());
 }
 
-forall X -> X __tact_not_null(X x) inline {
+forall X -> X __tact_not_null(X x) impure inline {
     throw_if(128, null?(x)); return x;
 }
 
@@ -63,11 +63,15 @@ int __tact_slice_eq_bits(slice a, slice b) inline {
     return equal_slice_bits(a, b);
 }
 
+forall X0, X1 -> tuple __tact_tuple_create_2((X0, X1) v) asm "2 TUPLE";
+
 forall X0, X1 -> (X0, X1) __tact_tuple_destroy_2(tuple v) asm "2 UNTUPLE";
 
 forall X0, X1, X2, X3 -> tuple __tact_tuple_create_4((X0, X1, X2, X3) v) asm "4 TUPLE";
 
 forall X0, X1, X2, X3 -> (X0, X1, X2, X3) __tact_tuple_destroy_4(tuple v) asm "4 UNTUPLE";
+
+forall X0, X1, X2, X3, X4 -> tuple __tact_tuple_create_5((X0, X1, X2, X3, X4) v) asm "5 TUPLE";
 
 () $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref {
     var (($params'bounce, $params'to, $params'value, $params'mode, $params'body, $params'code, $params'data)) = $params;

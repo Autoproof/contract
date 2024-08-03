@@ -87,7 +87,6 @@ contract Autoproof with Deployable, Resumable {
         send(SendParameters{
             to: msg.documentAddress,
             value: context().value,
-            mode: SendIgnoreErrors,
             body: "cancel".asComment(),
         });
     }
@@ -103,14 +102,12 @@ contract Autoproof with Deployable, Resumable {
             send(SendParameters{
                 to: sender(),
                 value: context().value,
-                mode: SendIgnoreErrors,
                 body: "The Autoproof commissions were updated".asComment(),
             });
         } else {
             send(SendParameters{
                 to: msg.documentAddress!!,
                 value: context().value,
-                mode: SendIgnoreErrors,
                 body: msg.toCell()
             });
         }
@@ -123,7 +120,6 @@ contract Autoproof with Deployable, Resumable {
         send(SendParameters{
             to: sender(),
             value: msg.amount,
-            mode: SendIgnoreErrors,
             body: "Send funds to the owner".asComment(),
         });
     }

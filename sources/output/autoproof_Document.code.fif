@@ -33,7 +33,9 @@ PROGRAM{
   DECLPROC $ExclusiveRightsClaim$_to_tuple
   DECLPROC $ExclusiveRightsClaim$_to_opt_tuple
   DECLPROC $ExclusiveRightsClaim$_to_opt_external
+  DECLPROC $DocumentData$_to_tuple
   DECLPROC $DocumentData$_to_external
+  DECLPROC $Commissions$_to_tuple
   DECLPROC $Commissions$_to_external
   DECLPROC $Document$init$_load
   DECLPROC $Document$_contract_init
@@ -57,8 +59,8 @@ PROGRAM{
   DECLPROC $Document$_fun_forward
   DECLPROC $Document$_fun_reply
   DECLPROC $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments
-  DECLPROC $SendParameters$_constructor_to_value_mode_body
-  DECLPROC $SendParameters$_constructor_to_value_bounce_mode_body
+  DECLPROC $SendParameters$_constructor_to_value_bounce_body
+  DECLPROC $SendParameters$_constructor_to_value_body
   DECLPROC $Document$_internal_binary_SetCost
   DECLPROC $Document$_internal_text_8b659ceff9a6a3c20aa31a7bb878a3a04fb8b758f0079c869f0f4fb7d071b14e
   DECLPROC $Document$_internal_text_b9f1ba120cb2ba414dc6e46ab801c29fa13c4d7f1e91726f63f55ec0b168b103
@@ -79,8 +81,6 @@ PROGRAM{
   108305 DECLMETHOD %summedCommission
   106294 DECLMETHOD %transfershipCommission
   117581 DECLMETHOD %royaltyCommission
-  113617 DECLMETHOD supported_interfaces
-  121275 DECLMETHOD get_abi_ipfs
   115390 DECLMETHOD lazy_deployment_completed
   DECLPROC $Document$_contract_router_internal
   DECLPROC recv_internal
@@ -219,12 +219,12 @@ PROGRAM{
     ROT
     STREF
     NEWC
-    ROT
+    NEWC
+    s0 s3 XCHG2
     STSLICER
     ENDC
-    SWAP
+    ROT
     STREF
-    NEWC
     NEWC
     s0 s4 XCHG2
     STSLICER
@@ -253,10 +253,10 @@ PROGRAM{
     LDREF
     SWAP
     CTOS
-    SWAP
     LDREF
     SWAP
     CTOS
+    SWAP
     LDREF
     SWAP
     CTOS
@@ -264,9 +264,8 @@ PROGRAM{
     LDREF
     DROP
     CTOS
-    s2 s5 XCHG
-    s2 s4 XCHG
-    s2 s3 XCHG
+    s3 s5 XCHG
+    s3 s4 XCHG
   }>
   $GetFunds$_load PROCINLINE:<{
     32 LDU
@@ -371,19 +370,15 @@ PROGRAM{
       ROT
       1 STI
     }>
-    NEWC
     s0 s5 XCHG
-    s7 s1 s3 XCHG3
-    s9 s8 XCHG2
+    s3 s4 XCHG
+    s6 s8 s7 XCHG3
     $DocumentData$_store INLINECALLDICT
     ENDC
-    s0 s4 XCHG2
+    s0 s3 XCHG2
     STREF
     ENDC
-    SWAP
-    STREF
-    ENDC
-    SWAP
+    ROT
     STREF
     ENDC
     SWAP
@@ -440,9 +435,6 @@ PROGRAM{
       PUSHNULL
     }>
     SWAP
-    LDREF
-    DROP
-    CTOS
     $DocumentData$_load INLINECALLDICT
     s5 POP
     s13 s15 XCHG
@@ -498,9 +490,17 @@ PROGRAM{
     }>ELSE<{
     }>
   }>
+  $DocumentData$_to_tuple PROCINLINE:<{
+    5 TUPLE
+  }>
   $DocumentData$_to_external PROCINLINE:<{
+    $DocumentData$_to_tuple INLINECALLDICT
+  }>
+  $Commissions$_to_tuple PROCINLINE:<{
+    2 TUPLE
   }>
   $Commissions$_to_external PROCINLINE:<{
+    $Commissions$_to_tuple INLINECALLDICT
   }>
   $Document$init$_load PROCREF:<{
     __tact_load_address INLINECALLDICT
@@ -886,15 +886,18 @@ PROGRAM{
   }>
   $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments PROCINLINE:<{
   }>
-  $SendParameters$_constructor_to_value_mode_body PROCINLINE:<{
-    TRUE
-    4 -ROLL
+  $SendParameters$_constructor_to_value_bounce_body PROCINLINE:<{
+    s3 s3 s0 XCHG3
+    0 PUSHINT
+    SWAP
     PUSHNULL
     PUSHNULL
   }>
-  $SendParameters$_constructor_to_value_bounce_mode_body PROCINLINE:<{
-    s2 s4 XCHG
-    s2 s3 XCHG
+  $SendParameters$_constructor_to_value_body PROCINLINE:<{
+    TRUE
+    s0 s3 XCHG
+    0 PUSHINT
+    s3 s0 s3 XCHG3
     PUSHNULL
     PUSHNULL
   }>
@@ -1052,11 +1055,11 @@ PROGRAM{
     s7 PUSH
     $ExclusiveRightsClaim$_not_null INLINECALLDICT
     $ExclusiveRightsClaim$_get_amount INLINECALLDICT
-    2 PUSHINT
+    FALSE
     B{b5ee9c7241010101002e0000580000000053656e642066756e647320746f20746865206578636c757369766520726967687473206f776e6572eecf223b} B>boc PUSHREF
     s13 PUSH
     3 -ROLL
-    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $SendParameters$_constructor_to_value_bounce_body INLINECALLDICT
     $global_send INLINECALLDICT
     s9 PUSH
     ISNULL
@@ -1079,10 +1082,9 @@ PROGRAM{
       s15 s2 XCHG2
       $Document$_fun_royaltyCommission INLINECALLDICT
       FALSE
-      2 PUSHINT
       B{b5ee9c7241010101001d0000360000000053656e6420726f79616c747920636f6d6d697373696f6ee033a394} B>boc PUSHREF
-      s4 20 s() XCHG
-      $SendParameters$_constructor_to_value_bounce_mode_body INLINECALLDICT
+      s3 19 s() XCHG
+      $SendParameters$_constructor_to_value_bounce_body INLINECALLDICT
       $global_send INLINECALLDICT
       2 14 BLKSWAP
     }>
@@ -1104,13 +1106,11 @@ PROGRAM{
       s7 POP
     }>
     FALSE
-    2 PUSHINT
     B{b5ee9c724101010100220000400000000053656e6420636f6d6d697373696f6e20746f204175746f70726f6f663d436200} B>boc PUSHREF
-    s14 PUSH
-    s0 s4 XCHG
-    s0 s6 XCHG
-    3 -ROLL
-    $SendParameters$_constructor_to_value_bounce_mode_body INLINECALLDICT
+    s13 PUSH
+    s0 s3 XCHG
+    s5 s5 s5 XCHG3
+    $SendParameters$_constructor_to_value_bounce_body INLINECALLDICT
     $global_send INLINECALLDICT
     __tact_context_get_sender INLINECALLDICT
     PUSHNULL
@@ -1198,10 +1198,10 @@ PROGRAM{
     s1 16 s() XCHG
     s0 s6 XCHG
     ADD
-    2 PUSHINT
+    FALSE
     B{b5ee9c7241010101002100003e0000000052657475726e2066756e647320746f2074686520636c61696d6572d1b329c2} B>boc PUSHREF
     s3 16 s() XCHG
-    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $SendParameters$_constructor_to_value_bounce_body INLINECALLDICT
     $global_send INLINECALLDICT
     PUSHNULL
     B{b5ee9c7241010101001700002a00000000436c61696d2069732063616e63656c6564f23499d4} B>boc PUSHREF
@@ -1234,9 +1234,8 @@ PROGRAM{
     __tact_context_get_sender INLINECALLDICT
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
-    2 PUSHINT
     B{b5ee9c7241010101002d0000560000000054686520646f63756d656e74277320636f6d6d697373696f6e73207765726520757064617465646964e449} B>boc PUSHREF
-    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $SendParameters$_constructor_to_value_body INLINECALLDICT
     $global_send INLINECALLDICT
   }>
   $Document$_internal_binary_GetFunds PROCINLINE:<{
@@ -1262,10 +1261,9 @@ PROGRAM{
     GREATER
     THROWANYIFNOT
     __tact_context_get_sender INLINECALLDICT
-    2 PUSHINT
     B{b5ee9c7241010101003000005c0000000052657475726e2066756e647320746f20746865206578636c757369766520726967687473206f776e6572bc883faa} B>boc PUSHREF
-    s2 s3 XCHG
-    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    s1 s2 XCHG
+    $SendParameters$_constructor_to_value_body INLINECALLDICT
     $global_send INLINECALLDICT
   }>
   %currentCommissions PROC:<{
@@ -1330,15 +1328,6 @@ PROGRAM{
     $Document$_contract_load INLINECALLDICT
     $Document$_fun_royaltyCommission INLINECALLDICT
     15 1 BLKDROP2
-  }>
-  supported_interfaces PROC:<{
-    123515602279859691144772641439386770278 PUSHINT
-    209801025412363888721030803524359905849 PUSHINT
-    42980537499636128163026532310500881091 PUSHINT
-    209474421377847335869795010607481022628 PUSHINT
-  }>
-  get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d63383374695035786e39575962576751664b4a41414237556268556b5462584c74354d62536e616769695463} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

@@ -150,12 +150,12 @@
     throw_unless(30316, $ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)));
     throw_unless(23073, $ExclusiveRightsClaim$_get_viewedDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)));
     throw_unless(3861, ( __tact_slice_eq_bits($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), __tact_context_get_sender()) ));
-    $global_send($SendParameters$_constructor_to_value_mode_body($self'exclusiveRightsOwner, $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)), 2, __gen_cell_comment_b46e5aff89477cef681bdcd8d8b06e707cbcdaa00c24228e98bf3ad1fdf8d64c()));
+    $global_send($SendParameters$_constructor_to_value_bounce_body($self'exclusiveRightsOwner, $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)), false, __gen_cell_comment_b46e5aff89477cef681bdcd8d8b06e707cbcdaa00c24228e98bf3ad1fdf8d64c()));
     if ((~ null?($self'royaltyWalletAddress))) {
-        $global_send($SendParameters$_constructor_to_value_bounce_mode_body(__tact_not_null($self'royaltyWalletAddress), ($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))~$Document$_fun_royaltyCommission(), false, 2, __gen_cell_comment_a1a55be61bff6dd5f0f64eec10bb1b13083eb1ad3bd72c53228ea826445f5c92()));
+        $global_send($SendParameters$_constructor_to_value_bounce_body(__tact_not_null($self'royaltyWalletAddress), ($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))~$Document$_fun_royaltyCommission(), false, __gen_cell_comment_a1a55be61bff6dd5f0f64eec10bb1b13083eb1ad3bd72c53228ea826445f5c92()));
     }
     int $autoproofCommission = (null?($self'royaltyWalletAddress) ? ($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))~$Document$_fun_summedCommission() : ($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))~$Document$_fun_transfershipCommission());
-    $global_send($SendParameters$_constructor_to_value_bounce_mode_body($self'parent, $autoproofCommission, false, 2, __gen_cell_comment_bd417ae69986f41c9e3c311f8930a86cc7b1c0a7266c3fc5854255da54b73d7e()));
+    $global_send($SendParameters$_constructor_to_value_bounce_body($self'parent, $autoproofCommission, false, __gen_cell_comment_bd417ae69986f41c9e3c311f8930a86cc7b1c0a7266c3fc5854255da54b73d7e()));
     $self'exclusiveRightsOwner = __tact_context_get_sender();
     $self'assignmentHash = $msg'assignmentHash;
     $self'cost = null();
@@ -171,7 +171,7 @@
         throw_unless(50544, ( (( __tact_slice_eq_bits($self'exclusiveRightsOwner, __tact_context_get_sender()) )) ? (true) : (( __tact_slice_eq_bits($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), __tact_context_get_sender()) )) ));
         throw_unless(53932, ( (($ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim)) == false)) ? (true) : (( ($ExclusiveRightsClaim$_get_sentDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim))) ? ($ExclusiveRightsClaim$_get_viewedDocuments($ExclusiveRightsClaim$_not_null($self'currentClaim))) : (false) )) ));
     }
-    $global_send($SendParameters$_constructor_to_value_mode_body($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), ($ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)) + ($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))~$Document$_fun_summedCommission()), 2, __gen_cell_comment_3ecc56424eae26fb2057e77fc13803917f73e6a91a7e5b542f0e2c56da70cd01()));
+    $global_send($SendParameters$_constructor_to_value_bounce_body($ExclusiveRightsClaim$_get_author($ExclusiveRightsClaim$_not_null($self'currentClaim)), ($ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)) + ($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))~$Document$_fun_summedCommission()), false, __gen_cell_comment_3ecc56424eae26fb2057e77fc13803917f73e6a91a7e5b542f0e2c56da70cd01()));
     $self'currentClaim = null();
     ($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))~$Document$_fun_reply(__gen_cell_comment_7bcf1cb8246d0fb1f98ccbb1b4e387d55fe728b52756389c67687a576907b365());
     return (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags)), ());
@@ -183,7 +183,7 @@
     throw_unless(48939, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'parent) ));
     $global_validateCommissions(($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage));
     ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage) = ($msg'commissions'transfershipCommissionPercentage, $msg'commissions'royaltyCommissionPercentage);
-    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), 2, __gen_cell_comment_6103e86002c4636a8d77df79a7d1a17097a99e41cecb074abce3ed0cb153ddd3()));
+    $global_send($SendParameters$_constructor_to_value_body(__tact_context_get_sender(), $Context$_get_value(__tact_context_get()), __gen_cell_comment_6103e86002c4636a8d77df79a7d1a17097a99e41cecb074abce3ed0cb153ddd3()));
     return (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags)), ());
 }
 
@@ -193,7 +193,7 @@
     throw_unless(19061, ( __tact_slice_eq_bits(__tact_context_get_sender(), $self'exclusiveRightsOwner) ));
     int $currentClaimAmount = (null?($self'currentClaim) ? 0 : $ExclusiveRightsClaim$_get_amount($ExclusiveRightsClaim$_not_null($self'currentClaim)));
     throw_unless(8086, ((__tact_my_balance() - $currentClaimAmount) > $msg'amount));
-    $global_send($SendParameters$_constructor_to_value_mode_body(__tact_context_get_sender(), $msg'amount, 2, __gen_cell_comment_3732868cf69df09fbb4e4fc919f0437763aa85503e8e4485543dc7ffa417f1d7()));
+    $global_send($SendParameters$_constructor_to_value_body(__tact_context_get_sender(), $msg'amount, __gen_cell_comment_3732868cf69df09fbb4e4fc919f0437763aa85503e8e4485543dc7ffa417f1d7()));
     return (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, ($self'document'authorship, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags)), ());
 }
 
@@ -271,19 +271,6 @@ _ %royaltyCommission() method_id(117581) {
     var self = $Document$_contract_load();
     var res = self~$Document$_fun_royaltyCommission();
     return res;
-}
-
-_ supported_interfaces() method_id {
-    return (
-        "org.ton.introspection.v0"H >> 128,
-        "org.ton.abi.ipfs.v0"H >> 128,
-        "org.ton.deploy.lazy.v0"H >> 128,
-        "org.ton.chain.workchain.v0"H >> 128
-    );
-}
-
-_ get_abi_ipfs() method_id {
-    return "ipfs://Qmc83tiP5xn9WYbWgQfKJAAB7UbhUkTbXLt5MbSnagiiTc";
 }
 
 _ lazy_deployment_completed() method_id {

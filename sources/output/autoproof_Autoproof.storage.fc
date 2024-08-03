@@ -24,20 +24,20 @@ _ $Context$_get_value((int, slice, int, slice) v) inline {
 ;; TLB: _ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters
 ;;
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline {
-    return (bounce, to, value, mode, body, code, data);
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int $bounce, slice $to, int $value, int $mode, cell $body, cell $code, cell $data) inline {
+    return ($bounce, $to, $value, $mode, $body, $code, $data);
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value(slice to, cell body, int value) inline {
-    return (true, to, value, 0, body, null(), null());
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value(slice $to, cell $body, int $value) inline {
+    return (true, $to, $value, 0, $body, null(), null());
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice to, cell body, int value, cell code, cell data) inline {
-    return (true, to, value, 0, body, code, data);
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice $to, cell $body, int $value, cell $code, cell $data) inline {
+    return (true, $to, $value, 0, $body, $code, $data);
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline {
-    return (true, to, value, mode, body, null(), null());
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_body(slice $to, int $value, cell $body) inline {
+    return (true, $to, $value, 0, $body, null(), null());
 }
 
 ;;
@@ -69,8 +69,8 @@ cell $DeployOk$_store_cell((int) v) inline {
     return $DeployOk$_store(begin_cell(), v).end_cell();
 }
 
-((int)) $DeployOk$_constructor_queryId(int queryId) inline {
-    return (queryId);
+((int)) $DeployOk$_constructor_queryId(int $queryId) inline {
+    return ($queryId);
 }
 
 ;;
@@ -82,8 +82,8 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
     var (v'authorship, v'description, v'rootHash, v'data, v'tags) = v;
     build_0 = build_0.store_ref(begin_cell().store_slice(v'authorship).end_cell());
     build_0 = build_0.store_ref(begin_cell().store_slice(v'description).end_cell());
-    build_0 = build_0.store_ref(begin_cell().store_slice(v'rootHash).end_cell());
     var build_1 = begin_cell();
+    build_1 = build_1.store_ref(begin_cell().store_slice(v'rootHash).end_cell());
     build_1 = build_1.store_ref(begin_cell().store_slice(v'data).end_cell());
     build_1 = build_1.store_ref(begin_cell().store_slice(v'tags).end_cell());
     build_0 = store_ref(build_0, build_1.end_cell());
@@ -93,8 +93,8 @@ builder $DocumentData$_store(builder build_0, (slice, slice, slice, slice, slice
 (slice, ((slice, slice, slice, slice, slice))) $DocumentData$_load(slice sc_0) inline {
     var v'authorship = sc_0~load_ref().begin_parse();
     var v'description = sc_0~load_ref().begin_parse();
-    var v'rootHash = sc_0~load_ref().begin_parse();
     slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'rootHash = sc_1~load_ref().begin_parse();
     var v'data = sc_1~load_ref().begin_parse();
     var v'tags = sc_1~load_ref().begin_parse();
     return (sc_0, (v'authorship, v'description, v'rootHash, v'data, v'tags));
@@ -162,8 +162,8 @@ tuple $Commissions$_to_opt_external(tuple v) inline {
     }
 }
 
-((int, int)) $Commissions$_constructor_transfershipCommissionPercentage_royaltyCommissionPercentage(int transfershipCommissionPercentage, int royaltyCommissionPercentage) inline {
-    return (transfershipCommissionPercentage, royaltyCommissionPercentage);
+((int, int)) $Commissions$_constructor_transfershipCommissionPercentage_royaltyCommissionPercentage(int $transfershipCommissionPercentage, int $royaltyCommissionPercentage) inline {
+    return ($transfershipCommissionPercentage, $royaltyCommissionPercentage);
 }
 
 ;;

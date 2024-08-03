@@ -160,7 +160,7 @@ contract Document {
         send(SendParameters{
             to: self.exclusiveRightsOwner,
             value: self.currentClaim!!.amount,
-            mode: SendIgnoreErrors,
+            bounce: false,
             body: "Send funds to the exclusive rights owner".asComment(),
         });
 
@@ -170,7 +170,6 @@ contract Document {
                 to: self.royaltyWalletAddress!!,
                 value: self.royaltyCommission(),
                 bounce: false,
-                mode: SendIgnoreErrors,
                 body: "Send royalty commission".asComment(),
             });
         }
@@ -184,7 +183,6 @@ contract Document {
             to: self.parent,
             value: autoproofCommission,
             bounce: false,
-            mode: SendIgnoreErrors,
             body: "Send commission to Autoproof".asComment(),
         });
 
@@ -211,7 +209,7 @@ contract Document {
         send(SendParameters{
                 to: self.currentClaim!!.author,
                 value: self.currentClaim!!.amount + self.summedCommission(),
-                mode: SendIgnoreErrors,
+                bounce: false,
                 body: "Return funds to the claimer".asComment(),
         });
 
@@ -229,7 +227,6 @@ contract Document {
         send(SendParameters{
             to: sender(),
             value: context().value,
-            mode: SendIgnoreErrors,
             body: "The document's commissions were updated".asComment(),
         });
     }
@@ -244,7 +241,6 @@ contract Document {
         send(SendParameters{
             to: sender(),
             value: msg.amount,
-            mode: SendIgnoreErrors,
             body: "Return funds to the exclusive rights owner".asComment(),
         });
     }

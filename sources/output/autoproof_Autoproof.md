@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Autoproof
-BOC Size: 2594 bytes
+BOC Size: 2392 bytes
 
 # Types
 Total Types: 18
@@ -150,3 +150,30 @@ Total Get Methods: 6
 61678: Only owner can get funds
 61716: Only the author of the claim have access
 62718: RootHash hash can't be empty
+
+# Trait Inheritance Diagram
+
+```mermaid
+graph TD
+Autoproof
+Autoproof --> BaseTrait
+Autoproof --> Deployable
+Deployable --> BaseTrait
+Autoproof --> Resumable
+Resumable --> BaseTrait
+Resumable --> Stoppable
+Stoppable --> BaseTrait
+Stoppable --> Ownable
+Ownable --> BaseTrait
+Resumable --> Ownable
+Autoproof --> Stoppable
+Autoproof --> Ownable
+```
+
+# Contract Dependency Diagram
+
+```mermaid
+graph TD
+Autoproof
+Autoproof --> Document
+```

@@ -4,7 +4,7 @@
 ;;
 
 ;; __tact_verify_address
-slice __tact_verify_address(slice address) inline;
+slice __tact_verify_address(slice address) impure inline;
 
 ;; __tact_load_address
 (slice, slice) __tact_load_address(slice cs) inline;
@@ -22,7 +22,7 @@ builder __tact_store_address_opt(builder b, slice address) inline;
 int __tact_my_balance() inline;
 
 ;; __tact_not_null
-forall X -> X __tact_not_null(X x) inline;
+forall X -> X __tact_not_null(X x) impure inline;
 
 ;; __tact_context_get
 (int, slice, int, slice) __tact_context_get() inline;
@@ -105,11 +105,17 @@ tuple $ExclusiveRightsClaim$_to_opt_tuple(tuple v) inline;
 ;; $ExclusiveRightsClaim$_to_opt_external
 tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline;
 
+;; $DocumentData$_to_tuple
+tuple $DocumentData$_to_tuple(((slice, slice, slice, slice, slice)) v) inline;
+
 ;; $DocumentData$_to_external
-(slice, slice, slice, slice, slice) $DocumentData$_to_external(((slice, slice, slice, slice, slice)) v) inline;
+tuple $DocumentData$_to_external(((slice, slice, slice, slice, slice)) v) inline;
+
+;; $Commissions$_to_tuple
+tuple $Commissions$_to_tuple(((int, int)) v) inline;
 
 ;; $Commissions$_to_external
-(int, int) $Commissions$_to_external(((int, int)) v) inline;
+tuple $Commissions$_to_external(((int, int)) v) inline;
 
 ;; $Document$init$_load
 (slice, ((slice, int, slice, (slice, slice, slice, slice, slice), (int, int), slice))) $Document$init$_load(slice sc_0) inline_ref;
@@ -166,7 +172,7 @@ tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline;
 ((slice, int, (int, int), slice, slice, slice, int, tuple, slice, (slice, slice, slice, slice, slice)), int) $Document$_fun_summedCommission((slice, int, (int, int), slice, slice, slice, int, tuple, slice, (slice, slice, slice, slice, slice)) $self) impure inline_ref;
 
 ;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int $bounce, slice $to, int $value, int $mode, cell $body, cell $code, cell $data) inline;
 
 ;; $Document$_fun_forward
 ((slice, int, (int, int), slice, slice, slice, int, tuple, slice, (slice, slice, slice, slice, slice)), ()) $Document$_fun_forward((slice, int, (int, int), slice, slice, slice, int, tuple, slice, (slice, slice, slice, slice, slice)) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
@@ -175,10 +181,10 @@ tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline;
 ((slice, int, (int, int), slice, slice, slice, int, tuple, slice, (slice, slice, slice, slice, slice)), ()) $Document$_fun_reply((slice, int, (int, int), slice, slice, slice, int, tuple, slice, (slice, slice, slice, slice, slice)) $self, cell $body) impure inline;
 
 ;; $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments
-((slice, int, int, int)) $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments(slice author, int amount, int sentDocuments, int viewedDocuments) inline;
+((slice, int, int, int)) $ExclusiveRightsClaim$_constructor_author_amount_sentDocuments_viewedDocuments(slice $author, int $amount, int $sentDocuments, int $viewedDocuments) inline;
 
-;; $SendParameters$_constructor_to_value_mode_body
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_body(slice to, int value, int mode, cell body) inline;
+;; $SendParameters$_constructor_to_value_bounce_body
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_bounce_body(slice $to, int $value, int $bounce, cell $body) inline;
 
-;; $SendParameters$_constructor_to_value_bounce_mode_body
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_bounce_mode_body(slice to, int value, int bounce, int mode, cell body) inline;
+;; $SendParameters$_constructor_to_value_body
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_body(slice $to, int $value, cell $body) inline;

@@ -65,7 +65,7 @@ PROGRAM{
   DECLPROC $Autoproof$_fun_owner
   DECLPROC $SendParameters$_constructor_to_body_value
   DECLPROC $SendParameters$_constructor_to_body_value_code_data
-  DECLPROC $SendParameters$_constructor_to_value_mode_body
+  DECLPROC $SendParameters$_constructor_to_value_body
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $Autoproof$_internal_binary_DeclareDocument
   DECLPROC $Autoproof$_internal_binary_CancelDocumentClaim
@@ -81,8 +81,6 @@ PROGRAM{
   66726 DECLMETHOD %currentRoyaltyCommissionPercentage
   74107 DECLMETHOD %stopped
   83229 DECLMETHOD %owner
-  113617 DECLMETHOD supported_interfaces
-  121275 DECLMETHOD get_abi_ipfs
   115390 DECLMETHOD lazy_deployment_completed
   DECLPROC $Autoproof$_contract_router_internal
   DECLPROC recv_internal
@@ -251,12 +249,12 @@ PROGRAM{
     ROT
     STREF
     NEWC
-    ROT
+    NEWC
+    s0 s3 XCHG2
     STSLICER
     ENDC
-    SWAP
+    ROT
     STREF
-    NEWC
     NEWC
     s0 s4 XCHG2
     STSLICER
@@ -285,10 +283,10 @@ PROGRAM{
     LDREF
     SWAP
     CTOS
-    SWAP
     LDREF
     SWAP
     CTOS
+    SWAP
     LDREF
     SWAP
     CTOS
@@ -296,9 +294,8 @@ PROGRAM{
     LDREF
     DROP
     CTOS
-    s2 s5 XCHG
-    s2 s4 XCHG
-    s2 s3 XCHG
+    s3 s5 XCHG
+    s3 s4 XCHG
   }>
   $GetFunds$_load PROCINLINE:<{
     32 LDU
@@ -802,9 +799,11 @@ PROGRAM{
     0 PUSHINT
     s1 s3 s3 XCHG3
   }>
-  $SendParameters$_constructor_to_value_mode_body PROCINLINE:<{
+  $SendParameters$_constructor_to_value_body PROCINLINE:<{
     TRUE
-    4 -ROLL
+    s0 s3 XCHG
+    0 PUSHINT
+    s3 s0 s3 XCHG3
     PUSHNULL
     PUSHNULL
   }>
@@ -871,9 +870,8 @@ PROGRAM{
     THROWANYIFNOT
     __tact_context_get INLINECALLDICT
     $Context$_get_value INLINECALLDICT
-    2 PUSHINT
     B{b5ee9c7241010101000c0000140000000063616e63656c79214bae} B>boc PUSHREF
-    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    $SendParameters$_constructor_to_value_body INLINECALLDICT
     $global_send INLINECALLDICT
   }>
   $Autoproof$_internal_binary_SetCommissions PROCINLINE:<{
@@ -893,20 +891,18 @@ PROGRAM{
       __tact_context_get_sender INLINECALLDICT
       __tact_context_get INLINECALLDICT
       $Context$_get_value INLINECALLDICT
-      2 PUSHINT
       B{b5ee9c7241010101002c00005400000000546865204175746f70726f6f6620636f6d6d697373696f6e7320776572652075706461746564a6f0f1cf} B>boc PUSHREF
-      $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+      $SendParameters$_constructor_to_value_body INLINECALLDICT
       $global_send INLINECALLDICT
     }>ELSE<{
       DUP
       __tact_not_null INLINECALLDICT
       __tact_context_get INLINECALLDICT
       $Context$_get_value INLINECALLDICT
-      s4 s3 XCHG2
-      2 PUSHINT
-      s0 s3 XCHG
+      s4 s3 s4 XCHG3
       $SetCommissions$_store_cell INLINECALLDICT
-      $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+      s1 s2 XCHG
+      $SendParameters$_constructor_to_value_body INLINECALLDICT
       $global_send INLINECALLDICT
     }>
   }>
@@ -922,10 +918,9 @@ PROGRAM{
     GREATER
     THROWANYIFNOT
     __tact_context_get_sender INLINECALLDICT
-    2 PUSHINT
     B{b5ee9c7241010101001d0000360000000053656e642066756e647320746f20746865206f776e6572652d4940} B>boc PUSHREF
-    s2 s3 XCHG
-    $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
+    s1 s2 XCHG
+    $SendParameters$_constructor_to_value_body INLINECALLDICT
     $global_send INLINECALLDICT
   }>
   $Autoproof$_internal_binary_SetTheNextAutoproof PROCINLINE:<{
@@ -991,18 +986,6 @@ PROGRAM{
     $Autoproof$_contract_load INLINECALLDICT
     $Autoproof$_fun_owner INLINECALLDICT
     6 1 BLKDROP2
-  }>
-  supported_interfaces PROC:<{
-    123515602279859691144772641439386770278 PUSHINT
-    209801025412363888721030803524359905849 PUSHINT
-    42980537499636128163026532310500881091 PUSHINT
-    209474421377847335869795010607481022628 PUSHINT
-    217874028807501790313347176103815139787 PUSHINT
-    192989407141549587419771644724066226057 PUSHINT
-    86142586315491086060343270784266291122 PUSHINT
-  }>
-  get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d59426874514d68797467506a5174624c544c4a53774d4573796161594739354c424e42766532623543423176} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

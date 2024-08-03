@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 3595 bytes
+BOC Size: 3444 bytes
 
 # Types
 Total Types: 18
@@ -162,3 +162,18 @@ Total Get Methods: 12
 61678: Only owner can get funds
 61716: Only the author of the claim have access
 62718: RootHash hash can't be empty
+
+# Trait Inheritance Diagram
+
+```mermaid
+graph TD
+Document
+Document --> BaseTrait
+```
+
+# Contract Dependency Diagram
+
+```mermaid
+graph TD
+Document
+```
