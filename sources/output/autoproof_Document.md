@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 3444 bytes
+BOC Size: 3795 bytes
 
 # Types
 Total Types: 18
@@ -46,8 +46,8 @@ TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
 Signature: `SetCost{cost:Maybe coins}`
 
 ## ClaimApproval
-TLB: `claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval`
-Signature: `ClaimApproval{assignmentHash:^string}`
+TLB: `claim_approval#3f96005a ownership:^string assignmentHash:^string = ClaimApproval`
+Signature: `ClaimApproval{ownership:^string,assignmentHash:^string}`
 
 ## DocumentData
 TLB: `_ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData`

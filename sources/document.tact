@@ -14,6 +14,7 @@ message SetCost {
 }
 
 message ClaimApproval {
+    ownership: String;
     assignmentHash: String;
 }
 
@@ -29,6 +30,7 @@ contract Document {
     cost: Int? as coins;
     currentClaim: ExclusiveRightsClaim?;
     assignmentHash: String?;
+    ownership: String?;
 
     document: DocumentData;
 
@@ -189,6 +191,7 @@ contract Document {
         // change the exclusive rights owner
         self.exclusiveRightsOwner = sender();
         self.assignmentHash = msg.assignmentHash;
+        self.ownership = msg.ownership;
         self.cost = null;
         self.currentClaim = null;
         self.reply("Claim is approved".asComment());
