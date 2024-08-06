@@ -30,7 +30,7 @@ contract Document {
     author: Address;
 
     exclusiveRightsOwner: Address;
-    exclusiveRightsOwnerDetails: PersonDetails?;
+    exclusiveRightsOwnerDetails: PersonDetails;
 
     royaltyWalletAddress: Address?;
 
@@ -47,6 +47,7 @@ contract Document {
 
         self.author = author;
         self.exclusiveRightsOwner = author;
+        self.exclusiveRightsOwnerDetails = document.author;
 
         self.document = document;
         self.commissions = commissions;
@@ -81,7 +82,7 @@ contract Document {
         return self.exclusiveRightsOwner;
     }
 
-    get fun exclusiveRightsOwnerDetails(): PersonDetails? {
+    get fun exclusiveRightsOwnerDetails(): PersonDetails {
         return self.exclusiveRightsOwnerDetails;
     }
 

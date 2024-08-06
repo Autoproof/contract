@@ -54,34 +54,14 @@ builder $PersonDetails$_store(builder build_0, (slice, slice) v) inline {
     return (sc_0, (v'name, v'address));
 }
 
-((slice, slice)) $PersonDetails$_not_null(tuple v) inline {
-    throw_if(128, null?(v));
-    var (slice vvv'name, slice vvv'address) = __tact_tuple_destroy_2(v);
-    return (vvv'name, vvv'address);
-}
-
-tuple $PersonDetails$_as_optional((slice, slice) v) inline {
-    var (v'name, v'address) = v;
-    return __tact_tuple_create_2(v'name, v'address);
-}
-
 tuple $PersonDetails$_to_tuple(((slice, slice)) v) inline {
     var (v'name, v'address) = v;
     return __tact_tuple_create_2(v'name, v'address);
 }
 
-tuple $PersonDetails$_to_opt_tuple(tuple v) inline {
-    if (null?(v)) { return null(); } 
-    return $PersonDetails$_to_tuple($PersonDetails$_not_null(v)); 
-}
-
-tuple $PersonDetails$_to_opt_external(tuple v) inline {
-    var loaded = $PersonDetails$_to_opt_tuple(v);
-    if (null?(loaded)) {
-        return null();
-    } else {
-        return (loaded);
-    }
+tuple $PersonDetails$_to_external(((slice, slice)) v) inline {
+    var (v'name, v'address) = v; 
+    return $PersonDetails$_to_tuple(v'name, v'address);
 }
 
 ;;
@@ -302,8 +282,8 @@ tuple $Commissions$_to_external(((int, int)) v) inline {
 ;; Type: Document
 ;;
 
-builder $Document$_store(builder build_0, (slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) v) inline {
-    var (v'parent, v'seqno, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage), v'author, v'exclusiveRightsOwner, v'exclusiveRightsOwnerDetails, v'royaltyWalletAddress, v'cost, v'currentClaim, v'assignmentHash, ((v'document'author'name, v'document'author'address), v'document'title, v'document'description, v'document'rootHash, v'document'data, v'document'tags)) = v;
+builder $Document$_store(builder build_0, (slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) v) inline {
+    var (v'parent, v'seqno, (v'commissions'transfershipCommissionPercentage, v'commissions'royaltyCommissionPercentage), v'author, v'exclusiveRightsOwner, (v'exclusiveRightsOwnerDetails'name, v'exclusiveRightsOwnerDetails'address), v'royaltyWalletAddress, v'cost, v'currentClaim, v'assignmentHash, ((v'document'author'name, v'document'author'address), v'document'title, v'document'description, v'document'rootHash, v'document'data, v'document'tags)) = v;
     build_0 = __tact_store_address(build_0, v'parent);
     build_0 = build_0.store_uint(v'seqno, 256);
     var build_1 = begin_cell();
@@ -311,7 +291,7 @@ builder $Document$_store(builder build_0, (slice, int, (int, int), slice, slice,
     build_1 = __tact_store_address(build_1, v'author);
     var build_2 = begin_cell();
     build_2 = __tact_store_address(build_2, v'exclusiveRightsOwner);
-    build_2 = ~ null?(v'exclusiveRightsOwnerDetails) ? build_2.store_int(true, 1).$PersonDetails$_store($PersonDetails$_not_null(v'exclusiveRightsOwnerDetails)) : build_2.store_int(false, 1);
+    build_2 = $PersonDetails$_store(build_2, (v'exclusiveRightsOwnerDetails'name, v'exclusiveRightsOwnerDetails'address));
     build_2 = __tact_store_address_opt(build_2, v'royaltyWalletAddress);
     build_2 = ~ null?(v'cost) ? build_2.store_int(true, 1).store_coins(v'cost) : build_2.store_int(false, 1);
     var build_3 = begin_cell();
@@ -326,7 +306,7 @@ builder $Document$_store(builder build_0, (slice, int, (int, int), slice, slice,
     return build_0;
 }
 
-(slice, ((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)))) $Document$_load(slice sc_0) inline {
+(slice, ((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)))) $Document$_load(slice sc_0) inline {
     var v'parent = sc_0~__tact_load_address();
     var v'seqno = sc_0~load_uint(256);
     slice sc_1 = sc_0~load_ref().begin_parse();
@@ -334,7 +314,7 @@ builder $Document$_store(builder build_0, (slice, int, (int, int), slice, slice,
     var v'author = sc_1~__tact_load_address();
     slice sc_2 = sc_1~load_ref().begin_parse();
     var v'exclusiveRightsOwner = sc_2~__tact_load_address();
-    var v'exclusiveRightsOwnerDetails = sc_2~load_int(1) ? $PersonDetails$_as_optional(sc_2~$PersonDetails$_load()) : null();
+    var v'exclusiveRightsOwnerDetails = sc_2~$PersonDetails$_load();
     var v'royaltyWalletAddress = sc_2~__tact_load_address_opt();
     var v'cost = sc_2~load_int(1) ? sc_2~load_coins() : null();
     slice sc_3 = sc_2~load_ref().begin_parse();
@@ -356,7 +336,7 @@ builder $Document$_store(builder build_0, (slice, int, (int, int), slice, slice,
     return (sc_0, (v'parent, v'seqno, v'author, v'document, v'commissions, v'royaltyWalletAddress));
 }
 
-(slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $Document$_contract_load() impure inline_ref {
+(slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $Document$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -371,7 +351,7 @@ builder $Document$_store(builder build_0, (slice, int, (int, int), slice, slice,
     }
 }
 
-() $Document$_contract_store((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) v) impure inline {
+() $Document$_contract_store((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);
