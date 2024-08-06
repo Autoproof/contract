@@ -48,8 +48,8 @@ builder $ExclusiveRightsClaim$_store(builder build_0, (slice, (slice, slice), in
 ;; $ExclusiveRightsClaim$_load
 (slice, ((slice, (slice, slice), int, int, int))) $ExclusiveRightsClaim$_load(slice sc_0) inline;
 
-;; $SetCost$_load
-(slice, ((int))) $SetCost$_load(slice sc_0) inline;
+;; $SetPrice$_load
+(slice, ((int))) $SetPrice$_load(slice sc_0) inline;
 
 ;; $ClaimRequest$_load
 (slice, (((slice, slice)))) $ClaimRequest$_load(slice sc_0) inline;
@@ -162,8 +162,8 @@ tuple $Commissions$_to_external(((int, int)) v) inline;
 ;; $Document$_fun_currentRoyaltyCommissionPercentage
 ((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), int) $Document$_fun_currentRoyaltyCommissionPercentage((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;
 
-;; $Document$_fun_currentCost
-((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), int) $Document$_fun_currentCost((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;
+;; $Document$_fun_currentprice
+((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), int) $Document$_fun_currentprice((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;
 
 ;; $Document$_fun_currentClaim
 ((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), tuple) $Document$_fun_currentClaim((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;

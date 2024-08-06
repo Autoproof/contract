@@ -10,8 +10,8 @@ struct ExclusiveRightsClaim {
     viewedDocuments: Bool;
 }
 
-message SetCost {
-    cost: Int? as coins;
+message SetPrice {
+    price: Int? as coins;
 }
 
 message ClaimRequest {
@@ -34,7 +34,7 @@ contract Document {
 
     royaltyWalletAddress: Address?;
 
-    cost: Int? as coins;
+    price: Int? as coins;
     currentClaim: ExclusiveRightsClaim?;
     assignmentHash: String?;
 
@@ -66,8 +66,8 @@ contract Document {
         return self.commissions.royaltyCommissionPercentage;
     }
 
-    get fun currentCost(): Int? {
-        return self.cost;
+    get fun currentprice(): Int? {
+        return self.price;
     }
 
     get fun currentClaim(): ExclusiveRightsClaim? {
@@ -104,31 +104,31 @@ contract Document {
     }
 
     get fun transfershipCommission(): Int {
-        if (self.cost != null) {
-            return self.cost!! / 1000 * self.currentTransfershipCommissionPercentage();
+        if (self.price != null) {
+            return self.price!! / 1000 * self.currentTransfershipCommissionPercentage();
         } else {
             return 0;
         }
     }
 
     get fun royaltyCommission(): Int {
-        if (self.cost != null) {
-            return self.cost!! / 1000 * self.currentRoyaltyCommissionPercentage();
+        if (self.price != null) {
+            return self.price!! / 1000 * self.currentRoyaltyCommissionPercentage();
         } else {
             return 0;
         }
     }
 
-    receive(msg: SetCost) {
-        require(self.exclusiveRightsOwner == sender(), "Only exclusive rights owner can set the cost");
+    receive(msg: SetPrice) {
+        require(self.exclusiveRightsOwner == sender(), "Only exclusive rights owner can set the price");
         require(self.currentClaim == null, "Transfer is in progress");
-        self.cost = msg.cost;
-        self.reply("Cost is updated".asComment());
+        self.price = msg.price;
+        self.reply("Price is updated".asComment());
     }
 
     receive(msg: ClaimRequest) {
-        require(self.cost != null, "Exclusive rights transfer is not available");
-        require(context().value > (self.cost!! + self.summedCommission()), "Not enough funds.");
+        require(self.price != null, "Exclusive rights transfer is not available");
+        require(context().value > (self.price!! + self.summedCommission()), "Not enough funds.");
         require(self.currentClaim == null, "Transfer is in progress");
 
         // set the new claim
@@ -211,7 +211,7 @@ contract Document {
         self.exclusiveRightsOwnerDetails = self.currentClaim!!.authorDetails;
 
         self.assignmentHash = msg.assignmentHash;
-        self.cost = null;
+        self.price = null;
         self.currentClaim = null;
         self.reply("Claim is approved".asComment());
     }

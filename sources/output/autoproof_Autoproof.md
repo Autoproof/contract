@@ -41,9 +41,9 @@ Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 TLB: `_ author:address authorDetails:PersonDetails{name:^string,address:^string} amount:coins sentDocuments:bool viewedDocuments:bool = ExclusiveRightsClaim`
 Signature: `ExclusiveRightsClaim{author:address,authorDetails:PersonDetails{name:^string,address:^string},amount:coins,sentDocuments:bool,viewedDocuments:bool}`
 
-## SetCost
-TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
-Signature: `SetCost{cost:Maybe coins}`
+## SetPrice
+TLB: `set_price#41231c75 price:Maybe coins = SetPrice`
+Signature: `SetPrice{price:Maybe coins}`
 
 ## ClaimRequest
 TLB: `claim_request#d54aa6e9 authorDetails:PersonDetails{name:^string,address:^string} = ClaimRequest`
@@ -127,7 +127,6 @@ Total Get Methods: 6
 137: Masterchain support is not enabled for this contract
 3861: Only author of the claim can approve
 5175: Title hash can't be empty
-5688: Only exclusive rights owner can set the cost
 7765: Can't approve without a claim
 7782: Can't cancel without a claim
 8086: Not enough funds
@@ -141,6 +140,7 @@ Total Get Methods: 6
 21953: Not enough funds.
 23073: Can't approve if documents are not viewed
 23942: Transfership commission percentage can't be less than 0
+25810: Only exclusive rights owner can set the price
 30316: Can't approve if documents are not sent
 31093: Only owner can set the next autoproof address
 31610: Transfership commission percentage can't be greater than 1000

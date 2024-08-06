@@ -14,7 +14,7 @@ PROGRAM{
   DECLPROC $PersonDetails$_load
   DECLPROC $ExclusiveRightsClaim$_store
   DECLPROC $ExclusiveRightsClaim$_load
-  DECLPROC $SetCost$_load
+  DECLPROC $SetPrice$_load
   DECLPROC $ClaimRequest$_load
   DECLPROC $ClaimApproval$_load
   DECLPROC $DocumentData$_store
@@ -52,7 +52,7 @@ PROGRAM{
   DECLPROC $Document$_fun_currentCommissions
   DECLPROC $Document$_fun_currentTransfershipCommissionPercentage
   DECLPROC $Document$_fun_currentRoyaltyCommissionPercentage
-  DECLPROC $Document$_fun_currentCost
+  DECLPROC $Document$_fun_currentprice
   DECLPROC $Document$_fun_currentClaim
   DECLPROC $Document$_fun_author
   DECLPROC $Document$_fun_exclusiveRightsOwner
@@ -69,7 +69,7 @@ PROGRAM{
   DECLPROC $ExclusiveRightsClaim$_constructor_author_authorDetails_amount_sentDocuments_viewedDocuments
   DECLPROC $SendParameters$_constructor_to_value_bounce_body
   DECLPROC $SendParameters$_constructor_to_value_body
-  DECLPROC $Document$_internal_binary_SetCost
+  DECLPROC $Document$_internal_binary_SetPrice
   DECLPROC $Document$_internal_binary_ClaimRequest
   DECLPROC $Document$_internal_text_95b9186dfe4d808c05d7dca3c7793b4e7961fcd792718c638123823ebae70dba
   DECLPROC $Document$_internal_text_b7ff23a48af187d6a81b4aff9682aae87792a6e108c45a3f348f9587625a858c
@@ -80,7 +80,7 @@ PROGRAM{
   104324 DECLMETHOD %currentCommissions
   72344 DECLMETHOD %currentTransfershipCommissionPercentage
   66726 DECLMETHOD %currentRoyaltyCommissionPercentage
-  96567 DECLMETHOD %currentCost
+  80614 DECLMETHOD %currentprice
   108101 DECLMETHOD %currentClaim
   121830 DECLMETHOD %author
   77639 DECLMETHOD %exclusiveRightsOwner
@@ -219,10 +219,10 @@ PROGRAM{
     s0 s5 XCHG
     3 -ROLL
   }>
-  $SetCost$_load PROCINLINE:<{
+  $SetPrice$_load PROCINLINE:<{
     32 LDU
     SWAP
-    2434905007 PUSHINT
+    1092820085 PUSHINT
     EQUAL
     129 THROWIFNOT
     1 LDI
@@ -850,7 +850,7 @@ PROGRAM{
   $Document$_fun_currentRoyaltyCommissionPercentage PROCREF:<{
     s15 PUSH
   }>
-  $Document$_fun_currentCost PROCREF:<{
+  $Document$_fun_currentprice PROCREF:<{
     s9 PUSH
   }>
   $Document$_fun_currentClaim PROCREF:<{
@@ -1131,9 +1131,9 @@ PROGRAM{
     PUSHNULL
     PUSHNULL
   }>
-  $Document$_internal_binary_SetCost PROCINLINE:<{
+  $Document$_internal_binary_SetPrice PROCINLINE:<{
     s10 POP
-    5688 PUSHINT
+    25810 PUSHINT
     __tact_context_get_sender INLINECALLDICT
     s15 PUSH
     __tact_slice_eq_bits INLINECALLDICT
@@ -1142,7 +1142,7 @@ PROGRAM{
     s9 PUSH
     ISNULL
     THROWANYIFNOT
-    B{b5ee9c7241010101001500002600000000436f7374206973207570646174656423247e70} B>boc PUSHREF
+    B{b5ee9c724101010100160000280000000050726963652069732075706461746564e234a300} B>boc PUSHREF
     $Document$_fun_reply INLINECALLDICT
   }>
   $Document$_internal_binary_ClaimRequest PROCINLINE:<{
@@ -1595,9 +1595,9 @@ PROGRAM{
     15 BLKDROP
     3 1 BLKDROP2
   }>
-  %currentCost PROC:<{
+  %currentprice PROC:<{
     $Document$_contract_load INLINECALLDICT
-    $Document$_fun_currentCost INLINECALLDICT
+    $Document$_fun_currentprice INLINECALLDICT
     16 s() POP
     15 BLKDROP
     3 1 BLKDROP2
@@ -1700,13 +1700,13 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    2434905007 PUSHINT
+    1092820085 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
-      $SetCost$_load INLINECALLDICT
+      $SetPrice$_load INLINECALLDICT
       NIP
-      $Document$_internal_binary_SetCost INLINECALLDICT
+      $Document$_internal_binary_SetPrice INLINECALLDICT
       TRUE
     }>
     DUP
