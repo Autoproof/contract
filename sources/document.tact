@@ -81,6 +81,10 @@ contract Document {
         return self.exclusiveRightsOwner;
     }
 
+    get fun exclusiveRightsOwnerDetails(): PersonDetails? {
+        return self.exclusiveRightsOwnerDetails;
+    }
+
     get fun royaltyWalletAddress(): Address? {
         return self.royaltyWalletAddress;
     }
@@ -204,7 +208,7 @@ contract Document {
         // change the exclusive rights owner
         self.exclusiveRightsOwner = sender();
         self.exclusiveRightsOwnerDetails = self.currentClaim!!.authorDetails;
-        
+
         self.assignmentHash = msg.assignmentHash;
         self.cost = null;
         self.currentClaim = null;

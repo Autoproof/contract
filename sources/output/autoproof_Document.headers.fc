@@ -126,6 +126,12 @@ tuple $ExclusiveRightsClaim$_to_opt_tuple(tuple v) inline;
 ;; $ExclusiveRightsClaim$_to_opt_external
 tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline;
 
+;; $PersonDetails$_to_opt_tuple
+tuple $PersonDetails$_to_opt_tuple(tuple v) inline;
+
+;; $PersonDetails$_to_opt_external
+tuple $PersonDetails$_to_opt_external(tuple v) inline;
+
 ;; $DocumentData$_to_tuple
 tuple $DocumentData$_to_tuple((((slice, slice), slice, slice, slice, slice, slice)) v) inline;
 
@@ -176,6 +182,9 @@ tuple $Commissions$_to_external(((int, int)) v) inline;
 
 ;; $Document$_fun_exclusiveRightsOwner
 ((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), slice) $Document$_fun_exclusiveRightsOwner((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;
+
+;; $Document$_fun_exclusiveRightsOwnerDetails
+((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), tuple) $Document$_fun_exclusiveRightsOwnerDetails((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;
 
 ;; $Document$_fun_royaltyWalletAddress
 ((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), slice) $Document$_fun_royaltyWalletAddress((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;

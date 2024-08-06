@@ -40,6 +40,8 @@ PROGRAM{
   DECLPROC $ExclusiveRightsClaim$_to_tuple
   DECLPROC $ExclusiveRightsClaim$_to_opt_tuple
   DECLPROC $ExclusiveRightsClaim$_to_opt_external
+  DECLPROC $PersonDetails$_to_opt_tuple
+  DECLPROC $PersonDetails$_to_opt_external
   DECLPROC $DocumentData$_to_tuple
   DECLPROC $DocumentData$_to_external
   DECLPROC $Commissions$_to_tuple
@@ -57,6 +59,7 @@ PROGRAM{
   DECLPROC $Document$_fun_currentClaim
   DECLPROC $Document$_fun_author
   DECLPROC $Document$_fun_exclusiveRightsOwner
+  DECLPROC $Document$_fun_exclusiveRightsOwnerDetails
   DECLPROC $Document$_fun_royaltyWalletAddress
   DECLPROC $Document$_fun_documentData
   DECLPROC $Document$_fun_assignmentHash
@@ -84,6 +87,7 @@ PROGRAM{
   108101 DECLMETHOD %currentClaim
   121830 DECLMETHOD %author
   77639 DECLMETHOD %exclusiveRightsOwner
+  129234 DECLMETHOD %exclusiveRightsOwnerDetails
   116543 DECLMETHOD %royaltyWalletAddress
   71441 DECLMETHOD %documentData
   67514 DECLMETHOD %assignmentHash
@@ -639,6 +643,27 @@ PROGRAM{
     }>ELSE<{
     }>
   }>
+  $PersonDetails$_to_opt_tuple PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      PUSHNULL
+    }>ELSE<{
+      $PersonDetails$_not_null INLINECALLDICT
+      $PersonDetails$_to_tuple INLINECALLDICT
+    }>
+  }>
+  $PersonDetails$_to_opt_external PROCINLINE:<{
+    $PersonDetails$_to_opt_tuple INLINECALLDICT
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      PUSHNULL
+    }>ELSE<{
+    }>
+  }>
   $DocumentData$_to_tuple PROCINLINE:<{
     s6 s5 XCHG2
     $PersonDetails$_to_tuple INLINECALLDICT
@@ -885,6 +910,9 @@ PROGRAM{
   }>
   $Document$_fun_exclusiveRightsOwner PROCREF:<{
     s12 PUSH
+  }>
+  $Document$_fun_exclusiveRightsOwnerDetails PROCREF:<{
+    s11 PUSH
   }>
   $Document$_fun_royaltyWalletAddress PROCREF:<{
     s10 PUSH
@@ -1622,6 +1650,14 @@ PROGRAM{
     16 s() POP
     15 BLKDROP
     2 1 BLKDROP2
+  }>
+  %exclusiveRightsOwnerDetails PROC:<{
+    $Document$_contract_load INLINECALLDICT
+    $Document$_fun_exclusiveRightsOwnerDetails INLINECALLDICT
+    16 s() POP
+    15 BLKDROP
+    2 1 BLKDROP2
+    $PersonDetails$_to_opt_external INLINECALLDICT
   }>
   %royaltyWalletAddress PROC:<{
     $Document$_contract_load INLINECALLDICT

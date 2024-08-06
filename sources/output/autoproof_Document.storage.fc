@@ -70,6 +70,20 @@ tuple $PersonDetails$_to_tuple(((slice, slice)) v) inline {
     return __tact_tuple_create_2(v'name, v'address);
 }
 
+tuple $PersonDetails$_to_opt_tuple(tuple v) inline {
+    if (null?(v)) { return null(); } 
+    return $PersonDetails$_to_tuple($PersonDetails$_not_null(v)); 
+}
+
+tuple $PersonDetails$_to_opt_external(tuple v) inline {
+    var loaded = $PersonDetails$_to_opt_tuple(v);
+    if (null?(loaded)) {
+        return null();
+    } else {
+        return (loaded);
+    }
+}
+
 ;;
 ;; Type: ExclusiveRightsClaim
 ;; TLB: _ author:address authorDetails:PersonDetails{name:^string,address:^string} amount:coins sentDocuments:bool viewedDocuments:bool = ExclusiveRightsClaim

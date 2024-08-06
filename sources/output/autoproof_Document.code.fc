@@ -68,6 +68,11 @@
     return (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'exclusiveRightsOwnerDetails, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, (($self'document'author'name, $self'document'author'address), $self'document'title, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags)), $self'exclusiveRightsOwner);
 }
 
+((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), tuple) $Document$_fun_exclusiveRightsOwnerDetails((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref {
+    var (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'exclusiveRightsOwnerDetails, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, (($self'document'author'name, $self'document'author'address), $self'document'title, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))) = $self;
+    return (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'exclusiveRightsOwnerDetails, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, (($self'document'author'name, $self'document'author'address), $self'document'title, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags)), $self'exclusiveRightsOwnerDetails);
+}
+
 ((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), slice) $Document$_fun_royaltyWalletAddress((slice, int, (int, int), slice, slice, tuple, slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref {
     var (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'exclusiveRightsOwnerDetails, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, (($self'document'author'name, $self'document'author'address), $self'document'title, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))) = $self;
     return (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, $self'exclusiveRightsOwnerDetails, $self'royaltyWalletAddress, $self'cost, $self'currentClaim, $self'assignmentHash, (($self'document'author'name, $self'document'author'address), $self'document'title, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags)), $self'royaltyWalletAddress);
@@ -248,6 +253,12 @@ _ %exclusiveRightsOwner() method_id(77639) {
     var self = $Document$_contract_load();
     var res = self~$Document$_fun_exclusiveRightsOwner();
     return res;
+}
+
+_ %exclusiveRightsOwnerDetails() method_id(129234) {
+    var self = $Document$_contract_load();
+    var res = self~$Document$_fun_exclusiveRightsOwnerDetails();
+    return $PersonDetails$_to_opt_external(res);
 }
 
 _ %royaltyWalletAddress() method_id(116543) {

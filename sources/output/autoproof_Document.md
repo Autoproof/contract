@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 4192 bytes
+BOC Size: 4239 bytes
 
 # Types
 Total Types: 20
@@ -86,7 +86,7 @@ TLB: `set_the_next_autoproof#579c57d5 contractAddress:Maybe address = SetTheNext
 Signature: `SetTheNextAutoproof{contractAddress:Maybe address}`
 
 # Get Methods
-Total Get Methods: 13
+Total Get Methods: 14
 
 ## currentCommissions
 
@@ -101,6 +101,8 @@ Total Get Methods: 13
 ## author
 
 ## exclusiveRightsOwner
+
+## exclusiveRightsOwnerDetails
 
 ## royaltyWalletAddress
 
