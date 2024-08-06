@@ -4,6 +4,7 @@ import "./common.tact";
 
 struct ExclusiveRightsClaim {
     author: Address;
+    authorDetails: PersonDetails;
     amount: Int as coins;
     sentDocuments: Bool;
     viewedDocuments: Bool;
@@ -13,8 +14,11 @@ message SetCost {
     cost: Int? as coins;
 }
 
+message ClaimRequest {
+    authorDetails: PersonDetails;
+}
+
 message ClaimApproval {
-    ownership: String;
     assignmentHash: String;
 }
 
@@ -24,13 +28,15 @@ contract Document {
     commissions: Commissions;
 
     author: Address;
+
     exclusiveRightsOwner: Address;
+    exclusiveRightsOwnerDetails: PersonDetails?;
+
     royaltyWalletAddress: Address?;
 
     cost: Int? as coins;
     currentClaim: ExclusiveRightsClaim?;
     assignmentHash: String?;
-    ownership: String?;
 
     document: DocumentData;
 
@@ -75,6 +81,10 @@ contract Document {
         return self.exclusiveRightsOwner;
     }
 
+    get fun royaltyWalletAddress(): Address? {
+        return self.royaltyWalletAddress;
+    }
+
     get fun documentData(): DocumentData {
         return self.document;
     }
@@ -111,7 +121,7 @@ contract Document {
         self.reply("Cost is updated".asComment());
     }
 
-    receive("claim-rights-transfer") {
+    receive(msg: ClaimRequest) {
         require(self.cost != null, "Exclusive rights transfer is not available");
         require(context().value > (self.cost!! + self.summedCommission()), "Not enough funds.");
         require(self.currentClaim == null, "Transfer is in progress");
@@ -119,18 +129,20 @@ contract Document {
         // set the new claim
         self.currentClaim = ExclusiveRightsClaim{
             author: sender(),
+            authorDetails: msg.authorDetails,
             amount: context().value,
             sentDocuments: false,
             viewedDocuments: false
         };
     }
 
-    receive("sent-documents") {
+    receive("mark-documents-as-sent") {
         require(self.currentClaim != null, "Can't update without a claim");
         require(self.exclusiveRightsOwner == sender(), "Only the exclusive rights have access");
 
         self.currentClaim = ExclusiveRightsClaim{
             author: self.currentClaim!!.author,
+            authorDetails: self.currentClaim!!.authorDetails,
             amount: self.currentClaim!!.amount,
             sentDocuments: true,
             viewedDocuments: false
@@ -138,13 +150,14 @@ contract Document {
         self.reply("Documents are marked as sent".asComment());
     }
 
-    receive("viewed-documents") {
+    receive("mark-documents-as-viewed") {
         require(self.currentClaim != null, "Can't update without a claim");
         require(self.currentClaim!!.author == sender(), "Only the author of the claim have access");
         require(self.currentClaim!!.sentDocuments, "Can't view documents if they are not sent");
 
         self.currentClaim = ExclusiveRightsClaim{
             author: self.currentClaim!!.author,
+            authorDetails: self.currentClaim!!.authorDetails,
             amount: self.currentClaim!!.amount,
             sentDocuments: true,
             viewedDocuments: true
@@ -190,8 +203,9 @@ contract Document {
 
         // change the exclusive rights owner
         self.exclusiveRightsOwner = sender();
+        self.exclusiveRightsOwnerDetails = self.currentClaim!!.authorDetails;
+        
         self.assignmentHash = msg.assignmentHash;
-        self.ownership = msg.ownership;
         self.cost = null;
         self.currentClaim = null;
         self.reply("Claim is approved".asComment());

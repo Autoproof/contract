@@ -133,10 +133,10 @@ contract Autoproof with Deployable, Resumable {
 
     // internals
     fun validateDeclaration(document: DocumentData) {
-        require(document.authorship != "", "Authorship can't be empty");
-        require(document.description != "", "Description hash can't be empty");
+        require(document.author.name != "", "Author's name can't be empty");
+        require(document.author.address != "", "Author's address can't be empty");
+        require(document.title != "", "Title hash can't be empty");
         require(document.rootHash != "", "RootHash hash can't be empty");
         require(document.data != "", "Data can't be empty");
-        require(document.tags != "", "Tags can't be empty");
     }
 }

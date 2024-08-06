@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 3795 bytes
+BOC Size: 4192 bytes
 
 # Types
-Total Types: 18
+Total Types: 20
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -38,20 +38,28 @@ TLB: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
 ## ExclusiveRightsClaim
-TLB: `_ author:address amount:coins sentDocuments:bool viewedDocuments:bool = ExclusiveRightsClaim`
-Signature: `ExclusiveRightsClaim{author:address,amount:coins,sentDocuments:bool,viewedDocuments:bool}`
+TLB: `_ author:address authorDetails:PersonDetails{name:^string,address:^string} amount:coins sentDocuments:bool viewedDocuments:bool = ExclusiveRightsClaim`
+Signature: `ExclusiveRightsClaim{author:address,authorDetails:PersonDetails{name:^string,address:^string},amount:coins,sentDocuments:bool,viewedDocuments:bool}`
 
 ## SetCost
 TLB: `set_cost#9121b3af cost:Maybe coins = SetCost`
 Signature: `SetCost{cost:Maybe coins}`
 
+## ClaimRequest
+TLB: `claim_request#d54aa6e9 authorDetails:PersonDetails{name:^string,address:^string} = ClaimRequest`
+Signature: `ClaimRequest{authorDetails:PersonDetails{name:^string,address:^string}}`
+
 ## ClaimApproval
-TLB: `claim_approval#3f96005a ownership:^string assignmentHash:^string = ClaimApproval`
-Signature: `ClaimApproval{ownership:^string,assignmentHash:^string}`
+TLB: `claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval`
+Signature: `ClaimApproval{assignmentHash:^string}`
+
+## PersonDetails
+TLB: `_ name:^string address:^string = PersonDetails`
+Signature: `PersonDetails{name:^string,address:^string}`
 
 ## DocumentData
-TLB: `_ authorship:^string description:^string rootHash:^string data:^string tags:^string = DocumentData`
-Signature: `DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string}`
+TLB: `_ author:PersonDetails{name:^string,address:^string} title:^string description:Maybe ^string rootHash:^string data:^string tags:Maybe ^string = DocumentData`
+Signature: `DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,description:Maybe ^string,rootHash:^string,data:^string,tags:Maybe ^string}`
 
 ## GetFunds
 TLB: `get_funds#0a30a01f amount:coins = GetFunds`
@@ -66,8 +74,8 @@ TLB: `_ transfershipCommissionPercentage:uint256 royaltyCommissionPercentage:uin
 Signature: `Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256}`
 
 ## DeclareDocument
-TLB: `declare_document#6f05cf40 document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string} royaltyWalletAddress:Maybe address = DeclareDocument`
-Signature: `DeclareDocument{document:DocumentData{authorship:^string,description:^string,rootHash:^string,data:^string,tags:^string},royaltyWalletAddress:Maybe address}`
+TLB: `declare_document#891d0707 document:DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,description:Maybe ^string,rootHash:^string,data:^string,tags:Maybe ^string} royaltyWalletAddress:Maybe address = DeclareDocument`
+Signature: `DeclareDocument{document:DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,description:Maybe ^string,rootHash:^string,data:^string,tags:Maybe ^string},royaltyWalletAddress:Maybe address}`
 
 ## CancelDocumentClaim
 TLB: `cancel_document_claim#24a3641f documentAddress:address = CancelDocumentClaim`
@@ -78,7 +86,7 @@ TLB: `set_the_next_autoproof#579c57d5 contractAddress:Maybe address = SetTheNext
 Signature: `SetTheNextAutoproof{contractAddress:Maybe address}`
 
 # Get Methods
-Total Get Methods: 12
+Total Get Methods: 13
 
 ## currentCommissions
 
@@ -93,6 +101,8 @@ Total Get Methods: 12
 ## author
 
 ## exclusiveRightsOwner
+
+## royaltyWalletAddress
 
 ## documentData
 
@@ -129,8 +139,8 @@ Total Get Methods: 12
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
-3545: Tags can't be empty
 3861: Only author of the claim can approve
+5175: Title hash can't be empty
 5688: Only exclusive rights owner can set the cost
 7765: Can't approve without a claim
 7782: Can't cancel without a claim
@@ -145,19 +155,19 @@ Total Get Methods: 12
 21953: Not enough funds.
 23073: Can't approve if documents are not viewed
 23942: Transfership commission percentage can't be less than 0
-28490: Authorship can't be empty
 30316: Can't approve if documents are not sent
 31093: Only owner can set the next autoproof address
 31610: Transfership commission percentage can't be greater than 1000
 34015: Only owner can cancel a document contract
+40125: Author's address can't be empty
 40368: Contract stopped
 41504: Can't update without a claim
 44565: Only the exclusive rights have access
 48939: Only parent contract can set the commissions
 50544: Only exclusive rights owner or author of the claim can cancel
+53084: Author's name can't be empty
 53296: Contract not stopped
 53932: Can't cancel if documents were sent but not viewed
-59821: Description hash can't be empty
 61064: Data can't be empty
 61678: Only owner can get funds
 61716: Only the author of the claim have access

@@ -18,6 +18,8 @@ PROGRAM{
   DECLPROC $Deploy$_load
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
+  DECLPROC $PersonDetails$_store
+  DECLPROC $PersonDetails$_load
   DECLPROC $DocumentData$_store
   DECLPROC $DocumentData$_load
   DECLPROC $GetFunds$_load
@@ -235,35 +237,89 @@ PROGRAM{
     $DeployOk$_store INLINECALLDICT
     ENDC
   }>
-  $DocumentData$_store PROCINLINE:<{
+  $PersonDetails$_store PROCINLINE:<{
     NEWC
-    s0 s5 XCHG2
-    STSLICER
-    ENDC
-    s0 s5 XCHG2
-    STREF
-    NEWC
-    s0 s3 XCHG2
+    ROT
     STSLICER
     ENDC
     ROT
     STREF
     NEWC
-    NEWC
-    s0 s3 XCHG2
+    ROT
     STSLICER
     ENDC
-    ROT
+    SWAP
     STREF
+  }>
+  $PersonDetails$_load PROCINLINE:<{
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    s1 s2 XCHG
+  }>
+  $DocumentData$_store PROCREF:<{
+    s7 s6 s5 XCHG3
+    $PersonDetails$_store INLINECALLDICT
+    NEWC
     NEWC
     s0 s4 XCHG2
     STSLICER
     ENDC
     s0 s3 XCHG2
     STREF
+    OVER
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      SWAP
+      1 STI
+      NEWC
+      ROT
+      STSLICER
+      ENDC
+      SWAP
+      STREF
+    }>ELSE<{
+      FALSE
+      s2 POP
+      1 STI
+    }>
     NEWC
-    ROT
+    s0 s5 XCHG2
     STSLICER
+    ENDC
+    s0 s4 XCHG2
+    STREF
+    NEWC
+    NEWC
+    s0 s4 XCHG2
+    STSLICER
+    ENDC
+    s0 s3 XCHG2
+    STREF
+    OVER
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      SWAP
+      1 STI
+      NEWC
+      ROT
+      STSLICER
+      ENDC
+      SWAP
+      STREF
+    }>ELSE<{
+      FALSE
+      s2 POP
+      1 STI
+    }>
     ENDC
     SWAP
     STREF
@@ -271,21 +327,25 @@ PROGRAM{
     SWAP
     STREF
   }>
-  $DocumentData$_load PROCINLINE:<{
-    LDREF
-    SWAP
-    CTOS
-    SWAP
-    LDREF
-    SWAP
-    CTOS
-    SWAP
+  $DocumentData$_load PROCREF:<{
+    $PersonDetails$_load INLINECALLDICT
+    s0 s2 XCHG
     LDREF
     SWAP
     CTOS
     LDREF
     SWAP
     CTOS
+    SWAP
+    1 LDI
+    SWAP
+    IF:<{
+      LDREF
+      SWAP
+      CTOS
+    }>ELSE<{
+      PUSHNULL
+    }>
     SWAP
     LDREF
     SWAP
@@ -294,8 +354,21 @@ PROGRAM{
     LDREF
     DROP
     CTOS
-    s3 s5 XCHG
-    s3 s4 XCHG
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    1 LDI
+    SWAP
+    IF:<{
+      LDREF
+      DROP
+      CTOS
+    }>ELSE<{
+      DROP
+      PUSHNULL
+    }>
+    s5 s7 XCHG
   }>
   $GetFunds$_load PROCINLINE:<{
     32 LDU
@@ -343,30 +416,30 @@ PROGRAM{
     s1 s3 XCHG
   }>
   $DeclareDocument$_store PROCINLINE:<{
-    1862651712 PUSHINT
-    s0 s7 XCHG2
+    2300380935 PUSHINT
+    s0 s9 XCHG2
     32 STU
-    5 -ROLL
+    7 -ROLL
     $DocumentData$_store INLINECALLDICT
     SWAP
     __tact_store_address_opt INLINECALLDICT
   }>
   $DeclareDocument$_store_cell PROCINLINE:<{
     NEWC
-    6 -ROLL
+    8 -ROLL
     $DeclareDocument$_store INLINECALLDICT
     ENDC
   }>
   $DeclareDocument$_load PROCINLINE:<{
     32 LDU
     SWAP
-    1862651712 PUSHINT
+    2300380935 PUSHINT
     EQUAL
     129 THROWIFNOT
     $DocumentData$_load INLINECALLDICT
-    s0 s5 XCHG
+    s0 s7 XCHG
     __tact_load_address_opt INLINECALLDICT
-    s1 s6 XCHG
+    s1 s8 XCHG
   }>
   $CancelDocumentClaim$_load PROCINLINE:<{
     32 LDU
@@ -460,16 +533,16 @@ PROGRAM{
     }>
   }>
   $Document$init$_store PROCINLINE:<{
-    s11 s10 XCHG2
+    s13 s12 XCHG2
     __tact_store_address INLINECALLDICT
-    s1 s8 XCHG
+    s1 s10 XCHG
     257 PUSHINT
     STIX
-    s0 s6 XCHG2
+    s0 s8 XCHG2
     __tact_store_address INLINECALLDICT
     NEWC
-    5 -ROLL
-    s0 s6 XCHG
+    7 -ROLL
+    s0 s8 XCHG
     $DocumentData$_store INLINECALLDICT
     s0 s0 s4 XCHG3
     $Commissions$_store INLINECALLDICT
@@ -654,7 +727,7 @@ PROGRAM{
     THROWANYIFNOT
   }>
   $Document$_init_child PROCREF:<{
-    s0 s11 XCHG
+    s0 s13 XCHG
     CTOS
     LDDICT
     DROP
@@ -676,8 +749,8 @@ PROGRAM{
     FALSE
     SWAP
     1 STI
-    11 -ROLL
-    s0 s12 XCHG
+    13 -ROLL
+    s0 s14 XCHG
     $Document$init$_store INLINECALLDICT
     ENDC
   }>
@@ -697,29 +770,32 @@ PROGRAM{
     OVER
   }>
   $Autoproof$_fun_validateDeclaration PROCREF:<{
-    28490 PUSHINT
+    DROP
+    s2 POP
+    53084 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
     s0 s6 XCHG2
     __tact_slice_neq INLINECALLDICT
     s1 s5 XCHG
     THROWANYIFNOT
-    59821 PUSHINT
+    40125 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
     s0 s4 XCHG2
     __tact_slice_neq INLINECALLDICT
     s1 s3 XCHG
     THROWANYIFNOT
+    5175 PUSHINT
+    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
+    ROT
+    __tact_slice_neq INLINECALLDICT
+    THROWANYIFNOT
     62718 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
-    ROT
+    s0 s3 XCHG2
     __tact_slice_neq INLINECALLDICT
+    s1 s2 XCHG
     THROWANYIFNOT
     61064 PUSHINT
-    B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
-    ROT
-    __tact_slice_neq INLINECALLDICT
-    THROWANYIFNOT
-    3545 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
     ROT
     __tact_slice_neq INLINECALLDICT
@@ -810,10 +886,14 @@ PROGRAM{
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
   $Autoproof$_internal_binary_DeclareDocument PROCINLINE:<{
-    6 6 BLKSWAP
+    s5 s13 XCHG
+    s4 s12 XCHG
+    s3 s11 XCHG
+    s10 s9 s8 XCHG3
     $Autoproof$_fun_requireNotStopped INLINECALLDICT
-    s11 s10 s9 PUSH3
-    s11 s10 PUSH2
+    s7 s6 s13 PUSH3
+    s15 s14 s13 PUSH3
+    s15 PUSH
     $Autoproof$_fun_validateDeclaration INLINECALLDICT
     s0 s3 XCHG
     INC
@@ -823,10 +903,12 @@ PROGRAM{
     IF:<{
       s3 PUSH
       __tact_not_null INLINECALLDICT
-      s5 s12 XCHG
-      s4 s11 XCHG
-      s3 s10 XCHG
-      s9 s8 s7 XCHG3
+      s7 s8 XCHG
+      s6 s8 XCHG
+      s5 s14 XCHG
+      s4 s13 XCHG
+      s3 s12 XCHG
+      s11 s10 s9 XCHG3
       $DeclareDocument$_store_cell INLINECALLDICT
       __tact_context_get INLINECALLDICT
       $Context$_get_value INLINECALLDICT
@@ -837,16 +919,18 @@ PROGRAM{
       __tact_context_sys GETGLOB
       MYADDR
       __tact_context_get_sender INLINECALLDICT
-      s8 s7 s0 XCHG3
+      s10 s9 s0 XCHG3
       s3 PUSH
-      s6 s7 XCHG2
-      s5 s15 XCHG
-      s4 s14 XCHG
-      s3 s13 XCHG
-      s12 s11 s0 XCHG3
-      s11 s(-1) PUXC
-      16 s() PUSH
-      s0 s12 XCHG2
+      s8 s9 XCHG2
+      s3 s7 XCHG
+      s2 s6 XCHG
+      s5 17 s() XCHG
+      s4 16 s() XCHG
+      s3 s15 XCHG
+      s14 s13 s0 XCHG3
+      s14 s(-1) PUXC
+      18 s() PUSH
+      s0 s14 XCHG2
       $Document$_init_child INLINECALLDICT
       2DUP
       $global_contractAddress INLINECALLDICT
@@ -856,8 +940,9 @@ PROGRAM{
       2 3 BLKSWAP
       $SendParameters$_constructor_to_body_value_code_data INLINECALLDICT
       $global_send INLINECALLDICT
-      s5 s4 s4 XCHG3
-      s0 s3 XCHG
+      s1 s5 XCHG
+      s3 s4 XCHG
+      s1 s3 s0 XCHG3
     }>
     s0 s5 XCHG
     s3 s3 s4 XCHG3
@@ -1011,12 +1096,12 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    1862651712 PUSHINT
+    2300380935 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       $DeclareDocument$_load INLINECALLDICT
-      1 6 BLKDROP2
+      1 8 BLKDROP2
       $Autoproof$_internal_binary_DeclareDocument INLINECALLDICT
       TRUE
     }>

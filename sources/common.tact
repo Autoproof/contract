@@ -1,9 +1,15 @@
+struct PersonDetails {
+    name: String;
+    address: String;
+}
+
 struct DocumentData {
-    authorship: String;
-    description: String;
+    author: PersonDetails;
+    title: String;
+    description: String?;
     rootHash: String;
     data: String;
-    tags: String;
+    tags: String?;
 }
 
 message GetFunds {
