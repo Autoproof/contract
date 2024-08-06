@@ -162,8 +162,8 @@ tuple $Commissions$_to_external(((int, int)) v) inline;
 ;; $Document$_fun_currentRoyaltyCommissionPercentage
 ((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), int) $Document$_fun_currentRoyaltyCommissionPercentage((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;
 
-;; $Document$_fun_currentprice
-((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), int) $Document$_fun_currentprice((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;
+;; $Document$_fun_currentPrice
+((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), int) $Document$_fun_currentPrice((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;
 
 ;; $Document$_fun_currentClaim
 ((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), tuple) $Document$_fun_currentClaim((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref;

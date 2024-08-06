@@ -52,7 +52,7 @@ PROGRAM{
   DECLPROC $Document$_fun_currentCommissions
   DECLPROC $Document$_fun_currentTransfershipCommissionPercentage
   DECLPROC $Document$_fun_currentRoyaltyCommissionPercentage
-  DECLPROC $Document$_fun_currentprice
+  DECLPROC $Document$_fun_currentPrice
   DECLPROC $Document$_fun_currentClaim
   DECLPROC $Document$_fun_author
   DECLPROC $Document$_fun_exclusiveRightsOwner
@@ -80,7 +80,7 @@ PROGRAM{
   104324 DECLMETHOD %currentCommissions
   72344 DECLMETHOD %currentTransfershipCommissionPercentage
   66726 DECLMETHOD %currentRoyaltyCommissionPercentage
-  80614 DECLMETHOD %currentprice
+  78418 DECLMETHOD %currentPrice
   108101 DECLMETHOD %currentClaim
   121830 DECLMETHOD %author
   77639 DECLMETHOD %exclusiveRightsOwner
@@ -850,7 +850,7 @@ PROGRAM{
   $Document$_fun_currentRoyaltyCommissionPercentage PROCREF:<{
     s15 PUSH
   }>
-  $Document$_fun_currentprice PROCREF:<{
+  $Document$_fun_currentPrice PROCREF:<{
     s9 PUSH
   }>
   $Document$_fun_currentClaim PROCREF:<{
@@ -1595,9 +1595,9 @@ PROGRAM{
     15 BLKDROP
     3 1 BLKDROP2
   }>
-  %currentprice PROC:<{
+  %currentPrice PROC:<{
     $Document$_contract_load INLINECALLDICT
-    $Document$_fun_currentprice INLINECALLDICT
+    $Document$_fun_currentPrice INLINECALLDICT
     16 s() POP
     15 BLKDROP
     3 1 BLKDROP2

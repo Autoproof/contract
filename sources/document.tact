@@ -66,7 +66,7 @@ contract Document {
         return self.commissions.royaltyCommissionPercentage;
     }
 
-    get fun currentprice(): Int? {
+    get fun currentPrice(): Int? {
         return self.price;
     }
 

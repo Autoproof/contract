@@ -49,7 +49,7 @@
     return (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, ($self'exclusiveRightsOwnerDetails'name, $self'exclusiveRightsOwnerDetails'address), $self'royaltyWalletAddress, $self'price, $self'currentClaim, $self'assignmentHash, (($self'document'author'name, $self'document'author'address), $self'document'title, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags)), $self'commissions'royaltyCommissionPercentage);
 }
 
-((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), int) $Document$_fun_currentprice((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref {
+((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)), int) $Document$_fun_currentPrice((slice, int, (int, int), slice, slice, (slice, slice), slice, int, tuple, slice, ((slice, slice), slice, slice, slice, slice, slice)) $self) impure inline_ref {
     var (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, ($self'exclusiveRightsOwnerDetails'name, $self'exclusiveRightsOwnerDetails'address), $self'royaltyWalletAddress, $self'price, $self'currentClaim, $self'assignmentHash, (($self'document'author'name, $self'document'author'address), $self'document'title, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags))) = $self;
     return (($self'parent, $self'seqno, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'author, $self'exclusiveRightsOwner, ($self'exclusiveRightsOwnerDetails'name, $self'exclusiveRightsOwnerDetails'address), $self'royaltyWalletAddress, $self'price, $self'currentClaim, $self'assignmentHash, (($self'document'author'name, $self'document'author'address), $self'document'title, $self'document'description, $self'document'rootHash, $self'document'data, $self'document'tags)), $self'price);
 }
@@ -232,9 +232,9 @@ _ %currentRoyaltyCommissionPercentage() method_id(66726) {
     return res;
 }
 
-_ %currentprice() method_id(80614) {
+_ %currentPrice() method_id(78418) {
     var self = $Document$_contract_load();
-    var res = self~$Document$_fun_currentprice();
+    var res = self~$Document$_fun_currentPrice();
     return res;
 }
 

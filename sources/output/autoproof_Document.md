@@ -94,7 +94,7 @@ Total Get Methods: 14
 
 ## currentRoyaltyCommissionPercentage
 
-## currentprice
+## currentPrice
 
 ## currentClaim
 
