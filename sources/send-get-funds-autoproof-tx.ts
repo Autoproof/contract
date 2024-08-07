@@ -5,7 +5,7 @@ import { storeGetFunds } from "./output/autoproof_Autoproof";
 (async () => {
   // Create Client
   const client = new TonClient({
-    endpoint: 'https://testnet.toncenter.com/api/v2/jsonRPC',
+    endpoint: 'https://toncenter.com/api/v2/jsonRPC',
     apiKey: process.env.TONCENTER_APIKEY ?? ""
   });
 

@@ -1,16 +1,16 @@
-import { TonClient, WalletContractV4, internal, beginCell, toNano } from "@ton/ton";
+import { TonClient, WalletContractV4, beginCell, internal, toNano } from "@ton/ton";
 import { mnemonicToPrivateKey } from "@ton/crypto";
-import { storeGetFunds } from "./output/autoproof_Document";
+import { storeSetTheNextAutoproof } from "./output/autoproof_Autoproof";
 
 (async () => {
   // Create Client
   const client = new TonClient({
-    endpoint: 'https://testnet.toncenter.com/api/v2/jsonRPC',
+    endpoint: 'https://toncenter.com/api/v2/jsonRPC',
     apiKey: process.env.TONCENTER_APIKEY ?? ""
   });
 
   // Generate new key
-  let mnemonics = process.env.MNEMONICS_AUTHOR?.split(" ") ?? [];
+  let mnemonics = process.env.MNEMONICS_CLIENT?.split(" ") ?? [];
   let keyPair = await mnemonicToPrivateKey(mnemonics);
 
   // Create wallet contract
@@ -20,9 +20,9 @@ import { storeGetFunds } from "./output/autoproof_Document";
 
   // Create a bodyCell
   let bodyCell = beginCell();
-  storeGetFunds({
-      $$type: "GetFunds",
-      amount: toNano('0.01')
+  storeSetTheNextAutoproof({
+      $$type: "SetTheNextAutoproof",
+      contractAddress: null
   })(bodyCell);
 
   // Create a transfer
@@ -31,8 +31,8 @@ import { storeGetFunds } from "./output/autoproof_Document";
     seqno,
     secretKey: keyPair.secretKey,
     messages: [internal({
-      value: '0.01',
-      to: process.env.DEPLOYED_DOCUMENT_ADDRESS ?? "",
+      value: '0.1',
+      to: process.env.DEPLOYED_AUTOPROOF_ADDRESS ?? "",
       body: bodyCell.endCell()
     })]
   });

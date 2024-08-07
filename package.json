@@ -7,16 +7,8 @@
     "test": "jest",
     "deploy": "ts-node ./sources/contract.deploy.ts",
     "read": "ts-node ./sources/contract.read.ts",
-    "send-declaration-tx": "ts-node ./sources/send-declaration-tx.ts",
-    "send-set-cost-tx": "ts-node ./sources/send-set-cost-tx.ts",
-    "send-exclusive-rights-claim-tx": "ts-node ./sources/send-exclusive-rights-claim-tx.ts",
-    "send-sent-documents-tx": "ts-node ./sources/send-sent-documents-tx.ts",
-    "send-viewed-documents-tx": "ts-node ./sources/send-viewed-documents-tx.ts",
-    "send-approve-tx": "ts-node ./sources/send-approve-tx.ts",
-    "send-cancel-tx": "ts-node ./sources/send-cancel-tx.ts",
     "send-get-funds-autoproof-tx": "ts-node ./sources/send-get-funds-autoproof-tx.ts",
-    "send-get-funds-document-tx": "ts-node ./sources/send-get-funds-document-tx.ts",
-    "get-txs": "ts-node ./sources/get-txs.ts"
+    "change-next-autoproof": "ts-node ./sources/change-next-autoproof.ts"
   },
   "dependencies": {
     "@orbs-network/ton-access": "^2.3.3",
