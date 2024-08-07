@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 4357 bytes
+BOC Size: 4386 bytes
 
 # Types
 Total Types: 20
@@ -58,8 +58,8 @@ TLB: `_ name:^string address:^string = PersonDetails`
 Signature: `PersonDetails{name:^string,address:^string}`
 
 ## DocumentData
-TLB: `_ author:PersonDetails{name:^string,address:^string} title:^string description:Maybe ^string rootHash:^string data:^string tags:Maybe ^string = DocumentData`
-Signature: `DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,description:Maybe ^string,rootHash:^string,data:^string,tags:Maybe ^string}`
+TLB: `_ author:PersonDetails{name:^string,address:^string} title:^string rootHash:^string data:^string tags:Maybe ^string description:Maybe ^string = DocumentData`
+Signature: `DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,rootHash:^string,data:^string,tags:Maybe ^string,description:Maybe ^string}`
 
 ## GetFunds
 TLB: `get_funds#0a30a01f amount:coins = GetFunds`
@@ -74,8 +74,8 @@ TLB: `_ transfershipCommissionPercentage:uint256 royaltyCommissionPercentage:uin
 Signature: `Commissions{transfershipCommissionPercentage:uint256,royaltyCommissionPercentage:uint256}`
 
 ## DeclareDocument
-TLB: `declare_document#891d0707 document:DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,description:Maybe ^string,rootHash:^string,data:^string,tags:Maybe ^string} royaltyWalletAddress:Maybe address = DeclareDocument`
-Signature: `DeclareDocument{document:DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,description:Maybe ^string,rootHash:^string,data:^string,tags:Maybe ^string},royaltyWalletAddress:Maybe address}`
+TLB: `declare_document#4b36ff48 document:DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,rootHash:^string,data:^string,tags:Maybe ^string,description:Maybe ^string} royaltyWalletAddress:Maybe address = DeclareDocument`
+Signature: `DeclareDocument{document:DocumentData{author:PersonDetails{name:^string,address:^string},title:^string,rootHash:^string,data:^string,tags:Maybe ^string,description:Maybe ^string},royaltyWalletAddress:Maybe address}`
 
 ## CancelDocumentClaim
 TLB: `cancel_document_claim#24a3641f documentAddress:address = CancelDocumentClaim`

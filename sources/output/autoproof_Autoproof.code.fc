@@ -49,7 +49,7 @@
 
 ((slice, int, int, (int, int), slice), ()) $Autoproof$_fun_validateDeclaration((slice, int, int, (int, int), slice) $self, ((slice, slice), slice, slice, slice, slice, slice) $document) impure inline_ref {
     var (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress)) = $self;
-    var ((($document'author'name, $document'author'address), $document'title, $document'description, $document'rootHash, $document'data, $document'tags)) = $document;
+    var ((($document'author'name, $document'author'address), $document'title, $document'rootHash, $document'data, $document'tags, $document'description)) = $document;
     throw_unless(53084, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'author'name));
     throw_unless(40125, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'author'address));
     throw_unless(5175, __tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $document'title));
@@ -92,14 +92,14 @@
 
 (((slice, int, int, (int, int), slice)), ()) $Autoproof$_internal_binary_DeclareDocument((slice, int, int, (int, int), slice) $self, (((slice, slice), slice, slice, slice, slice, slice), slice) $msg) impure inline {
     var ($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress) = $self;
-    var ((($msg'document'author'name, $msg'document'author'address), $msg'document'title, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $msg'royaltyWalletAddress) = $msg;
+    var ((($msg'document'author'name, $msg'document'author'address), $msg'document'title, $msg'document'rootHash, $msg'document'data, $msg'document'tags, $msg'document'description), $msg'royaltyWalletAddress) = $msg;
     ($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress)~$Autoproof$_fun_requireNotStopped();
-    ($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress)~$Autoproof$_fun_validateDeclaration($DocumentData$_tensor_cast((($msg'document'author'name, $msg'document'author'address), $msg'document'title, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags)));
+    ($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress)~$Autoproof$_fun_validateDeclaration($DocumentData$_tensor_cast((($msg'document'author'name, $msg'document'author'address), $msg'document'title, $msg'document'rootHash, $msg'document'data, $msg'document'tags, $msg'document'description)));
     $self'documentsNumber = ($self'documentsNumber + 1);
     if ((~ null?($self'nextAutoproofAddress))) {
-        $global_send($SendParameters$_constructor_to_body_value(__tact_not_null($self'nextAutoproofAddress), $DeclareDocument$_store_cell(((($msg'document'author'name, $msg'document'author'address), $msg'document'title, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), $msg'royaltyWalletAddress)), $Context$_get_value(__tact_context_get())));
+        $global_send($SendParameters$_constructor_to_body_value(__tact_not_null($self'nextAutoproofAddress), $DeclareDocument$_store_cell(((($msg'document'author'name, $msg'document'author'address), $msg'document'title, $msg'document'rootHash, $msg'document'data, $msg'document'tags, $msg'document'description), $msg'royaltyWalletAddress)), $Context$_get_value(__tact_context_get())));
     } else {
-        var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender(), (($msg'document'author'name, $msg'document'author'address), $msg'document'title, $msg'document'description, $msg'document'rootHash, $msg'document'data, $msg'document'tags), ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $msg'royaltyWalletAddress);
+        var ($init'code, $init'data) = $Document$_init_child(__tact_context_sys, my_address(), $self'documentsNumber, __tact_context_get_sender(), (($msg'document'author'name, $msg'document'author'address), $msg'document'title, $msg'document'rootHash, $msg'document'data, $msg'document'tags, $msg'document'description), ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $msg'royaltyWalletAddress);
         $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), __gen_cell_comment_b9536bb1add3345e01e0f9b78453670bf5bcdfe88fcc4d8f84f5b81161e9ab30(), $Context$_get_value(__tact_context_get()), $init'code, $init'data));
     }
     return (($self'owner, $self'stopped, $self'documentsNumber, ($self'commissions'transfershipCommissionPercentage, $self'commissions'royaltyCommissionPercentage), $self'nextAutoproofAddress), ());
@@ -232,7 +232,7 @@ _ lazy_deployment_completed() method_id {
     
     
     ;; Receive DeclareDocument message
-    if (op == 2300380935) {
+    if (op == 1261895496) {
         var msg = in_msg~$DeclareDocument$_load();
         self~$Autoproof$_internal_binary_DeclareDocument(msg);
         return (self, true);

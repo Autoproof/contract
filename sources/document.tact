@@ -32,13 +32,14 @@ contract Document {
     exclusiveRightsOwner: Address;
     exclusiveRightsOwnerDetails: PersonDetails;
 
-    royaltyWalletAddress: Address?;
+    document: DocumentData;
 
     price: Int? as coins;
     currentClaim: ExclusiveRightsClaim?;
     assignmentHash: String?;
 
-    document: DocumentData;
+    royaltyWalletAddress: Address?;
+    
 
     // author is owner when created
     init(parent: Address, seqno: Int, author: Address, document: DocumentData, commissions: Commissions, royaltyWalletAddress: Address?) {

@@ -662,6 +662,15 @@
     form-data "^4.0.0"
     zod "^3.20.6"
 
+"@tact-lang/emulator@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@tact-lang/emulator/-/emulator-4.3.0.tgz#f221f81268f66a4b19acfb0ed6a7f7f643a94a5a"
+  integrity sha512-r0i92vyxgz+pQh+AtfXdVKUnM0XcsJevfyLn255hJvfAXQj+fqP7b083qDeoKFveHnxI7reakimCfZXBl73x6Q==
+  dependencies:
+    prando "^6.0.1"
+    teslabot "^1.5.0"
+    zod "^3.20.2"
+
 "@tact-lang/opcode@^0.0.14":
   version "0.0.14"
   resolved "https://registry.yarnpkg.com/@tact-lang/opcode/-/opcode-0.0.14.tgz#52a9cb65bd43b8975481ecac26a3a59b377d1cf2"

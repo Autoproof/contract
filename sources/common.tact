@@ -6,10 +6,10 @@ struct PersonDetails {
 struct DocumentData {
     author: PersonDetails;
     title: String;
-    description: String?;
     rootHash: String;
     data: String;
     tags: String?;
+    description: String?;
 }
 
 message GetFunds {

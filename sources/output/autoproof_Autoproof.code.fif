@@ -271,24 +271,12 @@ PROGRAM{
     ENDC
     s0 s3 XCHG2
     STREF
-    OVER
-    ISNULL
-    NOT
-    IF:<{
-      TRUE
-      SWAP
-      1 STI
-      NEWC
-      ROT
-      STSLICER
-      ENDC
-      SWAP
-      STREF
-    }>ELSE<{
-      FALSE
-      s2 POP
-      1 STI
-    }>
+    NEWC
+    ROT
+    STSLICER
+    ENDC
+    SWAP
+    STREF
     NEWC
     s0 s5 XCHG2
     STSLICER
@@ -296,12 +284,25 @@ PROGRAM{
     s0 s4 XCHG2
     STREF
     NEWC
-    NEWC
-    s0 s4 XCHG2
-    STSLICER
-    ENDC
-    s0 s3 XCHG2
-    STREF
+    s3 PUSH
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      SWAP
+      1 STI
+      NEWC
+      s0 s4 XCHG2
+      STSLICER
+      ENDC
+      s0 s3 XCHG2
+      STREF
+    }>ELSE<{
+      s3 POP
+      FALSE
+      s0 s3 XCHG2
+      1 STI
+    }>
     OVER
     ISNULL
     NOT
@@ -337,6 +338,17 @@ PROGRAM{
     SWAP
     CTOS
     SWAP
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    LDREF
+    DROP
+    CTOS
     1 LDI
     SWAP
     IF:<{
@@ -346,17 +358,6 @@ PROGRAM{
     }>ELSE<{
       PUSHNULL
     }>
-    SWAP
-    LDREF
-    SWAP
-    CTOS
-    SWAP
-    LDREF
-    DROP
-    CTOS
-    LDREF
-    SWAP
-    CTOS
     SWAP
     1 LDI
     SWAP
@@ -416,7 +417,7 @@ PROGRAM{
     s1 s3 XCHG
   }>
   $DeclareDocument$_store PROCINLINE:<{
-    2300380935 PUSHINT
+    1261895496 PUSHINT
     s0 s9 XCHG2
     32 STU
     7 -ROLL
@@ -433,7 +434,7 @@ PROGRAM{
   $DeclareDocument$_load PROCINLINE:<{
     32 LDU
     SWAP
-    2300380935 PUSHINT
+    1261895496 PUSHINT
     EQUAL
     129 THROWIFNOT
     $DocumentData$_load INLINECALLDICT
@@ -770,8 +771,7 @@ PROGRAM{
     OVER
   }>
   $Autoproof$_fun_validateDeclaration PROCREF:<{
-    DROP
-    s2 POP
+    2DROP
     53084 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
     s0 s6 XCHG2
@@ -791,9 +791,8 @@ PROGRAM{
     THROWANYIFNOT
     62718 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
-    s0 s3 XCHG2
+    ROT
     __tact_slice_neq INLINECALLDICT
-    s1 s2 XCHG
     THROWANYIFNOT
     61064 PUSHINT
     B{b5ee9c724101010100020000004cacb9cd} B>boc <s PUSHSLICE
@@ -1096,7 +1095,7 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    2300380935 PUSHINT
+    1261895496 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
