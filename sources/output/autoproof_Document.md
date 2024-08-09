@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: Document
-BOC Size: 4386 bytes
+BOC Size: 4387 bytes
 
 # Types
 Total Types: 20
@@ -144,10 +144,10 @@ Total Get Methods: 14
 3861: Only author of the claim can approve
 5175: Title hash can't be empty
 7765: Can't approve without a claim
-7782: Can't cancel without a claim
 8086: Not enough funds
 11428: Royalty commission percentage can't be greater than 1000
 14555: Exclusive rights transfer is not available
+16940: Only the exclusive rights owner can set the price
 19061: Only exclusive rights owner can get funds
 19102: Transfer is in progress
 19201: Can't view documents if they are not sent
@@ -156,7 +156,6 @@ Total Get Methods: 14
 21953: Not enough funds.
 23073: Can't approve if documents are not viewed
 23942: Transfership commission percentage can't be less than 0
-25810: Only exclusive rights owner can set the price
 30316: Can't approve if documents are not sent
 31093: Only owner can set the next autoproof address
 31610: Transfership commission percentage can't be greater than 1000
@@ -165,11 +164,12 @@ Total Get Methods: 14
 40368: Contract stopped
 41504: Can't update without a claim
 44565: Only the exclusive rights have access
+45720: Can't reject if documents were sent but not viewed
 48939: Only parent contract can set the commissions
-50544: Only exclusive rights owner or author of the claim can cancel
 53084: Author's name can't be empty
 53296: Contract not stopped
-53932: Can't cancel if documents were sent but not viewed
+59193: Only exclusive rights owner or author of the claim can reject
+59485: Can't reject without a claim
 61064: Data can't be empty
 61678: Only owner can get funds
 61716: Only the author of the claim have access

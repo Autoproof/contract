@@ -74,7 +74,7 @@ PROGRAM{
   DECLPROC $Document$_internal_text_95b9186dfe4d808c05d7dca3c7793b4e7961fcd792718c638123823ebae70dba
   DECLPROC $Document$_internal_text_b7ff23a48af187d6a81b4aff9682aae87792a6e108c45a3f348f9587625a858c
   DECLPROC $Document$_internal_binary_ClaimApproval
-  DECLPROC $Document$_internal_text_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4
+  DECLPROC $Document$_internal_text_9a9ea0eeb9d51d0cc37f598107e61435bce7e32ba7d9aa93c6bfea80c7a3cfc9
   DECLPROC $Document$_internal_binary_SetCommissions
   DECLPROC $Document$_internal_binary_GetFunds
   104324 DECLMETHOD %currentCommissions
@@ -1137,7 +1137,7 @@ PROGRAM{
   }>
   $Document$_internal_binary_SetPrice PROCINLINE:<{
     s4 POP
-    25810 PUSHINT
+    16940 PUSHINT
     __tact_context_get_sender INLINECALLDICT
     s15 PUSH
     __tact_slice_eq_bits INLINECALLDICT
@@ -1431,8 +1431,8 @@ PROGRAM{
     s1 s2 XCHG
     $Document$_fun_reply INLINECALLDICT
   }>
-  $Document$_internal_text_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4 PROCINLINE:<{
-    7782 PUSHINT
+  $Document$_internal_text_9a9ea0eeb9d51d0cc37f598107e61435bce7e32ba7d9aa93c6bfea80c7a3cfc9 PROCINLINE:<{
+    59485 PUSHINT
     s3 PUSH
     ISNULL
     NOT
@@ -1443,7 +1443,7 @@ PROGRAM{
     __tact_slice_eq_bits INLINECALLDICT
     NOT
     IF:<{
-      50544 PUSHINT
+      59193 PUSHINT
       __tact_context_get_sender INLINECALLDICT
       s15 s(-1) PUXC
       __tact_slice_eq_bits INLINECALLDICT
@@ -1457,7 +1457,7 @@ PROGRAM{
         __tact_slice_eq_bits INLINECALLDICT
       }>
       THROWANYIFNOT
-      53932 PUSHINT
+      45720 PUSHINT
       s3 PUSH
       $ExclusiveRightsClaim$_not_null INLINECALLDICT
       $ExclusiveRightsClaim$_get_sentDocuments INLINECALLDICT
@@ -1507,14 +1507,14 @@ PROGRAM{
     s3 POP
     s1 20 s() XCHG
     s0 s2 XCHG
-    ADD
+    SUB
     FALSE
     B{b5ee9c7241010101002100003e0000000052657475726e2066756e647320746f2074686520636c61696d6572d1b329c2} B>boc PUSHREF
     s3 20 s() XCHG
     $SendParameters$_constructor_to_value_bounce_body INLINECALLDICT
     $global_send INLINECALLDICT
     PUSHNULL
-    B{b5ee9c7241010101001700002a00000000436c61696d2069732063616e63656c6564f23499d4} B>boc PUSHREF
+    B{b5ee9c7241010101001700002a00000000436c61696d2069732072656a656374656412821712} B>boc PUSHREF
     17 s() 19 s() XCHG
     16 s() 18 s() XCHG
     s15 17 s() XCHG
@@ -1780,10 +1780,10 @@ PROGRAM{
         TRUE
         RETALT
       }>
-      40205204258101648474118693578851442949965142477259452404171865109192867478212 PUSHINT
+      69936451233511245563306864220600809102801358773422085761950535236705598033865 PUSHINT
       EQUAL
       IFJMP:<{
-        $Document$_internal_text_58e356d53cea1ec53a635a2191d2f2ffad4f2274af01079b33e4e88295167ac4 INLINECALLDICT
+        $Document$_internal_text_9a9ea0eeb9d51d0cc37f598107e61435bce7e32ba7d9aa93c6bfea80c7a3cfc9 INLINECALLDICT
         TRUE
         RETALT
       }>

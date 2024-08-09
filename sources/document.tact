@@ -121,7 +121,7 @@ contract Document {
     }
 
     receive(msg: SetPrice) {
-        require(self.exclusiveRightsOwner == sender(), "Only exclusive rights owner can set the price");
+        require(self.exclusiveRightsOwner == sender(), "Only the exclusive rights owner can set the price");
         require(self.currentClaim == null, "Transfer is in progress");
         self.price = msg.price;
         self.reply("Price is updated".asComment());
@@ -217,27 +217,27 @@ contract Document {
         self.reply("Claim is approved".asComment());
     }
 
-    receive("cancel") {
-        require(self.currentClaim != null, "Can't cancel without a claim");
+    receive("reject") {
+        require(self.currentClaim != null, "Can't reject without a claim");
 
-        // Autoproof contract can cancel at any time as an arbiter to resolve the dispute
+        // Autoproof contract can reject at any time as an arbiter to resolve the dispute
         if (sender() != self.parent) {
             require((sender() == self.exclusiveRightsOwner) || (sender() == self.currentClaim!!.author),
-                "Only exclusive rights owner or author of the claim can cancel");
+                "Only exclusive rights owner or author of the claim can reject");
             require(self.currentClaim!!.sentDocuments == false ||
                 (self.currentClaim!!.sentDocuments && self.currentClaim!!.viewedDocuments),
-                "Can't cancel if documents were sent but not viewed");
+                "Can't reject if documents were sent but not viewed");
         }
 
         send(SendParameters{
                 to: self.currentClaim!!.author,
-                value: self.currentClaim!!.amount + self.summedCommission(),
+                value: self.currentClaim!!.amount - self.summedCommission(),
                 bounce: false,
                 body: "Return funds to the claimer".asComment(),
         });
 
         self.currentClaim = null;
-        self.reply("Claim is canceled".asComment());
+        self.reply("Claim is rejected".asComment());
     }
 
     receive(msg: SetCommissions) {
