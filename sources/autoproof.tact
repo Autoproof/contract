@@ -6,16 +6,16 @@ import "./common.tact";
 
 // Contract for autoproof document claim mechanism.
 
-message DeclareDocument {
+message (1261895496) DeclareDocument {
     document: DocumentData;
     royaltyWalletAddress: Address?;
 }
 
-message CancelDocumentClaim {
+message (614687775) CancelDocumentClaim {
     documentAddress: Address;
 }
 
-message SetTheNextAutoproof {
+message (1469863893) SetTheNextAutoproof {
     contractAddress: Address?;
 }
 
@@ -38,7 +38,7 @@ contract Autoproof with Deployable, Resumable {
             royaltyCommissionPercentage: 5 // 0.5% by default
         };
     }
-
+    
     get fun documentsNumber(): Int {
         return self.documentsNumber;
     }

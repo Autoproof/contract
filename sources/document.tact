@@ -10,15 +10,15 @@ struct ExclusiveRightsClaim {
     viewedDocuments: Bool;
 }
 
-message SetPrice {
+message (1092820085) SetPrice {
     price: Int? as coins;
 }
 
-message ClaimRequest {
+message (3578439401) ClaimRequest {
     authorDetails: PersonDetails;
 }
 
-message ClaimApproval {
+message (774961926) ClaimApproval {
     assignmentHash: String;
 }
 

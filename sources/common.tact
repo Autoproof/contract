@@ -12,11 +12,11 @@ struct DocumentData {
     description: String?;
 }
 
-message GetFunds {
+message (170958879) GetFunds {
     amount: Int as coins;
 }
 
-message SetCommissions {
+message (1263034725) SetCommissions {
     commissions: Commissions;
 
     // if there is no address, the commision will be updated for the autproof contract
