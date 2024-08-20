@@ -39,9 +39,7 @@ PROGRAM{
   DECLPROC $ExclusiveRightsClaim$_to_opt_tuple
   DECLPROC $ExclusiveRightsClaim$_to_opt_external
   DECLPROC $PersonDetails$_to_external
-  DECLPROC $DocumentData$_to_tuple
   DECLPROC $DocumentData$_to_external
-  DECLPROC $Commissions$_to_tuple
   DECLPROC $Commissions$_to_external
   DECLPROC $Document$init$_load
   DECLPROC $Document$_contract_init
@@ -617,23 +615,10 @@ PROGRAM{
     }>
   }>
   $PersonDetails$_to_external PROCINLINE:<{
-    $PersonDetails$_to_tuple INLINECALLDICT
-  }>
-  $DocumentData$_to_tuple PROCINLINE:<{
-    s6 s5 XCHG2
-    $PersonDetails$_to_tuple INLINECALLDICT
-    s0 s5 XCHG
-    4 ROLL
-    6 TUPLE
   }>
   $DocumentData$_to_external PROCINLINE:<{
-    $DocumentData$_to_tuple INLINECALLDICT
-  }>
-  $Commissions$_to_tuple PROCINLINE:<{
-    2 TUPLE
   }>
   $Commissions$_to_external PROCINLINE:<{
-    $Commissions$_to_tuple INLINECALLDICT
   }>
   $Document$init$_load PROCREF:<{
     __tact_load_address INLINECALLDICT

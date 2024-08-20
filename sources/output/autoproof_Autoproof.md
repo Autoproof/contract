@@ -3,7 +3,7 @@ Contract: Autoproof
 BOC Size: 2455 bytes
 
 # Types
-Total Types: 20
+Total Types: 22
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -53,6 +53,10 @@ Signature: `ClaimRequest{authorDetails:PersonDetails{name:^string,address:^strin
 TLB: `claim_approval#2e30fb06 assignmentHash:^string = ClaimApproval`
 Signature: `ClaimApproval{assignmentHash:^string}`
 
+## Document$Data
+TLB: `null`
+Signature: `null`
+
 ## PersonDetails
 TLB: `_ name:^string address:^string = PersonDetails`
 Signature: `PersonDetails{name:^string,address:^string}`
@@ -84,6 +88,10 @@ Signature: `CancelDocumentClaim{documentAddress:address}`
 ## SetTheNextAutoproof
 TLB: `set_the_next_autoproof#579c57d5 contractAddress:Maybe address = SetTheNextAutoproof`
 Signature: `SetTheNextAutoproof{contractAddress:Maybe address}`
+
+## Autoproof$Data
+TLB: `null`
+Signature: `null`
 
 # Get Methods
 Total Get Methods: 6

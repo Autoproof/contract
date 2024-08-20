@@ -121,19 +121,13 @@ tuple $ExclusiveRightsClaim$_to_opt_tuple(tuple v) inline;
 tuple $ExclusiveRightsClaim$_to_opt_external(tuple v) inline;
 
 ;; $PersonDetails$_to_external
-tuple $PersonDetails$_to_external(((slice, slice)) v) inline;
-
-;; $DocumentData$_to_tuple
-tuple $DocumentData$_to_tuple((((slice, slice), slice, slice, slice, slice, slice)) v) inline;
+(slice, slice) $PersonDetails$_to_external(((slice, slice)) v) inline;
 
 ;; $DocumentData$_to_external
-tuple $DocumentData$_to_external((((slice, slice), slice, slice, slice, slice, slice)) v) inline;
-
-;; $Commissions$_to_tuple
-tuple $Commissions$_to_tuple(((int, int)) v) inline;
+((slice, slice), slice, slice, slice, slice, slice) $DocumentData$_to_external((((slice, slice), slice, slice, slice, slice, slice)) v) inline;
 
 ;; $Commissions$_to_external
-tuple $Commissions$_to_external(((int, int)) v) inline;
+(int, int) $Commissions$_to_external(((int, int)) v) inline;
 
 ;; $Document$init$_load
 (slice, ((slice, int, slice, ((slice, slice), slice, slice, slice, slice, slice), (int, int), slice))) $Document$init$_load(slice sc_0) inline_ref;

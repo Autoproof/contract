@@ -59,9 +59,9 @@ tuple $PersonDetails$_to_tuple(((slice, slice)) v) inline {
     return __tact_tuple_create_2(v'name, v'address);
 }
 
-tuple $PersonDetails$_to_external(((slice, slice)) v) inline {
+(slice, slice) $PersonDetails$_to_external(((slice, slice)) v) inline {
     var (v'name, v'address) = v; 
-    return $PersonDetails$_to_tuple(v'name, v'address);
+    return (v'name, v'address);
 }
 
 ;;
@@ -215,14 +215,9 @@ builder $DocumentData$_store(builder build_0, ((slice, slice), slice, slice, sli
     return (sc_0, (v'author, v'title, v'rootHash, v'data, v'tags, v'description));
 }
 
-tuple $DocumentData$_to_tuple((((slice, slice), slice, slice, slice, slice, slice)) v) inline {
-    var (v'author, v'title, v'rootHash, v'data, v'tags, v'description) = v;
-    return __tact_tuple_create_6($PersonDetails$_to_tuple(v'author), v'title, v'rootHash, v'data, v'tags, v'description);
-}
-
-tuple $DocumentData$_to_external((((slice, slice), slice, slice, slice, slice, slice)) v) inline {
+((slice, slice), slice, slice, slice, slice, slice) $DocumentData$_to_external((((slice, slice), slice, slice, slice, slice, slice)) v) inline {
     var (v'author, v'title, v'rootHash, v'data, v'tags, v'description) = v; 
-    return $DocumentData$_to_tuple(v'author, v'title, v'rootHash, v'data, v'tags, v'description);
+    return (v'author, v'title, v'rootHash, v'data, v'tags, v'description);
 }
 
 ;;
@@ -255,14 +250,9 @@ builder $Commissions$_store(builder build_0, (int, int) v) inline {
     return (sc_0, (v'transfershipCommissionPercentage, v'royaltyCommissionPercentage));
 }
 
-tuple $Commissions$_to_tuple(((int, int)) v) inline {
-    var (v'transfershipCommissionPercentage, v'royaltyCommissionPercentage) = v;
-    return __tact_tuple_create_2(v'transfershipCommissionPercentage, v'royaltyCommissionPercentage);
-}
-
-tuple $Commissions$_to_external(((int, int)) v) inline {
+(int, int) $Commissions$_to_external(((int, int)) v) inline {
     var (v'transfershipCommissionPercentage, v'royaltyCommissionPercentage) = v; 
-    return $Commissions$_to_tuple(v'transfershipCommissionPercentage, v'royaltyCommissionPercentage);
+    return (v'transfershipCommissionPercentage, v'royaltyCommissionPercentage);
 }
 
 ;;
