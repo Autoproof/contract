@@ -145,7 +145,7 @@ describe("contract", () => {
   })
 
 
-    it("should successfully reject", async () => {
+    it("should successfully reject as claimer", async () => {
         let system = await Blockchain.create();   
         let owner = await system.treasury("owner")
         let author = await system.treasury("author");
@@ -258,5 +258,61 @@ describe("contract", () => {
     })
   })
 
+    it("should successfully reject as author", async () => {
+        let system = await Blockchain.create();   
+        let owner = await system.treasury("owner")
+        let author = await system.treasury("author");
+        let claimer = await system.treasury("claimer");
+
+        let contract = system.openContract(await Autoproof.fromInit());
+        await contract.send(owner.getSender(), { value: toNano(1), bounce: false }, { $$type: "Deploy", queryId: 0n });
+        
+      await contract.send(owner.getSender(), { value: toNano(100), bounce: false }, "Resume")
+
+      const declResult = await contract.send(author.getSender(), { value: toNano(10) },
+        { $$type: "DeclareDocument",
+          royaltyWalletAddress: null,
+          document:
+            { $$type: "DocumentData",
+              author: {
+                $$type: "PersonDetails",
+                name: "name",
+                address: "address"
+              },
+              title: "document",
+              rootHash: "hash",
+              data: "data",
+              tags: null,
+              description: null
+            },
+         })
+
+      const documentContractAddress = declResult.transactions[1].outMessages.values()[0].info.dest
+
+      let dc = system.openContract(Document.fromAddress(documentContractAddress as Address))
+
+     // Set price
+      await dc.send(author.getSender(), { value: toNano('0.1') }, {
+        $$type: "SetPrice",
+        price: toNano('2')
+      })
+
+    const price = await dc.getCurrentPrice()
+    expect (price).toEqual(toNano('2'))
+
+    // Claim document
+    await dc.send(claimer.getSender(), { value: toNano('3') }, { $$type: "ClaimRequest", authorDetails: { $$type: "PersonDetails", name: "Claimer", address: "" } })
+
+    await dc.send(author.getSender(), { value: toNano('0.05') }, 'mark-documents-as-sent')
+    await dc.send(claimer.getSender(), { value: toNano('0.05') }, 'mark-documents-as-viewed')
+
+    // Reject
+    await dc.send(author.getSender(), { value: toNano('0.5') }, 'reject')
+    
+    const dcOwner = await dc.getExclusiveRightsOwner()
+
+    expect(dcOwner.toString()).toEqual(author.address.toString())
+
+  })
 
 })
